@@ -48,8 +48,8 @@ openSRMfile <- function(filename)
   file_id <- xml_attrs(xml_children(xml_tmp)[[1]])[["id"]]
 
   meta_data$fileID <- file_id
-  meta_data$precision <- precision$name
-  meta_data$compressin <- compression$name
+  meta_data$precision <- as.character(precision$name)
+  meta_data$compressin <- as.character(compression$name)
   meta_data$schema <- schema
   meta_data$instrument_model <- as.character(inst_model$value)
 
