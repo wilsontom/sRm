@@ -13,16 +13,16 @@ openSRMfile <- function(filename)
   {
 
   xml_tmp <- read_xml(filename)
-  cv_params <- .cvParams(xml_tmp)
-  id_refs <- .idRefs(xml_tmp)
-  binary_arrays <- .binaryArrays(xml_tmp)
+  cv_params <- cvParams(xml_tmp)
+  id_refs <- idRefs(xml_tmp)
+  binary_arrays <- binaryArrays(xml_tmp)
 
   if(cv_params$name[12] == "64-bit float"){precision = 64}
   if(cv_params$name[12] == "32-bit float"){precision = 32}
 
   if(cv_params$name[13] == "no compression"){compression = "none"}
 
-  peaks <- lapply(binary_arrays$value,function(x)(.decodePeaks(x,compression = compression, size = precision/8)))
+  peaks <- lapply(binary_arrays$value,function(x)(decodePeaks(x,compression = compression, size = precision/8)))
   names(peaks) <- binary_arrays$name
 
   peaks_time <- peaks[which(names(peaks) == "time array")]
