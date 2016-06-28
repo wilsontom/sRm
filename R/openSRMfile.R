@@ -1,6 +1,13 @@
-
-
-
+#' Open a SRM-MS file
+#'
+#' Function for reading and parsing SRM-MS data in a \code{mzML} file.
+#'
+#' @param filename a \code{mzML} file
+#' @return a \code{SRM} object
+#'  (see \code{\link{SRM-class}})
+#'
+#' @author Tom Wilson \email{tpw2@@aber.ac.uk}
+#' @export
 
 openSRMfile <- function(filename)
   {
@@ -76,10 +83,9 @@ openSRMfile <- function(filename)
   header$Q3mz <- Qmz
   header$totalIonCount <- tic
   header$basePeakInt <- bpi
+  object@header <- header
+
+  return(object)
   }
-
-
-
-
 
 
