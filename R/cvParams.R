@@ -6,7 +6,7 @@
 #' @return a \code{data.frame} of all avaialble \code{cvParams}. Accession, name and value are all given for each \code{cvParam}
 #'
 #' @author Tom Wilson \email{tpw2@@aber.ac.uk}
-#' @export
+#' @keywords internal
 #'
 #' @examples \dontrun{
 #' library(xml2)
@@ -22,7 +22,7 @@
 #' 6 MS:1000529                  instrument serial number                                 TQU01681
 #' }
 
-cvParams <- function(xmlDoc)
+.cvParams <- function(xmlDoc)
 {
   if(class(xmlDoc)[1] != "xml_document"){
     stop("...xmlDoc must be an xml_documment read in using xml2::read_xml", call. = FALSE)

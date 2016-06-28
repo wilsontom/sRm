@@ -7,7 +7,7 @@
 #' @return a character vector of all available \code{idRefs}
 #'
 #' @author Tom Wilson \email{tpw2@@aber.ac.uk}
-#' @export
+#' @keywords internal
 #'
 #' @examples \dontrun{
 #' library(xml2)
@@ -19,7 +19,7 @@
 #' [5] "SRM SIC 179.022,107.007" "SRM SIC 179.022,134.006"
 #'  }
 
-idRefs <- function(xmlDoc)
+.idRefs <- function(xmlDoc)
   {
   if(class(xmlDoc)[1] != "xml_document"){
     stop("...xmlDoc must be an xml_documment read in using xml2::read_xml", call. = FALSE)

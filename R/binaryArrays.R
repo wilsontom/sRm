@@ -8,7 +8,7 @@
 #' is the \code{base64} encdoded value of the \code{binaryDataArray}
 #'
 #' @author Tom Wilson \email{tpw2@@aber.ac.uk}
-#' @export
+#' @keywords internal
 #'
 #' @examples \dontrun{
 #' library(xml2)
@@ -18,7 +18,7 @@
 #' [1] "name"  "value"
 #'  }
 
-binaryArrays <- function(xmlDoc)
+.binaryArrays <- function(xmlDoc)
 {
   if(class(xmlDoc)[1] != "xml_document"){
     stop("...xmlDoc must be an xml_documment read in using xml2::read_xml", call. = FALSE)
