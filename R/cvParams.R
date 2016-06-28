@@ -22,7 +22,7 @@
 #' 6 MS:1000529                  instrument serial number                                 TQU01681
 #' }
 
-.cvParams <- function(xmlDoc)
+cvParams <- function(xmlDoc)
 {
   if(class(xmlDoc)[1] != "xml_document"){
     stop("...xmlDoc must be an xml_documment read in using xml2::read_xml", call. = FALSE)

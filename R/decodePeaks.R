@@ -19,7 +19,7 @@
 #' [1] 3.516104 3.427163 3.493258 3.397190 3.430998 3.053472
 #' }
 
-.decodePeaks <- function(x, compression = "none", size)
+decodePeaks <- function(x, compression = "none", size)
 {
   x <- base64enc::base64decode(x)
   raw_x <- as.raw(x)
