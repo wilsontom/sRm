@@ -1,5 +1,4 @@
 #' SRM
-#' @rdname SRMclass
 #'
 #' A S4 class to store selective reaction monitoring (SRM) mass spectrometry (MS) data
 #'
