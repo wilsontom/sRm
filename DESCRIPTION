@@ -8,6 +8,7 @@ Maintainer: Tom Wilson <tpw2@aber.ac.uk>
 Description: Functions for reading SRM-MS data from mzML files.
 License: GPL (>= 3)
 Depends:
+    methods,
     xml2 (>= 1.0.0)
 Imports:
     base64enc
