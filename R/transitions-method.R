@@ -1,4 +1,4 @@
-#' #' Show trasitions
+#' Show trasitions
 #' @rdname transitions
 #'
 
