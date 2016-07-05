@@ -10,6 +10,18 @@ A S4 class to store selective reaction monitoring (SRM) mass spectrometry (MS) d
 \section{Slots}{
 
 \describe{
-\item{\code{header}}{}
+\item{\code{env}}{class environment}
+
+\item{\code{SHA1}}{character vector of the file SHA1 checksum value}
+
+\item{\code{meta}}{list containing file meta data}
+
+\item{\code{totalIonCount}}{\code{data.frame} of sample total ion count (TIC)}
+
+\item{\code{index}}{character vector of scan index's; ie \code{SRM SIC 341.014,114.098}}
+
+\item{\code{peaks}}{list of peak data}
+
+\item{\code{header}}{\code{data.frame} of summary information for each scan index; parentMz, Q3mz, totalIonCount, basePeakInt}
 }}
 

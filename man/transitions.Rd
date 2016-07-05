@@ -16,7 +16,7 @@ transitions(object)
 \description{
 Show transitions
 
-#' Show trasitions
+Show trasitions
 }
 \author{
 Tom Wilson \email{tpw2@aber.ac.uk}
