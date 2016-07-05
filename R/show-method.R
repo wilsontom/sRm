@@ -1,6 +1,11 @@
 #' show-sRm
 #' @rdname show
 #'
+#' @param object a SRM object
+#' @return NULL
+#'
+#' @author Tom Wilson \email{tpw2@@aber.ac.uk}
+#' @export
 
 setMethod("show", signature = "SRM",
           function(object){
