@@ -3,11 +3,15 @@
 \docType{methods}
 \name{show,SRM-method}
 \alias{show,SRM-method}
+\title{show-SRM}
 \usage{
 \S4method{show}{SRM}(object)
 }
 \arguments{
 \item{object}{a SRM object}
+}
+\description{
+show-SRM
 }
 \author{
 Tom Wilson \email{tpw2@aber.ac.uk}

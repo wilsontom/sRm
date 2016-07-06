@@ -1,4 +1,3 @@
-#' Show meta data
 #' @rdname meta
 #'
 

@@ -15,8 +15,6 @@ meta(object)
 }
 \description{
 Show meta data
-
-Show meta data
 }
 \author{
 Tom Wilson \email{tpw2@aber.ac.uk}
