@@ -5,14 +5,14 @@
 \alias{SRM-class}
 \title{SRM}
 \description{
-A S4 class to store selective reaction monitoring (SRM) mass spectrometry (MS) data
+A S4 class to store single reaction monitoring (SRM) mass spectrometry (MS) data
 }
 \section{Slots}{
 
 \describe{
 \item{\code{env}}{class environment}
 
-\item{\code{SHA1}}{character vector of the file SHA1 checksum value}
+\item{\code{SHA1}}{character vector of the file SHA-1 checksum value}
 
 \item{\code{meta}}{list containing file meta data}
 
@@ -22,6 +22,6 @@ A S4 class to store selective reaction monitoring (SRM) mass spectrometry (MS) d
 
 \item{\code{peaks}}{list of peak data}
 
-\item{\code{header}}{\code{data.frame} of summary information for each scan index; parentMz, Q3mz, totalIonCount, basePeakInt}
+\item{\code{header}}{\code{data.frame} of summary information for each scan index; \code{parentMz, Q3mz, totalIonCount, basePeakInt}}
 }}
 

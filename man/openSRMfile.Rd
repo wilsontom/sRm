@@ -14,7 +14,7 @@ a \code{SRM} object
  (see \code{\link{SRM-class}})
 }
 \description{
-Function for reading and parsing SRM-MS data in a \code{mzML} file.
+Function for reading and parsing \code{mzML} file containing SRM-MS data
 }
 \author{
 Tom Wilson \email{tpw2@aber.ac.uk}
