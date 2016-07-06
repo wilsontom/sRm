@@ -5,11 +5,11 @@ Title: Minimal parser for Single Reaction Monitoring (SRM) mass spectrometry
 Version: 0.1.0
 Author: Tom Wilson <tpw2@aber.ac.uk>
 Maintainer: Tom Wilson <tpw2@aber.ac.uk>
-Description: Functions for reading SRM-MS data from mzML files.
+Description: Functions for parsing SRM-MS data stored in .mzML files. 
 License: GPL (>= 3)
 Depends:
     methods,
-    xml2 (>= 1.0.0)
+    xml2 (>= 1.0
 Imports:
     base64enc
 URL: http://github.com/wilsontom/sRm
