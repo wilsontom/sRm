@@ -9,7 +9,7 @@ Description: Functions for parsing SRM-MS data stored in .mzML files.
 License: GPL (>= 3)
 Depends:
     methods,
-    xml2 (>= 1.0
+    xml2 (>= 1.0)
 Imports:
     base64enc
 URL: http://github.com/wilsontom/sRm
