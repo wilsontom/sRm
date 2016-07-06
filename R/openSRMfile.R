@@ -1,6 +1,6 @@
 #' Open a SRM-MS file
 #'
-#' Function for reading and parsing SRM-MS data in a \code{mzML} file.
+#' Function for reading and parsing \code{mzML} file containing SRM-MS data
 #'
 #' @param filename a \code{mzML} file
 #' @return a \code{SRM} object
@@ -87,5 +87,3 @@ openSRMfile <- function(filename)
 
   return(object)
   }
-
-

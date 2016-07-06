@@ -1,4 +1,3 @@
-#' show-sRm
 #' @rdname show
 #'
 #' @param object a SRM object
