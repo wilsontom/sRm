@@ -1,4 +1,4 @@
-# sRm
+# sRm [![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active) [![Build Status](https://travis-ci.org/wilsontom/sRm.svg?branch=master)](https://travis-ci.org/wilsontom/sRm) [![Build status](https://ci.appveyor.com/api/projects/status/hd7toi1bcfxchiua/branch/master?svg=true)](https://ci.appveyor.com/project/wilsontom/srm/branch/master)
 
 > __a minimal parser for selective reaction monitoring (SRM) data__
 
