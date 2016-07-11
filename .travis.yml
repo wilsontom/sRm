@@ -4,7 +4,6 @@ language: r
 warnings_are_errors: false
 sudo: required
 
-
 apt_packages:
  - libxml2
 
@@ -15,7 +14,7 @@ r_binary_packages:
  - base64enc
 
 after_sucess:
- - Rscript -e 'library(covr);codecov()'
+ - Rscript -e 'library(covr); codecov()'
 
 notifications:
   email:
