@@ -1,21 +1,18 @@
-# Sample .travis.yml for R projects
-
 language: r
 warnings_are_errors: false
 sudo: required
 
-
 apt_packages:
  - libxml2
 
-r_binary_packages:
+r_packages:
  - xml2
  - testthat
  - covr
  - base64enc
 
-after_sucess:
- - Rscript -e 'library(covr);codecov()'
+after_success:
+ - Rscript -e 'library(covr); codecov()'
 
 notifications:
   email:

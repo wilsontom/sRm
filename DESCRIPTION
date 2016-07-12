@@ -11,7 +11,8 @@ Depends:
     methods,
     xml2 (>= 1.0)
 Imports:
-    base64enc
+    base64enc,
+    Rcpp
 URL: http://github.com/wilsontom/sRm
 BugReports: http://github.com/wilsontom/sRm/issues
 LazyData: TRUE
