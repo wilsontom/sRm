@@ -15,22 +15,26 @@ setMethod(f = combineTransitions, signature = "SRM",
 
           trans_dfs <- lapply(trans_sets, function(x)(do.call("cbind",x)))
 
-          int_idx <- grep("int", names(trans_dfs[[1]]))
-          int_rt <- grep("rt", names(trans_dfs[[1]]))
+          int_idx <- rt_idx <- NULL
+          for(i in 1:length(trans_dfs)){
+            int_idx[[i]] <- grep("int", names(trans_dfs[[i]]))
+            rt_idx[[i]] <- grep("rt", names(trans_dfs[[i]]))
+          }
 
-          int_sum <- lapply(trans_dfs,function(x)(apply(x[,int_idx],1,sum)))
+          int_sum <- NULL
+          for(i in 1:length(trans_dfs)){
+            int_sum[[i]] <- apply(trans_dfs[[i]][,int_idx[[i]]],1,sum)
+          }
 
           trans_df_comb <- list()
           for(i in 1:length(int_sum)){
-            trans_df_comb[[i]] <- data.frame(rt = trans_dfs[[i]][,int_rt[1]], TIC = int_sum[[i]])
+            trans_df_comb[[i]] <- data.frame(rt = trans_dfs[[i]][,int_rt[[1]]], TIC = int_sum[[i]])
           }
 
           new_names <- NULL
           for(i in 1:length(trans_header)){
             pMz <- paste("Q1", trans_header[[i]][1,"parentMz"], sep = ": ")
-            qMzs <- paste(trans_header[[i]][1,"Q3mz"],
-                            trans_header[[i]][2,"Q3mz"],
-                              trans_header[[i]][3,"Q3mz"], sep = "/")
+            qMzs <- paste(trans_header[[i]][,"Q3mz"], collapse = "//")
             qMz2 <- paste("Q3", qMzs, sep = ": ")
             new_names[[i]] <- paste(pMz, qMz2, sep = " -> ")
           }
