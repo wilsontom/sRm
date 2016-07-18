@@ -44,7 +44,7 @@ setGeneric(name = "transitions",
 
 
 #' Plot SRM
-#' @rdname plot
+#' @rdname plotSRM
 #' @param object a SRM objecy
 #' @param idn the index number of a transition to plot
 #' @return NULL

@@ -1,4 +1,4 @@
-#' @rdname Plot SRM
+#' @rdname PlotSRM
 #'
 setMethod("plotSRM", signature = "SRM",
             function(object,idn){
