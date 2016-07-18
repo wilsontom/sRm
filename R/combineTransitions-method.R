@@ -28,7 +28,7 @@ setMethod(f = combineTransitions, signature = "SRM",
 
           trans_df_comb <- list()
           for(i in 1:length(int_sum)){
-            trans_df_comb[[i]] <- data.frame(rt = trans_dfs[[i]][,rt_idx[[1]]], TIC = int_sum[[i]])
+            trans_df_comb[[i]] <- data.frame(rt = trans_dfs[[i]][,rt_idx[[i]]][[1]],int = trans_dfs[[i]][,int_idx[[i]]], TIC = int_sum[[i]])
           }
 
           new_names <- NULL
