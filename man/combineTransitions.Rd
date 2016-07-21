@@ -14,7 +14,7 @@ combineTransitions(object)
 \item{object}{a SRM object}
 }
 \value{
-a list of SRM total ion chromatograms
+a \code{transition} (list) class of SRM total ion chromatograms
 }
 \description{
 Combine Transitions
