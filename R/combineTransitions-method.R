@@ -40,6 +40,7 @@ setMethod(f = combineTransitions, signature = "SRM",
           }
 
           names(trans_df_comb) <- new_names
+          class(trans_df_comb) <- "transition"
 
           return(trans_df_comb)
           }
