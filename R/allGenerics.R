@@ -2,7 +2,7 @@
 #' @rdname combineTransitions
 #'
 #' @param object a SRM object
-#' @return a list of SRM total ion chromatograms
+#' @return a \code{transition} (list) class of SRM total ion chromatograms
 #'
 #' @author Tom Wilson \email{tpw2@@aber.ac.uk}
 #' @export
