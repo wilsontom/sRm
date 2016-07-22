@@ -10,9 +10,10 @@ binaryArrays(xmlDoc)
 \item{xmlDoc}{a \code{xml} document}
 }
 \value{
-a list of two elements; array name and array value. Array name is character vector specifying
+a list of three elements; array name, array value and array precision. Array name is character vector specifying
 the type of array (time array or intensity). Array value is a large character vector where each element
-is the \code{base64} encdoded value of the \code{binaryDataArray}
+is the \code{base64} encdoded value of the \code{binaryDataArray}. Arrray precision is the value specifing the encoded precision
+of each array (32-bit or 64-bit)
 }
 \description{
 Extract all the \code{binaryDataArrays} in the specified \code{mzML} file.
