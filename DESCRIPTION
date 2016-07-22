@@ -18,7 +18,8 @@ Imports:
     Rcpp,
     gtable,
     scales,
-    munsell
+    munsell,
+    colorspace
 URL: http://github.com/wilsontom/sRm
 BugReports: http://github.com/wilsontom/sRm/issues
 LazyData: TRUE
