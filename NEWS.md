@@ -14,4 +14,7 @@
 #### v0.1.1
   - Adapt `combineTransitions` to catch SRM's of different lengths
   - Result of `combineTransitions` is now S3 class
-  - Plot method for `combineTransitions` class
+  - Plot method for `combineTransitions` class ;(`plotAll`)
+  - Plot method for single transition events; (`plotSRM`)
+  - Bug fixed for when time and intensity arrays are encoded with different precisions
+  - `grid` and `gridExtra` are listed as Dependencies
