@@ -10,19 +10,28 @@
 #' @export
 
 openSRMfile <- function(filename)
-  {
+{
 
   xml_tmp <- read_xml(filename)
   cv_params <- cvParams(xml_tmp)
   id_refs <- idRefs(xml_tmp)
   binary_arrays <- binaryArrays(xml_tmp)
 
-  if(cv_params$name[12] == "64-bit float"){precision = 64}
-  if(cv_params$name[12] == "32-bit float"){precision = 32}
-
   if(cv_params$name[13] == "no compression"){compression = "none"}
 
-  peaks <- lapply(binary_arrays$value,function(x)(decodePeaks(x,compression = compression, size = precision/8)))
+  bin_vals <- binary_arrays$value
+  bin_prec <- binary_arrays$precision
+
+  bin_df <- data.frame(name = binary_arrays$name, prec = bin_prec)
+  bin_df <- unique(bin_df)
+
+  bin_df$prec <- paste(bin_df$prec, "bit float", sep = " ")
+
+  peaks <- list()
+  for(i in 1:length(bin_vals)){
+    peaks[[i]] <- decodePeaks(bin_vals[[i]], compression = compression, size = bin_prec[[i]] / 8)
+  }
+
   names(peaks) <- binary_arrays$name
 
   peaks_time <- peaks[which(names(peaks) == "time array")]
@@ -41,14 +50,19 @@ openSRMfile <- function(filename)
 
 
   meta_data <- list()
-  precision <- cv_unique[grep("float", cv_unique$name),]
+  #precision <- cv_unique[grep("float", cv_unique$name),]
+  precision <- NULL
+  for(i in 1:nrow(bin_df)){
+    precision[[i]] <- paste(bin_df[i,"name"], bin_df[i, "prec"], sep = " : ")
+  }
+
   inst_model <- cv_unique[grep("serial number", cv_unique$name),]
   compression <- cv_unique[grep("compression", cv_unique$name),]
   schema <- xml_attrs(xml_children(xml_tmp)[[1]])[["schemaLocation"]]
   file_id <- xml_attrs(xml_children(xml_tmp)[[1]])[["id"]]
 
   meta_data$fileID <- file_id
-  meta_data$precision <- as.character(precision$name)
+  meta_data$precision <- precision
   meta_data$compressin <- as.character(compression$name)
   meta_data$schema <- schema
   meta_data$instrument_model <- as.character(inst_model$value)
@@ -86,4 +100,4 @@ openSRMfile <- function(filename)
   object@header <- header
 
   return(object)
-  }
+}
