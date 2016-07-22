@@ -16,7 +16,8 @@ Depends:
 Imports:
     base64enc,
     Rcpp,
-    gtable
+    gtable,
+    scales
 URL: http://github.com/wilsontom/sRm
 BugReports: http://github.com/wilsontom/sRm/issues
 LazyData: TRUE
