@@ -15,7 +15,8 @@ Depends:
     gridExtra
 Imports:
     base64enc,
-    Rcpp
+    Rcpp,
+    gtable
 URL: http://github.com/wilsontom/sRm
 BugReports: http://github.com/wilsontom/sRm/issues
 LazyData: TRUE
