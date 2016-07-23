@@ -1,7 +1,7 @@
-# sRm [![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active) [![Build Status](https://travis-ci.org/wilsontom/sRm.svg?branch=master)](https://travis-ci.org/wilsontom/sRm) [![Build status](https://ci.appveyor.com/api/projects/status/hd7toi1bcfxchiua/branch/master?svg=true)](https://ci.appveyor.com/project/wilsontom/srm/branch/master) [![codecov](https://codecov.io/gh/wilsontom/sRm/branch/master/graph/badge.svg)](https://codecov.io/gh/wilsontom/sRm)
+# sRm [![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active) [![Build Status](https://travis-ci.org/wilsontom/sRm.svg?branch=master)](https://travis-ci.org/wilsontom/sRm) [![Build status](https://ci.appveyor.com/api/projects/status/hd7toi1bcfxchiua/branch/master?svg=true)](https://ci.appveyor.com/project/wilsontom/srm/branch/master) [![codecov](https://codecov.io/gh/wilsontom/sRm/branch/master/graph/badge.svg)](https://codecov.io/gh/wilsontom/sRm) [![License](https://img.shields.io/badge/license-GNU%20GPL%20v3.0-blue.svg "GNU GPL v3.0")]
 
 
-> __a minimal parser for selective reaction monitoring (SRM) data__
+> __a minimal parser for selective reaction monitoring (SRM) mass spectrometry (MS) data__
 
 
 `sRm` is a basic parser for selective reaction monitoring (SRM) mass spectrometry (MS) data. SRM-MS data which is converted to chromatogram data during `RAW` to `mzML` conversion, is  parsed and decoded, then stored in a simple `S4` object for easy access.
