@@ -17,7 +17,7 @@ setMethod("meta", signature = "SRM",
               cat("\n")
             }
           }
-          cat("\n", "\n")
+          cat("\n")
           cat("Compression", object@meta$compressin, sep = " : ")
           cat("\n", "\n")
           cat("Conversion schema", object@meta$schema, sep = " : ")
