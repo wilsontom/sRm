@@ -18,8 +18,10 @@ devtools::install_github("wilsontom/sRm")
 ```R
 library(sRm)
 SRMdata <- openSRMfile("example_file.mzML")
+```
 
-# View sample information
+#### View sample information
+```R
 SRMdata
 file id : Calibrant-Mix-D2
 
@@ -30,8 +32,11 @@ run time :  19.02 mins
 26 unique parent masses
 
 78 unique Q3 product ions
+```
 
-# View break down of SRM transitions
+#### View break down of SRM transitions
+
+```R
 transitions(SRMdata)
 Q1: 136.055 -> Q3: 65.014/80.292/108.19
 Q1: 153.01 -> Q3: 65.271/67.232/109.094
@@ -39,17 +44,34 @@ Q1: 163.051 -> Q3: 91.242/93.114/119.137
 Q1: 164.029 -> Q3: 72.277/77.266/105.234
 Q1: 167.085 -> Q3: 69.384/124.185/150.13
 Q1: 167.096 -> Q3: 94.22/96.302/124.152
+```
 
-# View minimal amount of meta data
+#### View minimal amount of meta data
+```R
 meta(SRMdata)
 file id : Calibrant-Mix-D2
 
 Instrument : TQU01681
 
-Precision : 64-bit float
+Precision:
+time array : 64 bit float
+intensity array : 64 bit float
 
 Compression : no compression
 
-Conversion scheme:
-http://psi.hupo.org/ms/mzmlhttp://psidev.info/files/ms/mzML/xsd/mzML1.1.0.xsd
+Conversion schema : http://psi.hupo.org/ms/mzml http://psidev.info/files/ms/mzML/xsd/mzML1.1.0.xsd
 ````
+
+#### Plot a single SRM transitions
+```R
+plotSRM(SRMdata,10)
+```
+![srm](inst/images/plot_srm.jpeg)
+
+
+#### Plot a combined transition TIC
+```R
+all_transitions <- combineTransition(SRMdata)
+plotAll(all_transitions,10)
+```
+![srm_all](inst/images/plot_all.jpeg)
