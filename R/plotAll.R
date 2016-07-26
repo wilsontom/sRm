@@ -64,7 +64,7 @@ plotAll.transition <- function(x, n)
 
   plot_layer_2 <- grid.arrange(heights = unit(c(6,6), "null"), plot_layer_1, grob_ind)
 
-  plot_layer_3 <- grid.arrange(widths = unit(c(0.1,6), "null"), ncol = 2, grid.text("Intensity", rot = 90), plot_layer_2)
+  plot_layer_3 <- grid.arrange(widths = unit(c(0.3,6), "null"), ncol = 2, grid.text("Intensity", rot = 90), plot_layer_2)
 
   plot_layer_4 <- grid.arrange(heights = unit(c(6,0.5), "null"), nrow = 2, plot_layer_3, grid.text("Retention Time (mins)", hjust = 0.2, vjust = 0))
 
