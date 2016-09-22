@@ -11,6 +11,9 @@
 #' @author Tom Wilson \email{tpw2@@aber.ac.uk}
 #' @keywords internal
 #'
+#' @importFrom xml2 xml_find_all xml_attrs xml_children xml_text
+#'
+#'
 #' @examples \dontrun{
 #' library(xml2)
 #' xmlDoc <- read_xml("example_file.mzML")

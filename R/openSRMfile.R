@@ -8,6 +8,8 @@
 #'
 #' @author Tom Wilson \email{tpw2@@aber.ac.uk}
 #' @export
+#' @importFrom methods new
+#' @importFrom xml2 read_xml
 
 openSRMfile <- function(filename)
 {

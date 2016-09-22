@@ -1,5 +1,8 @@
 #' @rdname plotAll
 #' @export
+#' @importFrom ggplot2 ggplot aes theme_bw geom_line element_text element_blank ggtitle theme xlab ylab
+#' @importFrom gridExtra arrangeGrob grid.arrange
+#' @importFrom grid grid.text unit
 
 plotAll.transition <- function(x, n)
 {

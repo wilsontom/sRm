@@ -6,6 +6,7 @@
 #'
 #' @author Tom Wilson \email{tpw2@@aber.ac.uk}
 #' @export
+#' @importFrom methods show
 
 setMethod("show", signature = "SRM",
           function(object){
