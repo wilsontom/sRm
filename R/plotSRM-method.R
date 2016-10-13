@@ -11,7 +11,7 @@ setMethod("plotSRM", signature = "SRM",
           plot_title <- gsub(",", " : Q3 ", plot_title)
           plot_title <- paste("Q1", plot_title, sep = "")
 
-          ggplot(data = plot_df, aes(x = rt, y = int)) + geom_line(size = 0.5) + theme_bw() +
+          ggplot(data = plot_df, aes_string(x = 'rt', y = 'int')) + geom_line(size = 0.5) + theme_bw() +
             theme(legend.position = "none") +
             theme(strip.text.x = element_text(size=12, face="bold")) +
             theme(axis.text.y = element_text(size = 12, face = "bold"),

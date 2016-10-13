@@ -24,6 +24,6 @@ Imports:
 URL: http://github.com/wilsontom/sRm
 BugReports: http://github.com/wilsontom/sRm/issues
 LazyData: TRUE
-RoxygenNote: 5.0.1
+RoxygenNote: 5.0.0
 Suggests:
     testthat

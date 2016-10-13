@@ -1,6 +1,6 @@
 #' @rdname plotAll
 #' @export
-#' @importFrom ggplot2 ggplot aes theme_bw geom_line element_text element_blank ggtitle theme xlab ylab
+#' @importFrom ggplot2 ggplot aes_string theme_bw geom_line element_text element_blank ggtitle theme xlab ylab
 #' @importFrom gridExtra arrangeGrob grid.arrange
 #' @importFrom grid grid.text unit
 
@@ -10,7 +10,7 @@ plotAll.transition <- function(x, n)
   envir = .GlobalEnv
   plotInd <- function(x,id)
   {
-    plot_a <- ggplot(data = x, aes(x = rt, y = int)) + geom_line(size = 0.5) + theme_bw() +
+    plot_a <- ggplot(data = x, aes_string(x = 'rt', y = 'int')) + geom_line(size = 0.5) + theme_bw() +
       theme(legend.position = "none") +
       theme(strip.text.x = element_text(size=12)) +
       theme(axis.text.y = element_text(size = 12),
