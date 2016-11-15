@@ -12,4 +12,8 @@ test_that("sRm-works", {
   expect_true(is.list(srm_comb))
   expect_that(length(srm_comb), equals(length(unique(srm_peaks@header$parentMz))))
 
-})
+  expect_true(is.null(transitions(srm_peaks)))
+  expect_true(is.null(meta(srm_peaks)))
+  expect_true(isS4(new("SRM")))
+
+  })
