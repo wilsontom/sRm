@@ -1,11 +1,11 @@
 Package: sRm
 Type: Package
-Title: Minimal parser for Single Reaction Monitoring (SRM) mass spectrometry
+Title: Minimal parser for Selective Reaction Monitoring (SRM) mass spectrometry
     (MS) data
-Version: 0.1.1
+Version: 0.1.2
 Author: Tom Wilson <tpw2@aber.ac.uk>
 Maintainer: Tom Wilson <tpw2@aber.ac.uk>
-Description: Functions for parsing SRM-MS data stored in .mzML files.
+Description: Functions for parsing SRM-MS data from .mzML files.
 License: GPL (>= 3)
 Depends:
     methods,
@@ -21,8 +21,8 @@ Imports:
     munsell,
     colorspace,
     plyr
-URL: http://github.com/wilsontom/sRm
-BugReports: http://github.com/wilsontom/sRm/issues
+URL: https://github.com/wilsontom/sRm
+BugReports: https://github.com/wilsontom/sRm/issues
 LazyData: TRUE
 RoxygenNote: 5.0.0
 Suggests:
