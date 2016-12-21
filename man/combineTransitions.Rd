@@ -14,13 +14,13 @@ combineTransitions(object)
 \item{object}{a SRM object}
 }
 \value{
-a \code{transition} (list) class of SRM total ion chromatograms
+a \code{transition} class of SRM total ion chromatograms
 }
 \description{
 Combine Transitions
 
-While each parent \code{m/z} will usually have three separat Q3 product ions, SRM transitions are stored separately
-in the \code{mzML} file. Each index is a single transition of parent \code{m/z} to one of the specified Q3 \code{m/z} ions.
+Each parent \code{m/z} will usually have multiple separate Q3 product ions. SRM transitions are stored separately
+in the \code{mzML} file. Each index is a transition from a single Q1 precursor ion to one of the specified Q3 ions.
 This method combines all Q3 product ion chromatograms into one, to produce a total ion chromatogram based on
 the parent \code{m/z} and all Q3 product ions assigned to that parent \code{m/z}
 }

@@ -15,7 +15,7 @@ plotAll(x, n)
 \item{n}{the number of the transition (index) to plot}
 }
 \description{
-Plot the SRM-MS TIC and all indivvidual Q3 traces for a selected parent scans'
+Plot the SRM-MS TIC and all individual Q3 traces for a selected parent scans'
 }
 \author{
 Tom Wilson \email{tpw2@aber.ac.uk}
