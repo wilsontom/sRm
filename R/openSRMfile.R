@@ -1,6 +1,6 @@
 #' Open a SRM-MS file
 #'
-#' Function for reading and parsing \code{mzML} file containing SRM-MS data
+#' Open and parse \code{mzML} file into \code{SRM} object
 #'
 #' @param filename a \code{mzML} file
 #' @return a \code{SRM} object

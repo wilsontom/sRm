@@ -3,7 +3,7 @@
 #' A S4 class to store single reaction monitoring (SRM) mass spectrometry (MS) data
 #'
 #' @slot env class environment
-#' @slot SHA1 character vector of the file SHA-1 checksum value
+#' @slot SHA1 character vector of the original SHA-1 checksum value
 #' @slot meta list containing file meta data
 #' @slot totalIonCount \code{data.frame} of sample total ion count (TIC)
 #' @slot index character vector of scan index's; ie \code{SRM SIC 341.014,114.098}

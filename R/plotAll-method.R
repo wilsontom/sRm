@@ -1,6 +1,6 @@
 #' Plot all
 #'
-#' Plot the SRM-MS TIC and all indivvidual Q3 traces for a selected parent scans'
+#' Plot the SRM-MS TIC and all individual Q3 traces for a selected parent scans'
 #'
 #' @rdname plotAll
 #' @param x a \code{transition} class
