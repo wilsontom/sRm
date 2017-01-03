@@ -45,7 +45,7 @@ setGeneric(name = "transitions",
 
 #' Plot SRM
 #' @rdname plotSRM
-#' @param object a SRM objecy
+#' @param object a SRM object
 #' @param idn the index number of a transition to plot
 #' @return NULL
 #'
@@ -55,4 +55,19 @@ setGeneric(name = "transitions",
 setGeneric(name = "plotSRM",
            def = function(object,idn)
            {standardGeneric("plotSRM")}
+)
+
+
+#' plotMulti
+#' @rdname plotMulti
+#' @param object a SRM object
+#' @param idn the index number of a transition to plot
+#' @return NULL
+#'
+#' @author Tom Wilson \email{tpw2@@aber.ac.uk}
+#' @export
+
+setGeneric(name = "plotMulti",
+           def = function(object,idn)
+           {standardGeneric("plotMulti")}
 )
