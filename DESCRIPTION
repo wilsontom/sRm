@@ -14,6 +14,7 @@ Depends:
     grid,
     gridExtra
 Imports:
+    ggrepel,
     base64enc,
     Rcpp,
     gtable,

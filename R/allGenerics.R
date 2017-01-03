@@ -67,6 +67,7 @@ setGeneric(name = "plotSRM",
 #' @author Tom Wilson \email{tpw2@@aber.ac.uk}
 #' @export
 
+
 setGeneric(name = "plotMulti",
            def = function(object,idn)
            {standardGeneric("plotMulti")}

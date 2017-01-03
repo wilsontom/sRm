@@ -1,5 +1,6 @@
 #' @rdname plotMulti
-#'
+#' @importFrom ggplot2 guides
+
 setMethod("plotMulti", signature = "SRM",
           function(object,idn){
 
@@ -31,7 +32,7 @@ setMethod("plotMulti", signature = "SRM",
           label_df[,"name"] <- gsub("SRM SIC ", "", label_df[,"name"])
 
           plot_multi <- ggplot(data = idn_df, aes_string(x = 'rt', y = 'int', group = 'name', colour = 'name')) +
-                            geom_line() + theme_classic() + ggrepel::geom_label_repel(data = label_df, aes_string(x = 'rt', y = 'int', label = 'name')) +
+                            geom_line() + theme_bw() + ggrepel::geom_label_repel(data = label_df, aes_string(x = 'rt', y = 'int', label = 'name')) +
                             guides(group = "none") +
                             guides(colour = "none")  +
                             xlab("Retention Time (mins)") +
