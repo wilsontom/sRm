@@ -10,8 +10,6 @@ A S4 class to store single reaction monitoring (SRM) mass spectrometry (MS) data
 \section{Slots}{
 
 \describe{
-\item{\code{env}}{class environment}
-
 \item{\code{SHA1}}{character vector of the original SHA-1 checksum value}
 
 \item{\code{meta}}{list containing file meta data}
