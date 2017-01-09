@@ -2,7 +2,6 @@
 #'
 #' A S4 class to store single reaction monitoring (SRM) mass spectrometry (MS) data
 #'
-#' @slot env class environment
 #' @slot SHA1 character vector of the original SHA-1 checksum value
 #' @slot meta list containing file meta data
 #' @slot totalIonCount \code{data.frame} of sample total ion count (TIC)
@@ -11,7 +10,6 @@
 #' @slot header \code{data.frame} of summary information for each scan index; \code{parentMz, Q3mz, totalIonCount, basePeakInt}
 #'
 setClass(Class = "SRM", representation = representation(
-          env = "environment",
           SHA1 = "character",
           meta = "list",
           totalIonCount = "data.frame",
