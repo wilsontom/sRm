@@ -58,17 +58,31 @@ openSRMfile <- function(filename)
     precision[[i]] <- paste(bin_df[i,"name"], bin_df[i, "prec"], sep = " : ")
   }
 
-  inst_model <- cv_unique[grep("serial number", cv_unique$name),]
+  precision <- gsub("time array", "Time Array", precision)
+  precision <- gsub("intensity array", "Intensity Array", precision)
+  precision <- gsub("float", "Float", precision)
+
+  inst_serial <- cv_unique[grep("serial number", cv_unique$name),]
+
+  xmlUserParam <- xml_find_all(xml_tmp, "//d1:userParam")
+  inst_model <- xml_attrs(xmlUserParam)[[1]][["value"]]
+
   compression <- cv_unique[grep("compression", cv_unique$name),]
   schema <- xml_attrs(xml_children(xml_tmp)[[1]])[["schemaLocation"]]
   file_id <- xml_attrs(xml_children(xml_tmp)[[1]])[["id"]]
 
+  runHeader <- xml_find_all(xml_tmp, "//d1:run")
+  acqStamp <- xml_attrs(runHeader)[[1]][["startTimeStamp"]]
+  acqDate <- strsplit(acqStamp, "T")[[1]][1]
+
+
   meta_data$fileID <- file_id
+  meta_data$acqDate <- acqDate
   meta_data$precision <- precision
   meta_data$compressin <- as.character(compression$name)
   meta_data$schema <- schema
-  meta_data$instrument_model <- as.character(inst_model$value)
-
+  meta_data$instrument_model <- as.character(inst_model)
+  meta_data$instrument_serial <- as.character(inst_serial$value)
 
   object <- new("SRM")
 
