@@ -3,10 +3,12 @@
 
 setMethod("meta", signature = "SRM",
           function(object){
-
-          cat("file id", object@meta$fileID, sep = " : ")
+          cat("\n")
+          cat("File ID : ", object@meta$fileID)
           cat("\n", "\n")
-          cat("Instrument", object@meta$instrument_model, sep = " : ")
+          cat("Instrument Model : ", object@meta$instrument_model)
+          cat("\n", "\n")
+          cat("Instrument Serial Number : ", object@meta$instrument_serial)
           cat("\n", "\n")
           if(length(object@meta$precision) == 1){cat("Precision", object@meta$precision, sep = " : ")}
 
@@ -20,7 +22,7 @@ setMethod("meta", signature = "SRM",
           cat("\n")
           cat("Compression", object@meta$compressin, sep = " : ")
           cat("\n", "\n")
-          cat("Conversion schema", object@meta$schema, sep = " : ")
+          cat("Conversion Schema", object@meta$schema, sep = " : ")
           cat("\n", "\n")
        }
 )
