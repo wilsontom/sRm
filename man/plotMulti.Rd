@@ -6,14 +6,16 @@
 \alias{plotMulti,SRM-method}
 \title{plotMulti}
 \usage{
-plotMulti(object, idn)
+plotMulti(object, idn, labels = NULL)
 
-\S4method{plotMulti}{SRM}(object, idn)
+\S4method{plotMulti}{SRM}(object, idn, labels = NULL)
 }
 \arguments{
 \item{object}{a SRM object}
 
 \item{idn}{the index number of a transition to plot}
+
+\item{labels}{an optional character vector of label names. Default is \code{NULL}}
 }
 \description{
 plotMulti

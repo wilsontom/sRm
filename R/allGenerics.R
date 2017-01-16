@@ -62,6 +62,7 @@ setGeneric(name = "plotSRM",
 #' @rdname plotMulti
 #' @param object a SRM object
 #' @param idn the index number of a transition to plot
+#' @param labels an optional character vector of label names. Default is \code{NULL}
 #' @return NULL
 #'
 #' @author Tom Wilson \email{tpw2@@aber.ac.uk}
@@ -69,6 +70,6 @@ setGeneric(name = "plotSRM",
 
 
 setGeneric(name = "plotMulti",
-           def = function(object,idn)
+           def = function(object,idn, labels = NULL)
            {standardGeneric("plotMulti")}
 )

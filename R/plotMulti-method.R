@@ -2,7 +2,7 @@
 #' @importFrom ggplot2 guides
 
 setMethod("plotMulti", signature = "SRM",
-          function(object,idn){
+          function(object,idn, labels = NULL){
 
           idn_names <- object@index[idn]
           idn_peaks <- object@peaks[idn]
@@ -30,6 +30,10 @@ setMethod("plotMulti", signature = "SRM",
 
           names(label_df) <- c("rt", "int", "name")
           label_df[,"name"] <- gsub("SRM SIC ", "", label_df[,"name"])
+
+          if(!is.null(labels)){
+            label_df$name <- labels
+          }
 
           plot_multi <- ggplot(data = idn_df, aes_string(x = 'rt', y = 'int', group = 'name', colour = 'name')) +
                             geom_line() + theme_bw() + ggrepel::geom_label_repel(data = label_df, aes_string(x = 'rt', y = 'int', label = 'name')) +
