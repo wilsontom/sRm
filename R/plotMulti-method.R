@@ -31,12 +31,16 @@ setMethod("plotMulti", signature = "SRM",
           names(label_df) <- c("rt", "int", "name")
           label_df[,"name"] <- gsub("SRM SIC ", "", label_df[,"name"])
 
+
+
           if(!is.null(labels)){
-            label_df$name <- labels
+            midx <- match(idn_df$name, label_df$name)
+            idn_df$name <- labels[midx]
+            label_df[,"name"] <- labels
           }
 
           plot_multi <- ggplot(data = idn_df, aes_string(x = 'rt', y = 'int', group = 'name', colour = 'name')) +
-                            geom_line() + theme_bw() + ggrepel::geom_label_repel(data = label_df, aes_string(x = 'rt', y = 'int', label = 'name')) +
+                            geom_line() + theme_classic() + ggrepel::geom_label_repel(data =label_df, aes_string(x = 'rt', y = 'int', label = 'name')) +
                             guides(group = "none") +
                             guides(colour = "none")  +
                             xlab("Retention Time (mins)") +
