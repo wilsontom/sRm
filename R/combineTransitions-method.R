@@ -28,6 +28,10 @@ setMethod(f = combineTransitions, signature = "SRM",
           trans_df_comb <- list()
           for(i in 1:length(int_sum)){
             trans_df_comb[[i]] <- data.frame(rt = trans_dfs[[i]][,rt_idx[[i]]][[1]],int = trans_dfs[[i]][,int_idx[[i]]], TIC = int_sum[[i]])
+            names(trans_df_comb[[i]]) <- gsub(".int", "", names(trans_df_comb[[i]]))
+            patsub <- paste0(".",unique(trans_header[[i]]$parentMz))
+            names(trans_df_comb[[i]]) <- gsub(patsub,"", names(trans_df_comb[[i]]))
+            names(trans_df_comb[[i]]) <- gsub("int.", "int-", names(trans_df_comb[[i]]))
           }
 
           new_names <- NULL
