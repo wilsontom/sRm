@@ -87,18 +87,24 @@ openSRMfile <- function(filename)
   object <- new("SRM")
 
   object@peaks <- peaks_df[-1]
+
+
   object@totalIonCount <- peaks_df[[1]]
   object@index <- id_refs[-1]
   object@SHA1 <- as.character(cv_params[which(cv_params$name == "SHA-1"),"value"])
   object@meta <- meta_data
 
   names(object@peaks) <- object@index
+  names(object@peaks) <- gsub("SRM SIC", "", names(object@peaks))
+  names(object@peaks) <- gsub("[[:space:]]", "", names(object@peaks))
 
   header <- data.frame(scanIndex = object@index, parentMz = "", Q3mz = "", totalIonCount = "", basePeakInt = "")
 
   index_clean <- gsub("SRM SIC","", header$scanIndex)
   index_clean <- gsub("[[:space:]]", "", index_clean)
   index_split <- strsplit(index_clean, ",")
+
+  header$scanIndex <- index_clean
 
   pMz <- Qmz <- NULL
   for(i in 1:length(index_split)){
