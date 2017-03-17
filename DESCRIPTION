@@ -2,7 +2,7 @@ Package: sRm
 Type: Package
 Title: Minimal parser for Selective Reaction Monitoring (SRM) mass spectrometry
     (MS) data
-Version: 0.1.2
+Version: 0.1.3
 Author: Tom Wilson <tpw2@aber.ac.uk>
 Maintainer: Tom Wilson <tpw2@aber.ac.uk>
 Description: Functions for parsing SRM-MS data from .mzML files.

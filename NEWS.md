@@ -20,6 +20,10 @@
   - `grid` and `gridExtra` are listed as Dependencies
 
 #### v0.1.2
-  - Fix `no visible binding' NOTE for 'ggplot2'
+  - Fix `no visible binding' NOTE for 'ggplot2`
   - Update manual
   - Increase test coverage
+
+#### v0.1.3
+ - Add `plotMulti` for easy graphical representation of complex SRM-MS chromatograms
+ - Cleaned up filter naming throughout
