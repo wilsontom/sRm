@@ -1,6 +1,11 @@
 language: r
 warnings_are_errors: false
 sudo: required
+dist: trusty
+
+r:
+ - release
+ - devel
 
 apt_packages:
  - libxml2

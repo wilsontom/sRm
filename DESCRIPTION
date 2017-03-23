@@ -16,11 +16,6 @@ Depends:
 Imports:
     ggrepel,
     base64enc,
-    Rcpp,
-    gtable,
-    scales,
-    munsell,
-    colorspace,
     plyr
 URL: https://github.com/wilsontom/sRm
 BugReports: https://github.com/wilsontom/sRm/issues
