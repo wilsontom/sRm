@@ -15,8 +15,7 @@ Depends:
     gridExtra
 Imports:
     ggrepel,
-    base64enc,
-    plyr
+    base64enc
 URL: https://github.com/wilsontom/sRm
 BugReports: https://github.com/wilsontom/sRm/issues
 LazyData: TRUE
