@@ -19,4 +19,3 @@ Open and parse \code{mzML} file into \code{SRM} object
 \author{
 Tom Wilson \email{tpw2@aber.ac.uk}
 }
-

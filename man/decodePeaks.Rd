@@ -4,10 +4,10 @@
 \alias{decodePeaks}
 \title{Decocde peaks}
 \usage{
-decodePeaks(x, compression = "none", size)
+decodePeaks(x, compression, size)
 }
 \arguments{
-\item{compression}{compresison type; \code{default = "none"}}
+\item{compression}{compresison type, "none" or "gzip"}
 
 \item{size}{a numeric value for the number of bytes per element in the byte stream}
 
@@ -33,4 +33,3 @@ head(intensity)
 Tom Wilson \email{tpw2@aber.ac.uk}
 }
 \keyword{internal}
-

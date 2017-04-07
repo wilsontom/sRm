@@ -27,4 +27,3 @@ the parent \code{m/z} and all Q3 product ions assigned to that parent \code{m/z}
 \author{
 Tom Wilson \email{tpw2@aber.ac.uk}
 }
-
