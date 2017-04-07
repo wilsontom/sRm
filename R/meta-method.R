@@ -6,6 +6,8 @@ setMethod("meta", signature = "SRM",
           cat("\n")
           cat("File ID : ", object@meta$fileID)
           cat("\n", "\n")
+          cat("Instrument : ", object@meta$instrument)
+          cat("\n", "\n")
           cat("Instrument Model : ", object@meta$instrument_model)
           cat("\n", "\n")
           cat("Instrument Serial Number : ", object@meta$instrument_serial)
