@@ -21,8 +21,8 @@ setMethod("show", signature = "SRM",
             cat("\n")
             cat(nrow(object@header), "SRM Transitions measured")
             cat("\n")
-            cat(length(unique(object@header$parentMz)), "Unique Q1 (parent) Ions")
+            cat(length(unique(object@header$parent)), "Unique Q1 (parent) Ions")
             cat("\n")
-            cat(length(unique(object@header$Q3mz)), "Unique Q3 (product) Ions")
+            cat(length(unique(object@header$product)), "Unique Q3 (product) Ions")
           }
 )
