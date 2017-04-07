@@ -10,7 +10,7 @@ test_that("sRm-works", {
 
   srm_comb <- combineTransitions(srm_peaks)
   expect_true(is.list(srm_comb))
-  expect_that(length(srm_comb), equals(length(unique(srm_peaks@header$parentMz))))
+  expect_that(length(srm_comb), equals(length(unique(srm_peaks@header$parent))))
 
   expect_true(is.null(transitions(srm_peaks)))
   expect_true(is.null(meta(srm_peaks)))
