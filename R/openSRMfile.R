@@ -69,7 +69,7 @@ openSRMfile <- function(filename)
   if(nrow(inst_serial) == 0){
     inst_serial <- "NA"
   }else{
-    inst_serial <- as.charatcer(inst_serial$value)
+    inst_serial <- as.character(inst_serial$value)
   }
 
 
@@ -108,10 +108,16 @@ openSRMfile <- function(filename)
 
   polarity <- scanPolarity(cv_params)
 
+  if(is.null(polarity)){
+    polarity <- rep(0,length(object@peaks))
+    polarity_num <- rep(0,length(object@peaks))
+  }
+
+  if(!is.null(polarity)){
   polarity_num <- polarity
   polarity_num <- gsub("\\-", "-1", polarity_num)
   polarity_num <- gsub("\\+", "1", polarity_num)
-
+  }
   object@index <- paste0("Q1: ", QMZdf[,"parent"], " --> ", "Q3: ", QMZdf[,"product"], " (", polarity, ")")
 
   object@filter <- id_refs[-1]
