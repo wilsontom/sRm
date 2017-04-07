@@ -16,7 +16,9 @@ A S4 class to store single reaction monitoring (SRM) mass spectrometry (MS) data
 
 \item{\code{totalIonCount}}{\code{data.frame} of sample total ion count (TIC)}
 
-\item{\code{index}}{character vector of scan index's; ie \code{SRM SIC 341.014,114.098}}
+\item{\code{filter}}{character vector of scan filters; taken directly from \code{chromatogram idRef's}}
+
+\item{\code{index}}{character vector of readable scan index's; ie \code{SRM SIC 341.014,114.098}}
 
 \item{\code{peaks}}{list of peak data}
 
