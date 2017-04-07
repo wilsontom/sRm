@@ -19,7 +19,11 @@ openSRMfile <- function(filename)
   id_refs <- idRefs(xml_tmp)
   binary_arrays <- binaryArrays(xml_tmp)
 
-  if(cv_params$name[13] == "no compression"){compression = "none"}
+  compidx <- agrep("compression", cv_params$name,max.distance = 0.2)
+  comptmp <- unique(cv_params$name[compidx])
+
+  if(comptmp == "no compression"){compression = "none"}
+  if(comptmp == "zlib compression"){compression = "gzip"}
 
   bin_vals <- binary_arrays$value
   bin_prec <- binary_arrays$precision
