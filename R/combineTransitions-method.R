@@ -8,9 +8,21 @@
 setMethod(f = combineTransitions, signature = "SRM",
           function(object){
 
-          trans_sets <- split(object@peaks, object@header$parentMz)
+          trans_sets <- split(object@peaks, object@header$parent)
 
-          trans_header <- split(object@header, object@header$parentMz)
+          trans_header <- split(object@header, object@header$parent)
+
+          trans_dim <- NULL
+          for(i in seq_along(trans_sets)){
+            trans_dim[[i]] <- lapply(trans_sets[[i]], nrow)
+          }
+
+          equality_test <- lapply(trans_dim, function(x)(length(unique(x))))
+          idx <- which(equality_test != 1)
+
+          if(length(idx != 0)){
+            stop("different Rt lengths detected in transition sets; unable to combine", call. = FALSE)
+          }
 
           trans_dfs <- lapply(trans_sets, function(x)(do.call("cbind",x)))
 
@@ -36,8 +48,8 @@ setMethod(f = combineTransitions, signature = "SRM",
 
           new_names <- NULL
           for(i in 1:length(trans_header)){
-            pMz <- paste("Q1", trans_header[[i]][1,"parentMz"], sep = ": ")
-            qMzs <- paste(trans_header[[i]][,"Q3mz"], collapse = "//")
+            pMz <- paste("Q1", trans_header[[i]][1,"parent"], sep = ": ")
+            qMzs <- paste(trans_header[[i]][,"product"], collapse = "//")
             qMz2 <- paste("Q3", qMzs, sep = ": ")
             new_names[[i]] <- paste(pMz, qMz2, sep = " -> ")
           }
