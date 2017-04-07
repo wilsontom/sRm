@@ -15,9 +15,9 @@ openSRMfile <- function(filename)
 {
 
   xml_tmp <- read_xml(filename)
-  cv_params <- cvParams(xml_tmp)
-  id_refs <- idRefs(xml_tmp)
-  binary_arrays <- binaryArrays(xml_tmp)
+  cv_params <- sRm:::cvParams(xml_tmp)
+  id_refs <- sRm:::idRefs(xml_tmp)
+  binary_arrays <- sRm:::binaryArrays(xml_tmp)
 
   compidx <- agrep("compression", cv_params$name,max.distance = 0.2)
   comptmp <- unique(cv_params$name[compidx])
@@ -35,7 +35,7 @@ openSRMfile <- function(filename)
 
   peaks <- list()
   for(i in 1:length(bin_vals)){
-    peaks[[i]] <- decodePeaks(bin_vals[[i]], compression = compression, size = bin_prec[[i]] / 8)
+    peaks[[i]] <- sRm:::decodePeaks(bin_vals[[i]], compression = compression, size = bin_prec[[i]] / 8)
   }
 
   names(peaks) <- binary_arrays$name
@@ -54,9 +54,8 @@ openSRMfile <- function(filename)
 
   cv_unique <- cv_unique[-which(cv_unique$accession == "MS:1000827"),]
 
-
   meta_data <- list()
-  #precision <- cv_unique[grep("float", cv_unique$name),]
+
   precision <- NULL
   for(i in 1:nrow(bin_df)){
     precision[[i]] <- paste(bin_df[i,"name"], bin_df[i, "prec"], sep = " : ")
@@ -67,6 +66,15 @@ openSRMfile <- function(filename)
   precision <- gsub("float", "Float", precision)
 
   inst_serial <- cv_unique[grep("serial number", cv_unique$name),]
+  if(nrow(inst_serial) == 0){
+    inst_serial <- "NA"
+  }else{
+    inst_serial <- as.charatcer(inst_serial$value)
+  }
+
+
+  refGroup <- xml_find_all(xml_tmp, "//d1:referenceableParamGroup")
+  instrument <- lapply(refGroup, function(x)(xml_attrs(xml_children(x)[[1]])[["name"]]))[[1]]
 
   xmlUserParam <- xml_find_all(xml_tmp, "//d1:userParam")
   inst_model <- xml_attrs(xmlUserParam)[[1]][["value"]]
@@ -85,8 +93,9 @@ openSRMfile <- function(filename)
   meta_data$precision <- precision
   meta_data$compressin <- as.character(compression$name)
   meta_data$schema <- schema
+  meta_data$instrument <- as.character(instrument)
   meta_data$instrument_model <- as.character(inst_model)
-  meta_data$instrument_serial <- as.character(inst_serial$value)
+  meta_data$instrument_serial <- inst_serial
 
   object <- new("SRM")
 
@@ -94,35 +103,40 @@ openSRMfile <- function(filename)
 
 
   object@totalIonCount <- peaks_df[[1]]
-  object@index <- id_refs[-1]
+
+  QMZdf <- getQMZs(cv_params)
+
+  polarity <- scanPolarity(cv_params)
+
+  polarity_num <- polarity
+  polarity_num <- gsub("\\-", "-1", polarity_num)
+  polarity_num <- gsub("\\+", "1", polarity_num)
+
+  object@index <- paste0("Q1: ", QMZdf[,"parent"], " --> ", "Q3: ", QMZdf[,"product"], " (", polarity, ")")
+
+  object@filter <- id_refs[-1]
+
   object@SHA1 <- as.character(cv_params[which(cv_params$name == "SHA-1"),"value"])
   object@meta <- meta_data
 
-  names(object@peaks) <- object@index
-  names(object@peaks) <- gsub("SRM SIC", "", names(object@peaks))
-  names(object@peaks) <- gsub("[[:space:]]", "", names(object@peaks))
+  header <- data.frame(scanIndex = object@index, parent = "", product = "", polarity = "", totalIonCount = "", basePeakInt = "")
 
-  header <- data.frame(scanIndex = object@index, parentMz = "", Q3mz = "", totalIonCount = "", basePeakInt = "")
-
-  index_clean <- gsub("SRM SIC","", header$scanIndex)
-  index_clean <- gsub("[[:space:]]", "", index_clean)
-  index_split <- strsplit(index_clean, ",")
-
+  index_clean <- paste0("Q1:", QMZdf[,"parent"], " // ", "Q3:", QMZdf[,"product"])
   header$scanIndex <- index_clean
 
-  pMz <- Qmz <- NULL
-  for(i in 1:length(index_split)){
-    pMz[i] <- index_split[[i]][[1]]
-    Qmz[i] <- index_split[[i]][[2]]
-  }
+  names(object@peaks) <- index_clean
 
   tic <- as.vector(sapply(object@peaks, function(x)(sum(x[,2]))))
   bpi <- as.vector(sapply(object@peaks, function(x)(max(x[,2]))))
 
-  header$parentMz <- pMz
-  header$Q3mz <- Qmz
+  header$parent <- QMZdf[,"parent"]
+  header$product <- QMZdf[,"product"]
+
+  header$polarity <- polarity_num
+
   header$totalIonCount <- tic
   header$basePeakInt <- bpi
+
   object@header <- header
 
   return(object)
