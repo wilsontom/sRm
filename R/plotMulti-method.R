@@ -1,5 +1,5 @@
 #' @rdname plotMulti
-#' @importFrom ggplot2 guides
+#' @importFrom ggplot2 guides theme_classic
 
 setMethod("plotMulti", signature = "SRM",
           function(object,idn, labels = NULL){
