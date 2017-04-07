@@ -7,9 +7,6 @@ setMethod("plotSRM", signature = "SRM",
           names(plot_df) <- c("rt", "int")
 
           plot_title <- as.character(object@index[idn])
-          plot_title <- gsub("SRM SIC", "", plot_title)
-          plot_title <- gsub(",", " : Q3 ", plot_title)
-          plot_title <- paste("Q1", plot_title, sep = "")
 
           ggplot(data = plot_df, aes_string(x = 'rt', y = 'int')) + geom_line(size = 0.5) + theme_bw() +
             theme(legend.position = "none") +
