@@ -5,7 +5,8 @@
 #' @slot SHA1 character vector of the original SHA-1 checksum value
 #' @slot meta list containing file meta data
 #' @slot totalIonCount \code{data.frame} of sample total ion count (TIC)
-#' @slot index character vector of scan index's; ie \code{SRM SIC 341.014,114.098}
+#' @slot filter character vector of scan filters; taken directly from \code{chromatogram idRef's}
+#' @slot index character vector of readable scan index's; ie \code{SRM SIC 341.014,114.098}
 #' @slot peaks list of peak data
 #' @slot header \code{data.frame} of summary information for each scan index; \code{parentMz, Q3mz, totalIonCount, basePeakInt}
 #'
@@ -13,6 +14,7 @@ setClass(Class = "SRM", representation = representation(
           SHA1 = "character",
           meta = "list",
           totalIonCount = "data.frame",
+          filter = "vector",
           index = "vector",
           peaks = "list",
           header = "data.frame"
