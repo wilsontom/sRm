@@ -15,9 +15,9 @@ openSRMfile <- function(filename)
 {
 
   xml_tmp <- read_xml(filename)
-  cv_params <- sRm:::cvParams(xml_tmp)
-  id_refs <- sRm:::idRefs(xml_tmp)
-  binary_arrays <- sRm:::binaryArrays(xml_tmp)
+  cv_params <- cvParams(xml_tmp)
+  id_refs <- idRefs(xml_tmp)
+  binary_arrays <- binaryArrays(xml_tmp)
 
   compidx <- agrep("compression", cv_params$name,max.distance = 0.2)
   comptmp <- unique(cv_params$name[compidx])
@@ -35,7 +35,7 @@ openSRMfile <- function(filename)
 
   peaks <- list()
   for(i in 1:length(bin_vals)){
-    peaks[[i]] <- sRm:::decodePeaks(bin_vals[[i]], compression = compression, size = bin_prec[[i]] / 8)
+    peaks[[i]] <- decodePeaks(bin_vals[[i]], compression = compression, size = bin_prec[[i]] / 8)
   }
 
   names(peaks) <- binary_arrays$name
