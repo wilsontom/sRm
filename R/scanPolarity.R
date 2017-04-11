@@ -20,7 +20,7 @@ scanPolarity <- function(x)
     if(pdf[i, "accession"] == "MS:1000129"){
         polarity[i] <- "-"
     }
-    if(pdf[i, "accession"] == "MS100130"){
+    if(pdf[i, "accession"] == "MS:1000130"){
       polarity[i] <- "+"
     }
   }
