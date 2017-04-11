@@ -1,9 +1,9 @@
 context("sRm")
 
 test_that("sRm-works", {
-  example_file <- system.file("extdata/example_file.mzML", package = "sRm")
+  example_file_local <- system.file("extdata/example_file.mzML", package = "sRm")
 
-  srm_peaks <- openSRMfile(example_file)
+  srm_peaks <- openSRMfile(example_file_local)
   expect_true(isS4(srm_peaks))
   expect_that(nrow(srm_peaks@header), equals(length(srm_peaks@peaks)))
   expect_that(nrow(srm_peaks@header), equals(length(srm_peaks@index)))
