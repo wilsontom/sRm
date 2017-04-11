@@ -102,7 +102,7 @@ openSRMfile <- function(filename)
   object@peaks <- peaks_df[-1]
 
 
-  object@totalIonCount <- peaks_df[[1]]
+  object@totIonCount <- peaks_df[[1]]
 
   QMZdf <- getQMZs(cv_params)
 
@@ -125,7 +125,7 @@ openSRMfile <- function(filename)
   object@SHA1 <- as.character(cv_params[which(cv_params$name == "SHA-1"),"value"])
   object@meta <- meta_data
 
-  header <- data.frame(scanIndex = object@index, parent = "", product = "", polarity = "", totalIonCount = "", basePeakInt = "")
+  header <- data.frame(scanIndex = object@index, parent = "", product = "", polarity = "", totIonCount = "", basePeakInt = "")
 
   index_clean <- paste0("Q1:", QMZdf[,"parent"], " // ", "Q3:", QMZdf[,"product"])
   header$scanIndex <- index_clean
@@ -140,7 +140,7 @@ openSRMfile <- function(filename)
 
   header$polarity <- polarity_num
 
-  header$totalIonCount <- tic
+  header$totIonCount <- tic
   header$basePeakInt <- bpi
 
   object@header <- header
