@@ -14,7 +14,7 @@ A S4 class to store single reaction monitoring (SRM) mass spectrometry (MS) data
 
 \item{\code{meta}}{list containing file meta data}
 
-\item{\code{totalIonCount}}{\code{data.frame} of sample total ion count (TIC)}
+\item{\code{totIonCount}}{\code{data.frame} of sample total ion count (TIC)}
 
 \item{\code{filter}}{character vector of scan filters; taken directly from \code{chromatogram idRefs}}
 
