@@ -27,3 +27,15 @@
 #### v0.1.3
  - Add `plotMulti` for easy graphical representation of complex SRM-MS chromatograms
  - Cleaned up filter naming throughout
+ - Fixed CI build environment, so there is no longer a list of unnecessary Imports in DESCRIPTION
+ - `openSRMfile` wasn't checking for file compression and assuming that file were converted with no compression. `openSRMfile` now checks for `zlib` compression and if found passes the `gzip` compression type arg to `sRm::decodePeaks`
+ - Instrument, Instrument Model and Instrument Serial are all separate fields in the `meta` method
+ - Internal helper function add (`scanPolarity`) to extract scan polarity from `cvParam` and insert into `object@header`
+ - Parent (Q1) and product (Q3) masses are extracted from `cvParams` using `getQMZs` and are no longer string processed from filter names
+ - `filter` slot added to the `SRM` class. This contains a raw copy of `idRefs`
+ - `object@header` now includes scan polarity; `-1 = negative, 1 = positive`
+ - `totalIonCount` has become `totIonCount` to improve readability
+ - `combineTransitions` now does a "best effort" at checking for transitions which have been acquired using dynamic MRM mode
+    - In these circumstances; a transition set needs to consider the retention window aswell as the parent m/z
+    - Unique filter ID strings are created from parsed `idRefs`
+    - Where Rt lengths are unequal within unique transitions set; these are (for now) removed from the `transitions` class with a on-screen message stating which `idRefs` have been dropped
