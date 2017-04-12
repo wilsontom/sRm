@@ -5,6 +5,28 @@
 #' This method combines all Q3 product ion chromatograms into one, to produce a total ion chromatogram based on
 #' the parent \code{m/z} and all Q3 product ions assigned to that parent \code{m/z}
 #'
+#' Where a dynamic MRM is used; then the start retention time (Rt) and end Rt is also taken into account when transitions are combined.
+#'
+#' For example the following transitions from a standard SRM-MS experiment would be combined into a single chromatogram
+#' based on the parent m/z value;
+#'
+#' \code{- SRM SIC 153.01,65.271} \cr
+#' \code{- SRM SIC 153.01,67.232} \cr
+#' \code{- SRM SIC 153.01,109.094} \cr
+#'
+#' Whereas the following transitions from a dynamic SRM-MS method would be combined into two different SRM TICs based on their
+#' parent m/z value and retention time window;
+#'
+#' \code{- SRM SIC Q1=145 Q3=56.996 start=10.61683333 end=20.84128333} \cr
+#' \code{- SRM SIC Q1=145 Q3=100.996 start=10.61665 end=20.84081667} \cr
+#' \code{- SRM SIC Q1=145.1 Q3=108.996 start=4.5304 end=10.53233333} \cr
+#' \code{- SRM SIC Q1=145.1 Q3=127.096 start=4.530016667 end=10.53213333} \cr
+#'
+#' The above transitions would be combined to make the following;
+#'
+#' \code{Q1: 145.1 -> Q3: 108.996//127.096 (4.5 - 10.5)} \cr
+#' \code{Q1: 145 -> Q3: 56.996//100.996 (10.6 - 20.8)} \cr
+
 setMethod(f = combineTransitions, signature = "SRM",
           function(object){
 
