@@ -19,13 +19,13 @@
 #'
 #' \code{- SRM SIC Q1=145 Q3=56.996 start=10.61683333 end=20.84128333} \cr
 #' \code{- SRM SIC Q1=145 Q3=100.996 start=10.61665 end=20.84081667} \cr
-#' \code{- SRM SIC Q1=145.1 Q3=108.996 start=4.5304 end=10.53233333} \cr
-#' \code{- SRM SIC Q1=145.1 Q3=127.096 start=4.530016667 end=10.53213333} \cr
+#' \code{- SRM SIC Q1=145 Q3=108.996 start=4.5304 end=10.53233333} \cr
+#' \code{- SRM SIC Q1=145 Q3=127.096 start=4.530016667 end=10.53213333} \cr
 #'
 #' The above transitions would be combined to make the following;
 #'
-#' \code{Q1: 145.1 -> Q3: 108.996//127.096 (4.5 - 10.5)} \cr
 #' \code{Q1: 145 -> Q3: 56.996//100.996 (10.6 - 20.8)} \cr
+#' \code{Q1: 145 -> Q3: 108.996//127.096 (4.5 - 10.5)} \cr
 
 setMethod(f = combineTransitions, signature = "SRM",
           function(object){
