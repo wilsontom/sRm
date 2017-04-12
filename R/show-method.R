@@ -15,7 +15,7 @@ setMethod("show", signature = "SRM",
             cat("\n", "\n")
             cat("Acquisition Date : ", object@meta$acqDate)
             cat("\n", "\n")
-            cat("Total Acquisition Time : ", round(max(object@totalIonCount$rt), digits = 2), "mins")
+            cat("Total Acquisition Time : ", round(max(object@totIonCount$rt), digits = 2), "mins")
             cat("\n", "\n")
             cat("-----Transition Data-----")
             cat("\n")
