@@ -18,10 +18,10 @@ A S4 class to store single reaction monitoring (SRM) mass spectrometry (MS) data
 
 \item{\code{filter}}{character vector of scan filters; taken directly from \code{chromatogram idRefs}}
 
-\item{\code{index}}{character vector of readable scan index's; ie \code{SRM SIC 341.014,114.098}}
+\item{\code{index}}{character vector of readable scan index's; ie \code{Q1: 153.01 --> Q3: 65.271 (-)}}
 
 \item{\code{peaks}}{list of peak data}
 
-\item{\code{header}}{\code{data.frame} of summary information for each scan index; \code{parentMz, Q3mz, totalIonCount, basePeakInt}}
+\item{\code{header}}{\code{data.frame} of summary information for each scan index; \code{parent, product, polarity, totIonCount, basePeakInt}}
 }}
 
