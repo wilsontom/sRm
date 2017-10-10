@@ -58,6 +58,64 @@ get_all_cvParams <- function(x)
   }
 
 
+#' Parse Q1 and Q3 mass values from scan filter string
+#' @keywords internal
+
+get_Qmz <- function(x)
+{
+
+  xsplit <- strsplit(x, " ")[[1]]
+
+  xsplit_mz <- xsplit[length(xsplit)]
+
+  qsplit <- strsplit(xsplit_mz, ",")
+
+  if (length(qsplit[[1]]) != 2 & qsplit[[1]][[1]] != 'TIC') {
+    message('WARNING: length of `qsplit` should be 2 (Q1 and Q3 m/z); potential parsing errror')
+  }
+
+  if (qsplit[[1]][[1]] != 'TIC') {
+    Q1value <- qsplit[[1]][1]
+    Q3value <- qsplit[[1]][2]
+  }
+
+  if (qsplit[[1]][[1]] == 'TIC') {
+    Q1value <- NA
+    Q3value <- NA
+
+  }
+
+  scan_index_tib <- tibble(header = x, Q1 = Q1value, Q3 = Q3value)
+
+  return(scan_index_tib)
+
+
+}
+
+
+#' SHA-1
+#'
+#'
+#'
+#'
+
+
+
+
+get_sha1 <- function(x)
+{
+
+  xmltmp <- read_xml(x)
+
+
+  cv_params <- get_all_cvParams(xmltmp)
+
+  SHA1 <- filter(cv_params, accession == 'MS:1000569')$value
+
+  return(SHA1)
+
+
+}
 
 
 
