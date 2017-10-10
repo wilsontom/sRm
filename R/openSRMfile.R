@@ -11,139 +11,53 @@
 #' @importFrom methods new
 #' @importFrom xml2 read_xml
 
-openSRMfile <- function(filename)
+
+openSRMfile <- function(x)
 {
+  opentmp <- mzR::openMSfile(x, backend = "pwiz")
+  chromtmp <- mzR::chromatogram(opentmp)
+  chromtib <-
+    purrr:::map(chromtmp, ~ {
+      tibble(rt = .[, 1], int = .[, 2])
+    })
 
-  xml_tmp <- read_xml(filename)
-  cv_params <- cvParams(xml_tmp)
-  id_refs <- idRefs(xml_tmp)
-  binary_arrays <- binaryArrays(xml_tmp)
-
-  compidx <- agrep("compression", cv_params$name,max.distance = 0.2)
-  comptmp <- unique(cv_params$name[compidx])
-
-  if(comptmp == "no compression"){compression = "none"}
-  if(comptmp == "zlib compression"){compression = "gzip"}
-
-  bin_vals <- binary_arrays$value
-  bin_prec <- binary_arrays$precision
-
-  bin_df <- data.frame(name = binary_arrays$name, prec = bin_prec)
-  bin_df <- unique(bin_df)
-
-  bin_df$prec <- paste(bin_df$prec, "bit float", sep = " ")
-
-  peaks <- list()
-  for(i in 1:length(bin_vals)){
-    peaks[[i]] <- decodePeaks(bin_vals[[i]], compression = compression, size = bin_prec[[i]] / 8)
+  if (names(chromtmp[[1]])[2] == 'TIC') {
+    chromtib[[1]] <- NULL
   }
-
-  names(peaks) <- binary_arrays$name
-
-  peaks_time <- peaks[which(names(peaks) == "time array")]
-  peaks_int <- peaks[which(names(peaks) == "intensity array")]
-
-  peaks_df <- list()
-  for(i in 1:length(peaks_time)){
-    peaks_df[[i]] <- data.frame(rt = peaks_time[[i]], int = peaks_int[[i]])
-  }
-
-  cv_idx <- as.character(unique(cv_params$accession))
-
-  cv_unique <- cv_params[match(cv_idx, cv_params$accession),]
-
-  cv_unique <- cv_unique[-which(cv_unique$accession == "MS:1000827"),]
-
-  meta_data <- list()
-
-  precision <- NULL
-  for(i in 1:nrow(bin_df)){
-    precision[[i]] <- paste(bin_df[i,"name"], bin_df[i, "prec"], sep = " : ")
-  }
-
-  precision <- gsub("time array", "Time Array", precision)
-  precision <- gsub("intensity array", "Intensity Array", precision)
-  precision <- gsub("float", "Float", precision)
-
-  inst_serial <- cv_unique[grep("serial number", cv_unique$name),]
-  if(nrow(inst_serial) == 0){
-    inst_serial <- "NA"
-  }else{
-    inst_serial <- as.character(inst_serial$value)
-  }
-
-
-  refGroup <- xml_find_all(xml_tmp, "//d1:referenceableParamGroup")
-  instrument <- lapply(refGroup, function(x)(xml_attrs(xml_children(x)[[1]])[["name"]]))[[1]]
-
-  xmlUserParam <- xml_find_all(xml_tmp, "//d1:userParam")
-  inst_model <- xml_attrs(xmlUserParam)[[1]][["value"]]
-
-  compression <- cv_unique[grep("compression", cv_unique$name),]
-  schema <- xml_attrs(xml_children(xml_tmp)[[1]])[["schemaLocation"]]
-  file_id <- xml_attrs(xml_children(xml_tmp)[[1]])[["id"]]
-
-  runHeader <- xml_find_all(xml_tmp, "//d1:run")
-  acqStamp <- xml_attrs(runHeader)[[1]][["startTimeStamp"]]
-  acqDate <- strsplit(acqStamp, "T")[[1]][1]
-
-
-  meta_data$fileID <- file_id
-  meta_data$acqDate <- acqDate
-  meta_data$precision <- precision
-  meta_data$compressin <- as.character(compression$name)
-  meta_data$schema <- schema
-  meta_data$instrument <- as.character(instrument)
-  meta_data$instrument_model <- as.character(inst_model)
-  meta_data$instrument_serial <- inst_serial
 
   object <- new("SRM")
+  object@peaks <- chromtib
+  object@SHA1 <- get_sha1(x)
 
-  object@peaks <- peaks_df[-1]
+  object@totIonCount <- chromtmp[[1]]
+  names(object@totIonCount) <- c('rt', 'int')
 
+  scan_head_tmp <- get_scan_header(x)
 
-  object@totIonCount <- peaks_df[[1]]
-
-  QMZdf <- getQMZs(cv_params)
-
-  polarity <- scanPolarity(cv_params)
-
-  if(is.null(polarity)){
-    polarity <- rep(0,length(object@peaks))
-    polarity_num <- rep(0,length(object@peaks))
+  if (scan_head_tmp$header[1] == 'TIC') {
+    scan_head_tmp <- scan_head_tmp[-1, ]
   }
+  object@filter <- scan_head_tmp$header
+  object@index <- scan_head_tmp$tidy_head
 
-  if(!is.null(polarity)){
-  polarity_num <- polarity
-  polarity_num <- gsub("\\-", "-1", polarity_num)
-  polarity_num <- gsub("\\+", "1", polarity_num)
-  }
-  object@index <- paste0("Q1: ", QMZdf[,"parent"], " --> ", "Q3: ", QMZdf[,"product"], " (", polarity, ")")
+  header_tmp <-
+    purrr::map(object@peaks, ~ {
+      tibble(totIonCount = sum(.$int),
+             basePeakInt = max(.$int))
+    }) %>% bind_rows() %>% tibble::add_column(., header = scan_head_tmp$header)
 
-  object@filter <- id_refs[-1]
+  scan_head_tmp <- scan_head_tmp  %>% left_join(header_tmp)
 
-  object@SHA1 <- as.character(cv_params[which(cv_params$name == "SHA-1"),"value"])
-  object@meta <- meta_data
+  scan_head_tmp$tidy_head <- NULL
+  ob_header <-
+    scan_head_tmp %>% mutate(polarity = replace(polarity, polarity == '+', '1')) %>% mutate(polarity = replace(polarity, polarity == '-', '-1'))
+  names(scan_head_tmp)[1] <- 'filter'
 
-  header <- data.frame(scanIndex = object@index, parent = "", product = "", polarity = "", totIonCount = "", basePeakInt = "")
+  object@header <- scan_head_tmp
 
-  index_clean <- paste0("Q1:", QMZdf[,"parent"], " // ", "Q3:", QMZdf[,"product"])
-  header$scanIndex <- index_clean
 
-  names(object@peaks) <- index_clean
-
-  tic <- as.vector(sapply(object@peaks, function(x)(sum(x[,2]))))
-  bpi <- as.vector(sapply(object@peaks, function(x)(max(x[,2]))))
-
-  header$parent <- QMZdf[,"parent"]
-  header$product <- QMZdf[,"product"]
-
-  header$polarity <- polarity_num
-
-  header$totIonCount <- tic
-  header$basePeakInt <- bpi
-
-  object@header <- header
+  object@meta <- get_meta(x)
 
   return(object)
 }
+
