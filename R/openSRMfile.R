@@ -10,6 +10,7 @@
 #' @export
 #' @importFrom methods new
 #' @importFrom xml2 read_xml
+#' @importFrom dplyr tibble filter bind_rows %>% mutate replace
 
 
 openSRMfile <- function(x)
@@ -54,7 +55,6 @@ openSRMfile <- function(x)
   names(scan_head_tmp)[1] <- 'filter'
 
   object@header <- scan_head_tmp
-
 
   object@meta <- get_meta(x)
 
