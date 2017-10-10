@@ -8,7 +8,10 @@ setMethod("meta", signature = "SRM",
           cat("\n", "\n")
           cat("Instrument Model : ", object@meta$instrument_model)
           cat("\n", "\n")
-          cat("Conversion Schema", object@meta$mzml_schema, sep = " : ")
+          cat("mzML Schema", object@meta$mzml_schema, sep = " : ")
           cat("\n", "\n")
+          cat("Acquisition Date", object@meta$acquisition_date, sep = " : ")
+          cat("\n", "\n")
+          cat("Acquisition Time", object@meta$acquisition_time, sep = " : ")
        }
 )
