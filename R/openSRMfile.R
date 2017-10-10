@@ -56,7 +56,10 @@ openSRMfile <- function(mzMLFile)
 
   object@header <- scan_head_tmp
 
-  object@meta <- get_meta(mzMLFile)
+  object_meta <- get_meta(mzMLFile)
+
+  object@meta <- as.list(object_meta$value)
+  names(object@meta) <- object_meta$name
 
   return(object)
 }
