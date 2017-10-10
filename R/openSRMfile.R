@@ -1,8 +1,8 @@
 #' Open a SRM-MS file
 #'
-#' Open and parse \code{mzML} file into \code{SRM} object
+#' Open and parse \code{mzML} file into a \code{SRM} object
 #'
-#' @param filename a \code{mzML} file
+#' @param mzMLFile a valid \code{.mzML} file
 #' @return a \code{SRM} object
 #'  (see \code{\link{SRM-class}})
 #'
@@ -13,9 +13,9 @@
 #' @importFrom dplyr tibble filter bind_rows %>% mutate replace
 
 
-openSRMfile <- function(x)
+openSRMfile <- function(mzMLFile)
 {
-  opentmp <- mzR::openMSfile(x, backend = "pwiz")
+  opentmp <- mzR::openMSfile(mzMLFile, backend = "pwiz")
   chromtmp <- mzR::chromatogram(opentmp)
   chromtib <-
     purrr:::map(chromtmp, ~ {
@@ -28,7 +28,7 @@ openSRMfile <- function(x)
 
   object <- new("SRM")
   object@peaks <- chromtib
-  object@SHA1 <- get_sha1(x)
+  object@SHA1 <- get_sha1(mzMLFile)
 
   object@totIonCount <- chromtmp[[1]]
   names(object@totIonCount) <- c('rt', 'int')
@@ -56,7 +56,7 @@ openSRMfile <- function(x)
 
   object@header <- scan_head_tmp
 
-  object@meta <- get_meta(x)
+  object@meta <- get_meta(mzMLFile)
 
   return(object)
 }
