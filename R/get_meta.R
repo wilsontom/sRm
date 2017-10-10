@@ -32,7 +32,7 @@ get_meta <- function(x)
   fileID <- xml_attrs(xml_children(fileInfo))[[1]][['id']]
 
 
-  meta_tibble <- tibble(name = c('mzml_schema', 'acqusition_date', 'acqusition_time', 'instrument_model', 'file_id'), value = c(mzml_schema, acqDate, acqTime_hhmm, inst_model, fileID))
+  meta_tibble <- tibble(name = c('mzml_schema', 'acquisition_date', 'acquisition_time', 'instrument_model', 'file_id'), value = c(mzml_schema, acqDate, acqTime_hhmm, inst_model, fileID))
 
   return(meta_tibble)
 
