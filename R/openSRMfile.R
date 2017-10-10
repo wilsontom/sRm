@@ -52,7 +52,7 @@ openSRMfile <- function(mzMLFile)
   scan_head_tmp$tidy_head <- NULL
   ob_header <-
     scan_head_tmp %>% mutate(polarity = replace(polarity, polarity == '+', '1')) %>% mutate(polarity = replace(polarity, polarity == '-', '-1'))
-  names(scan_head_tmp)[1] <- 'filter'
+  names(scan_head_tmp)[c(1,3:4)] <- c('filter', 'parent', 'product')
 
   object@header <- scan_head_tmp
 
