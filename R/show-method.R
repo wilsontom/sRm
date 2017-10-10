@@ -11,9 +11,9 @@
 setMethod("show", signature = "SRM",
           function(object){
             cat("\n")
-            cat("File ID : ", object@meta$fileID)
+            cat("File ID : ", object@meta$file_id)
             cat("\n", "\n")
-            cat("Acquisition Date : ", object@meta$acqDate)
+            cat("Acquisition Date : ", object@meta$acquisition_date)
             cat("\n", "\n")
             cat("Total Acquisition Time : ", round(max(object@totIonCount$rt), digits = 2), "mins")
             cat("\n", "\n")
