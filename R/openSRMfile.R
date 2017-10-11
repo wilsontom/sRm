@@ -10,7 +10,7 @@
 #' @export
 #' @importFrom methods new
 #' @importFrom xml2 read_xml
-#' @importFrom dplyr tibble filter bind_rows %>% mutate replace
+#' @importFrom dplyr tibble filter bind_rows %>% mutate
 
 
 openSRMfile <- function(mzMLFile)
@@ -33,7 +33,7 @@ openSRMfile <- function(mzMLFile)
   object@totIonCount <- chromtmp[[1]]
   names(object@totIonCount) <- c('rt', 'int')
 
-  scan_head_tmp <- get_scan_header(x)
+  scan_head_tmp <- get_scan_header(mzMLFile)
 
   if (scan_head_tmp$header[1] == 'TIC') {
     scan_head_tmp <- scan_head_tmp[-1, ]
