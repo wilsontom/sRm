@@ -70,6 +70,6 @@ setGeneric(name = "plotSRM",
 
 
 setGeneric(name = "plotMulti",
-           def = function(object,idn, labels = NULL)
+           def = function(object,idn, addLabels = FALSE,labels = NULL)
            {standardGeneric("plotMulti")}
 )
