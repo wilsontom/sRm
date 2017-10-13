@@ -1,10 +1,18 @@
 #' Extract scan header information
 #'
+#' Extract key values (parent m/z, product m/z and polarity) from the \code{chromatogram} blocks of an \code{.mzML} file
 #'
+#' @param mzMLFile a valid \code{.mzML} file
+#' @return a \code{tibble} containing
+#' \itemize{
+#'     \item{\code{header}}
+#'     \item{\code{polarity}}
+#'     \item{\code{Q1}}
+#'     \item{\code{Q3}}
+#'     \item{\code{tidy_head}}
+#' }
 #'
-#'
-#'
-
+#' @export
 
 get_scan_header <- function(x)
   {
@@ -48,7 +56,7 @@ get_scan_header <- function(x)
   header_tibble <-
     tibble(header = scan_head, polarity = polarity_check$chrom)
 
-  qmz_tib <- purrr:::map(header_tibble$header, ~{get_Qmz(.)}) %>% bind_rows()
+  qmz_tib <- purrr::map(header_tibble$header, ~{get_Qmz(.)}) %>% bind_rows()
 
   scan_tib <- left_join(header_tibble, qmz_tib) %>% mutate(polarity = replace(polarity, polarity == 'MS:1000129','-')) %>%
     mutate(polarity = replace(polarity, polarity == 'MS:1000130','+'))
