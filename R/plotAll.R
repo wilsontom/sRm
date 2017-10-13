@@ -2,7 +2,8 @@
 #' @export
 #' @importFrom ggplot2 ggplot aes_string theme_bw geom_line element_text element_blank ggtitle theme xlab ylab
 #' @importFrom gridExtra arrangeGrob grid.arrange
-#' @importFrom grid grid.text unit
+#' @importFrom grid grid.text unit textGrob
+#' @importFrom graphics plot
 
 plotAll.transition <- function(x, n)
 {
