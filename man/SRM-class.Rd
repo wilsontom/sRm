@@ -22,6 +22,6 @@ A S4 class to store single reaction monitoring (SRM) mass spectrometry (MS) data
 
 \item{\code{peaks}}{list of peak data}
 
-\item{\code{header}}{\code{data.frame} of summary information for each scan index; \code{parent, product, polarity, totIonCount, basePeakInt}}
+\item{\code{header}}{\code{data.frame} of summary information for each scan index;\code{parent}, \code{product}, \code{polarity}, \code{totIonCount}, \code{basePeakInt}}
 }}
 

@@ -8,7 +8,7 @@
 #' @slot filter character vector of scan filters; taken directly from \code{chromatogram idRefs}
 #' @slot index character vector of readable scan index's; ie \code{Q1: 153.01 --> Q3: 65.271 (-)}
 #' @slot peaks list of peak data
-#' @slot header \code{data.frame} of summary information for each scan index; \code{parent, product, polarity, totIonCount, basePeakInt}
+#' @slot header \code{data.frame} of summary information for each scan index;\code{parent}, \code{product}, \code{polarity}, \code{totIonCount}, \code{basePeakInt}
 #'
 setClass(Class = "SRM", representation = representation(
           SHA1 = "character",
