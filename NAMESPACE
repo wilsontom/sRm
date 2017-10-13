@@ -2,6 +2,8 @@
 
 S3method(plotAll,transition)
 export(combineTransitions)
+export(get_meta)
+export(get_scan_header)
 export(meta)
 export(openSRMfile)
 export(plotAll)

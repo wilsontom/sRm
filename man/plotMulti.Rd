@@ -6,16 +6,18 @@
 \alias{plotMulti,SRM-method}
 \title{plotMulti}
 \usage{
-plotMulti(object, idn, labels = NULL)
+plotMulti(object, idn, addLabels = FALSE, labels = NULL)
 
-\S4method{plotMulti}{SRM}(object, idn, labels = NULL)
+\S4method{plotMulti}{SRM}(object, idn, addLabels = TRUE, labels = NULL)
 }
 \arguments{
 \item{object}{a SRM object}
 
 \item{idn}{the index number of a transition to plot}
 
-\item{labels}{an optional character vector of label names. Default is \code{NULL}}
+\item{addLabels}{logical; If \code{TRUE} then labels for each \code{geom_line} are added}
+
+\item{labels}{an optional character vector of label names. Default is \code{NULL}. If \code{addLabels} is \code{TRUE} and \code{labels} is \code{NULL} then \code{object@index} is used for label text.}
 }
 \description{
 plotMulti
