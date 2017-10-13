@@ -75,6 +75,33 @@ setMethod(f = combineTransitions, signature = "SRM",
               combined_transitions[[i]] <-
                 data.frame(combined_transitions[[i]], tic = tic)
             }
+
+            combined_transitions_names <- function(x, y)
+            {
+              product <- x[-which(x == 'rt' | x == 'tic')]
+
+              parent <- unique(y$parent)
+              polarity <- unique(y$polarity)
+              product[1] <- gsub('int.', 'Q3: ', product[1])
+              product[-1] <- gsub('int.', '// ', product[-1])
+
+              paste_product <- paste0(product, collapse = '  ')
+
+              ct_name <-
+                paste0('Q1: ', parent, ' --> ', paste_product, ' (', polarity, ')')
+
+              return(ct_name)
+
+            }
+
+            ct_names <- NULL
+            for (i in seq_along(combined_transitions)) {
+              ct_names[[i]] <-
+                combined_transitions_names(names(combined_transitions[[i]]), split_header[[i]])
+            }
+
+            names(combined_transitions) <- ct_names
+            class(combined_transitions) <- 'transition'
             return(combined_transitions)
 
           })
