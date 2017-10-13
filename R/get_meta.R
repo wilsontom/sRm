@@ -1,9 +1,18 @@
 #' Extract meta information from .mzML file
 #'
-
-
-
-
+#' Extract a minimal amount meta data from a \code{.mzML} file
+#'
+#' @param mzMLFile a valid \code{.mzML} file
+#' @return a \code{tibble} containing;
+#' \itemize{
+#'     \item{\code{mzML Schema}}
+#'     \item{\code{Acquisition Date}}
+#'     \item{\code{Acquisition Time}}
+#'     \item{\code{Instrument Model}}
+#'     \item{\code{File ID}}
+#' }
+#'
+#' @export
 
 get_meta <- function(x)
   {
@@ -35,6 +44,5 @@ get_meta <- function(x)
   meta_tibble <- tibble(name = c('mzml_schema', 'acquisition_date', 'acquisition_time', 'instrument_model', 'file_id'), value = c(mzml_schema, acqDate, acqTime_hhmm, inst_model, fileID))
 
   return(meta_tibble)
-
 
   }
