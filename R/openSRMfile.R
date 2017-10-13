@@ -9,8 +9,8 @@
 #' @author Tom Wilson \email{tpw2@@aber.ac.uk}
 #' @export
 #' @importFrom methods new
-#' @importFrom xml2 read_xml
-#' @importFrom dplyr tibble filter bind_rows %>% mutate
+#' @importFrom xml2 read_xml xml_attrs xml_children xml_text xml_find_all
+#' @importFrom dplyr tibble filter bind_rows %>% mutate left_join
 
 
 openSRMfile <- function(mzMLFile)
@@ -18,7 +18,7 @@ openSRMfile <- function(mzMLFile)
   opentmp <- mzR::openMSfile(mzMLFile, backend = "pwiz")
   chromtmp <- mzR::chromatogram(opentmp)
   chromtib <-
-    purrr:::map(chromtmp, ~ {
+    purrr::map(chromtmp, ~ {
       tibble(rt = .[, 1], int = .[, 2])
     })
 
@@ -47,7 +47,7 @@ openSRMfile <- function(mzMLFile)
              basePeakInt = max(.$int))
     }) %>% bind_rows() %>% tibble::add_column(., header = scan_head_tmp$header)
 
-  scan_head_tmp <- scan_head_tmp  %>% left_join(header_tmp)
+  scan_head_tmp <- scan_head_tmp  %>% left_join(header_tmp, by = 'header')
 
   scan_head_tmp$tidy_head <- NULL
   ob_header <-

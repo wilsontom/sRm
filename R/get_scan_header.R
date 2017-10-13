@@ -2,7 +2,7 @@
 #'
 #' Extract key values (parent m/z, product m/z and polarity) from the \code{chromatogram} blocks of an \code{.mzML} file
 #'
-#' @param mzMLFile a valid \code{.mzML} file
+#' @param x a valid \code{.mzML} file
 #' @return a \code{tibble} containing
 #' \itemize{
 #'     \item{\code{header}}
@@ -58,7 +58,7 @@ get_scan_header <- function(x)
 
   qmz_tib <- purrr::map(header_tibble$header, ~{get_Qmz(.)}) %>% bind_rows()
 
-  scan_tib <- left_join(header_tibble, qmz_tib) %>% mutate(polarity = replace(polarity, polarity == 'MS:1000129','-')) %>%
+  scan_tib <- left_join(header_tibble, qmz_tib, by = 'header') %>% mutate(polarity = replace(polarity, polarity == 'MS:1000129','-')) %>%
     mutate(polarity = replace(polarity, polarity == 'MS:1000130','+'))
 
   scan_header_clean <- format_scan_header(scan_tib)
