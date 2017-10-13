@@ -2,7 +2,7 @@
 #'
 #' Extract a minimal amount meta data from a \code{.mzML} file
 #'
-#' @param mzMLFile a valid \code{.mzML} file
+#' @param x a valid \code{.mzML} file
 #' @return a \code{tibble} containing;
 #' \itemize{
 #'     \item{\code{mzML Schema}}
