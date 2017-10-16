@@ -1,9 +1,25 @@
 #' Set global variables
 #' @keywords internal
+globalVariables(
+  c(
+    '.',
+    'accession',
+    'polarity',
+    'PrecursorCharge',
+    'PrecursorMz',
+    'PrecursorName',
+    'PrecursorRT',
+    'ProductCharge',
+    'ProductMz',
+    'name',
+    'parent',
+    'product',
+    'rt'
+  )
+)
 
-globalVariables('.')
-globalVariables('polarity')
-globalVariables('accession')
+
+
 
 
 #' Check file is .mzML
