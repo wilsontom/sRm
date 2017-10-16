@@ -10,7 +10,7 @@
 #' @export
 #' @importFrom methods new
 #' @importFrom xml2 read_xml xml_attrs xml_children xml_text xml_find_all
-#' @importFrom dplyr tibble filter bind_rows %>% mutate left_join
+#' @importFrom dplyr tibble filter bind_rows %>% mutate left_join select
 
 
 openSRMfile <- function(mzMLFile)
