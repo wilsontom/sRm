@@ -16,4 +16,8 @@ test_that("sRm-works", {
   expect_true(is.null(meta(srm_peaks)))
   expect_true(isS4(new("SRM")))
 
+
+  expect_true(tibble::is.tibble(export_to_skyline(srm_peaks)))
+
+
   })
