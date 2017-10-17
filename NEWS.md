@@ -1,28 +1,19 @@
 ### NEWS
 
 
-#### v0.1.0
-  - First stable release
-  - Reading and parsing of Thermo TSQ Vantage SRM data
-  - Single function for reading and decoding peaks; stored to S4 object
-  - S4 method for combining all transitions from unique parent (Q1) m/z value
-  - S4 methods for viewing object: show, meta, transitions
-  - Basic tests (testthat + codecov)
-  - Travis and AppVeyor Continuous Integration
-  - Passes R CMD check with no ERRORS or WARNINGS
-
-#### v0.1.1
-  - Adapt `combineTransitions` to catch SRM's of different lengths
-  - Result of `combineTransitions` is now S3 class
-  - Plot method for `combineTransitions` class ;(`plotAll`)
-  - Plot method for single transition events; (`plotSRM`)
-  - Bug fixed for when time and intensity arrays are encoded with different precisions
-  - `grid` and `gridExtra` are listed as Dependencies
-
-#### v0.1.2
-  - Fix `no visible binding' NOTE for 'ggplot2`
-  - Update manual
-  - Increase test coverage
+#### v0.1.4
+ - The main change is that extraction and decoding of chromatogram time and intensity arrays is now performed by `mzR`.
+ - `xml2` is still used for extraction of header data which is currently unsupported by `mzR`
+ - A lot of the internal workings have been updated / replaced with more efficent approaches; mainly utilising `dplyr`, `tibble` and `purrr`
+ - New method `export_to_skyline` exports SRM transitions in a format that can saved as `.csv` and uploaded to [Skyline](https://skyline.ms/project/home/software/Skyline/begin.view)
+ - The `peaks` slot in `SRM-object` is now a list of tibbles
+ - `index` slot in `SRM-object` incorporates polarity (- or +)
+ - `SRM-object` `header`is now a tibble
+ - Bug fix in `plotAll` which caused multiple outputs during layering of plots
+ - Bug fix in `plotMulti` which caused switching of colours between `geom_lines` and labels
+ - Bug fix in `plotAll` which was causing for a new index order to be created
+ - Additional labelling options (default or custom) for `plotMulti`
+ 
 
 #### v0.1.3
  - Add `plotMulti` for easy graphical representation of complex SRM-MS chromatograms
@@ -39,3 +30,26 @@
     - In these circumstances; a transition set needs to consider the retention window aswell as the parent m/z
     - Unique filter ID strings are created from parsed `idRefs`
     - Where Rt lengths are unequal within unique transitions set; these are (for now) removed from the `transitions` class with a on-screen message stating which `idRefs` have been dropped
+
+#### v0.1.2
+  - Fix `no visible binding' NOTE for 'ggplot2`
+  - Update manual
+  - Increase test coverage
+  
+#### v0.1.1
+  - Adapt `combineTransitions` to catch SRM's of different lengths
+  - Result of `combineTransitions` is now S3 class
+  - Plot method for `combineTransitions` class ;(`plotAll`)
+  - Plot method for single transition events; (`plotSRM`)
+  - Bug fixed for when time and intensity arrays are encoded with different precisions
+  - `grid` and `gridExtra` are listed as Dependencies
+
+#### v0.1.0
+  - First stable release
+  - Reading and parsing of Thermo TSQ Vantage SRM data
+  - Single function for reading and decoding peaks; stored to S4 object
+  - S4 method for combining all transitions from unique parent (Q1) m/z value
+  - S4 methods for viewing object: show, meta, transitions
+  - Basic tests (testthat + codecov)
+  - Travis and AppVeyor Continuous Integration
+  - Passes R CMD check with no ERRORS or WARNINGS
