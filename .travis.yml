@@ -3,6 +3,7 @@ warnings_are_errors: false
 sudo: required
 dist: trusty
 bio_required: true
+cache: packages
 
 r:
  - release
