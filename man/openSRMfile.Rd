@@ -4,17 +4,17 @@
 \alias{openSRMfile}
 \title{Open a SRM-MS file}
 \usage{
-openSRMfile(filename)
+openSRMfile(mzMLFile)
 }
 \arguments{
-\item{filename}{a \code{mzML} file}
+\item{mzMLFile}{a valid \code{.mzML} file}
 }
 \value{
 a \code{SRM} object
  (see \code{\link{SRM-class}})
 }
 \description{
-Open and parse \code{mzML} file into \code{SRM} object
+Open and parse \code{mzML} file into a \code{SRM} object
 }
 \author{
 Tom Wilson \email{tpw2@aber.ac.uk}

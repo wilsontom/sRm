@@ -62,7 +62,8 @@ setGeneric(name = "plotSRM",
 #' @rdname plotMulti
 #' @param object a SRM object
 #' @param idn the index number of a transition to plot
-#' @param labels an optional character vector of label names. Default is \code{NULL}
+#' @param addLabels logical; If \code{TRUE} then labels for each \code{geom_line} are added
+#' @param labels an optional character vector of label names. Default is \code{NULL}. If \code{addLabels} is \code{TRUE} and \code{labels} is \code{NULL} then \code{object@index} is used for label text.
 #' @return NULL
 #'
 #' @author Tom Wilson \email{tpw2@@aber.ac.uk}
@@ -70,6 +71,27 @@ setGeneric(name = "plotSRM",
 
 
 setGeneric(name = "plotMulti",
-           def = function(object,idn, labels = NULL)
+           def = function(object,idn, addLabels = FALSE,labels = NULL)
            {standardGeneric("plotMulti")}
 )
+
+
+#' export_to_skyline
+#' @rdname export_to_skyline
+#' @param object a SRM object
+#' @param transitions an optional \code{data.frame} containing the following columns for selected (or all) transitions.
+#' @return a \code{tibble} of transitions in a format which can be easily used with \code{Skyline}
+#'
+#' @author Tom Wilson \email{tpw2@@aber.ac.uk}
+#' @export
+
+setGeneric(name = 'export_to_skyline',
+           def = function(object, transitions = NULL)
+           {standardGeneric('export_to_skyline')}
+)
+
+
+
+
+
+

@@ -9,11 +9,15 @@ test_that("sRm-works", {
   expect_that(nrow(srm_peaks@header), equals(length(srm_peaks@index)))
 
   srm_comb <- combineTransitions(srm_peaks)
-  expect_true(is.list(srm_comb))
+  expect_true(inherits(srm_comb, 'transition'))
   expect_that(length(srm_comb), equals(length(unique(srm_peaks@header$parent))))
 
   expect_true(is.null(transitions(srm_peaks)))
   expect_true(is.null(meta(srm_peaks)))
   expect_true(isS4(new("SRM")))
+
+
+  expect_true(tibble::is.tibble(export_to_skyline(srm_peaks)))
+
 
   })

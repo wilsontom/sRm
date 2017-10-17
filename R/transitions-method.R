@@ -4,9 +4,8 @@
 setMethod("transitions", signature = "SRM",
           function(object){
 
-          trans_ob <- combineTransitions(object)
-          for(i in 1:length(trans_ob)){
-            cat(names(trans_ob)[[i]], "\n")
+          for(i in seq_along(object@index)){
+            cat(object@index[i], "\n")
           }
       }
   )

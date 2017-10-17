@@ -2,6 +2,8 @@ language: r
 warnings_are_errors: false
 sudo: required
 dist: trusty
+bio_required: true
+cache: packages
 
 r:
  - release
@@ -9,12 +11,17 @@ r:
 
 apt_packages:
  - libxml2
+ - libnetcdf-dev
+ - udunits-bin
+ - libudunits2-dev
 
 r_packages:
  - xml2
  - testthat
  - covr
- - base64enc
+
+bioc_packages:
+ - mzR
 
 after_success:
  - Rscript -e 'library(covr); codecov()'

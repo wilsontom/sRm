@@ -13,101 +13,95 @@
 #' \code{- SRM SIC 153.01,65.271} \cr
 #' \code{- SRM SIC 153.01,67.232} \cr
 #' \code{- SRM SIC 153.01,109.094} \cr
-#'
-#' Whereas the following transitions from a dynamic SRM-MS method would be combined into two different SRM TICs based on their
-#' parent m/z value and retention time window;
-#'
-#' \code{- SRM SIC Q1=145 Q3=56.996 start=10.61683333 end=20.84128333} \cr
-#' \code{- SRM SIC Q1=145 Q3=100.996 start=10.61665 end=20.84081667} \cr
-#' \code{- SRM SIC Q1=145 Q3=108.996 start=4.5304 end=10.53233333} \cr
-#' \code{- SRM SIC Q1=145 Q3=127.096 start=4.530016667 end=10.53213333} \cr
-#'
-#' The above transitions would be combined to make the following;
-#'
-#' \code{Q1: 145 -> Q3: 56.996//100.996 (10.6 - 20.8)} \cr
-#' \code{Q1: 145 -> Q3: 108.996//127.096 (4.5 - 10.5)} \cr
 
 setMethod(f = combineTransitions, signature = "SRM",
-          function(object){
+          function(object) {
+            parent_index <-
+              tibble(parent = unique(object@header$parent),
+                     index = seq(from = 1, to = length(unique(
+                       object@header$parent
+                     ))))
 
-          if(length(grep("Q1",object@filter))!= 0){
-            unique_scan_filter <- unique_idrefs(object)
-          }else{
-            unique_scan_filter <- object@header$parent
-          }
+            idn <- seq(from = 1, to = nrow(object@header))
 
-          trans_sets <- split(object@peaks, unique_scan_filter)
+            index_value <-
+              parent_index$index[match(object@header$parent, parent_index$parent)]
 
-          trans_header <- split(object@header, unique_scan_filter)
+            tmp_header <-
+              data.frame(object@header, spind = index_value, idn = idn)
 
-          trans_dim <- NULL
-          for(i in seq_along(trans_sets)){
-            trans_dim[[i]] <- lapply(trans_sets[[i]], nrow)
-          }
+            split_header <- split(tmp_header, tmp_header$spind)
 
-          equality_test <- lapply(trans_dim, function(x)(length(unique(x))))
-          idx <- which(equality_test != 1)
 
-          if(length(idx != 0)){
-            message("WARNING: The follwing transitions have been removed from the 'transition' object:")
-            cat("\n")
-            for (i in seq_along(idx)){
-              idx_n <- as.numeric(rownames(trans_header[idx][[i]]))
-                for(k in seq_along(idx_n)){
-                  message(object@filter[idx_n[k]], "\n")
-                }
-              cat("\n")
+            peak_groups <- NULL
+            for (i in seq_along(split_header)) {
+              peak_groups[[i]] <- object@peaks[split_header[[i]][['idn']]]
+
             }
-          }
 
-          if(length(idx != 0)){
-            trans_sets <- trans_sets[-idx]
-            trans_header <- trans_header[-idx]
-          }
+            combn_trans <- function(x, y)  {
+              list_idn <- length(x)
+              df_tmp <-
+                data.frame(matrix(nrow = nrow(x[[1]]), ncol = (list_idn + 1)))
+              names(df_tmp)[1] <- 'rt'
 
-          trans_dfs <- lapply(trans_sets, function(x)(do.call("cbind",x)))
+              for (i in seq_along(x)) {
+                df_tmp[, 1] <- x[[1]]['rt']
+                df_tmp[, i + 1] <- x[[i]]['int']
 
-          int_idx <- rt_idx <- NULL
-          for(i in seq_along(trans_dfs)){
-            int_idx[[i]] <- grep("int", names(trans_dfs[[i]]))
-            rt_idx[[i]] <- grep("rt", names(trans_dfs[[i]]))
-          }
+              }
 
-          int_sum <- NULL
-          for(i in seq_along(trans_dfs)){
-            if(length(int_idx[[i]]) == 1){
-              int_sum[[i]] <- trans_dfs[[i]][,int_idx[[i]]]
-            }else{
-              int_sum[[i]] <- apply(trans_dfs[[i]][,int_idx[[i]]],1,sum)
+              product_names <- NULL
+              for (i in seq_along(y$product)) {
+                product_names[i] <- paste0('int-', y$product[i])
+              }
+
+              names(df_tmp)[2:ncol(df_tmp)] <- product_names
+
+              return(df_tmp)
+
             }
-          }
 
-          trans_df_comb <- list()
-          for(i in seq_along(int_sum)){
-            trans_df_comb[[i]] <- data.frame(rt = trans_dfs[[i]][,rt_idx[[i]]][[1]],int = trans_dfs[[i]][,int_idx[[i]]], TIC = int_sum[[i]])
+            combined_transitions <- NULL
+            for (i in seq_along(peak_groups)) {
+              combined_transitions[[i]] <-
+                combn_trans(peak_groups[[i]], split_header[[i]])
+            }
 
-            nmidx <- which(names(trans_df_comb[[i]]) != "rt" | names(trans_df_comb[[i]]) != "TIC")
+            for (i in seq_along(combined_transitions)) {
+              rtid <- which(names(combined_transitions[[i]]) == 'rt')
+              tmp <- combined_transitions[[i]][, -rtid]
+              tic <- apply(tmp, 1, sum)
+              combined_transitions[[i]] <-
+                data.frame(combined_transitions[[i]], tic = tic)
+            }
 
-            names(trans_df_comb[[i]])[-nmidx] <- "int"
+            combined_transitions_names <- function(x, y)
+            {
+              product <- x[-which(x == 'rt' | x == 'tic')]
 
+              parent <- unique(y$parent)
+              polarity <- unique(y$polarity)
+              product[1] <- gsub('int.', 'Q3: ', product[1])
+              product[-1] <- gsub('int.', '// ', product[-1])
 
-            #names(trans_df_comb[[i]]) <- gsub(".int", "", names(trans_df_comb[[i]]))
-            #patsub <- paste0(".",unique(trans_header[[i]]$parent))
-            #names(trans_df_comb[[i]]) <- gsub(patsub,"", names(trans_df_comb[[i]]))
-            #names(trans_df_comb[[i]]) <- gsub("int.", "int-", names(trans_df_comb[[i]]))
-          }
+              paste_product <- paste0(product, collapse = '  ')
 
-          new_names <- NULL
-          for(i in seq_along(trans_header)){
-            pMz <- paste("Q1", trans_header[[i]][1,"parent"], sep = ": ")
-            qMzs <- paste(trans_header[[i]][,"product"], collapse = "//")
-            qMz2 <- paste("Q3", qMzs, sep = ": ")
-            new_names[[i]] <- paste(pMz, qMz2, sep = " -> ")
-          }
+              ct_name <-
+                paste0('Q1: ', parent, ' --> ', paste_product, ' (', polarity, ')')
 
-          names(trans_df_comb) <- new_names
-          class(trans_df_comb) <- "transition"
+              return(ct_name)
 
-          return(trans_df_comb)
-          }
-)
+            }
+
+            ct_names <- NULL
+            for (i in seq_along(combined_transitions)) {
+              ct_names[[i]] <-
+                combined_transitions_names(names(combined_transitions[[i]]), split_header[[i]])
+            }
+
+            names(combined_transitions) <- ct_names
+            class(combined_transitions) <- 'transition'
+            return(combined_transitions)
+
+          })
