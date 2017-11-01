@@ -7,9 +7,12 @@
 #' @author Tom Wilson \email{tpw2@@aber.ac.uk}
 #' @export
 
-setGeneric(name = "combineTransitions",
-           def = function(object)
-           {standardGeneric("combineTransitions")}
+setGeneric(
+  name = "combineTransitions",
+  def = function(object)
+  {
+    standardGeneric("combineTransitions")
+  }
 )
 
 
@@ -22,9 +25,12 @@ setGeneric(name = "combineTransitions",
 #' @author Tom Wilson \email{tpw2@@aber.ac.uk}
 #' @export
 
-setGeneric(name = "meta",
-           def = function(object)
-           {standardGeneric("meta")}
+setGeneric(
+  name = "meta",
+  def = function(object)
+  {
+    standardGeneric("meta")
+  }
 )
 
 #' Show transitions
@@ -36,9 +42,12 @@ setGeneric(name = "meta",
 #' @author Tom Wilson \email{tpw2@@aber.ac.uk}
 #' @export
 
-setGeneric(name = "transitions",
-           def = function(object)
-           {standardGeneric("transitions")}
+setGeneric(
+  name = "transitions",
+  def = function(object)
+  {
+    standardGeneric("transitions")
+  }
 )
 
 
@@ -52,9 +61,12 @@ setGeneric(name = "transitions",
 #' @author Tom Wilson \email{tpw2@@aber.ac.uk}
 #' @export
 
-setGeneric(name = "plotSRM",
-           def = function(object,idn)
-           {standardGeneric("plotSRM")}
+setGeneric(
+  name = "plotSRM",
+  def = function(object, idn)
+  {
+    standardGeneric("plotSRM")
+  }
 )
 
 
@@ -70,9 +82,15 @@ setGeneric(name = "plotSRM",
 #' @export
 
 
-setGeneric(name = "plotMulti",
-           def = function(object,idn, addLabels = FALSE,labels = NULL)
-           {standardGeneric("plotMulti")}
+setGeneric(
+  name = "plotMulti",
+  def = function(object,
+                 idn,
+                 addLabels = FALSE,
+                 labels = NULL)
+  {
+    standardGeneric("plotMulti")
+  }
 )
 
 
@@ -85,11 +103,63 @@ setGeneric(name = "plotMulti",
 #' @author Tom Wilson \email{tpw2@@aber.ac.uk}
 #' @export
 
-setGeneric(name = 'export_to_skyline',
-           def = function(object, transitions = NULL)
-           {standardGeneric('export_to_skyline')}
+setGeneric(
+  name = 'export_to_skyline',
+  def = function(object, transitions = NULL)
+  {
+    standardGeneric('export_to_skyline')
+  }
 )
 
+
+#' tic
+#' @rdname tic
+#' @param object a SRM object
+#' @return a numeric value for the whole sample total ion count (tic)
+#'
+#' @author Tom Wilson \email{tpw2@@aber.ac.uk}
+#' @export
+
+setGeneric(
+  name = 'tic',
+  def = function(object)
+  {
+    standardGeneric('tic')
+  }
+)
+
+
+#' bpi
+#' @rdname bpi
+#' @param object a SRM object
+#' @return a numeric value for the whole sample base peak intensity (bpi)
+#'
+#' @author Tom Wilson \email{tpw2@@aber.ac.uk}
+#' @export
+
+setGeneric(
+  name = 'bpi',
+  def = function(object)
+  {
+    standardGeneric('bpi')
+  }
+)
+
+#' get
+#' @rdname get
+#' @param object a SRM object
+#' @param Q1 a numeric value for parent m/z
+#' @param Q3 a numeric value for product m/z
+#' @param method either 'tic' or 'bpi' to return total ion count or base peak intensity respectively
+#' @return a \code{tibble} or parent and product mass, and either tic or bpi
+
+setGeneric(
+  name = 'get',
+  def = function(object, Q1, Q3, method)
+  {
+    standardGeneric('get')
+  }
+)
 
 
 
