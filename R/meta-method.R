@@ -4,7 +4,7 @@
 setMethod("meta", signature = "SRM",
           function(object){
           cat("\n")
-          cat("File ID : ", object@meta$file_id)
+          cat("Filename : ", object@meta$filename)
           cat("\n", "\n")
           cat("Instrument Model : ", object@meta$instrument_model)
           cat("\n", "\n")
