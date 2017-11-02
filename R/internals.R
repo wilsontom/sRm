@@ -84,10 +84,18 @@ get_all_cvParams <- function(x)
   xml_headers  <-
     xml_find_all(x, '//d1:cvParam') %>% purrr::map(., xml_attrs)
 
+  cv_params_acc <-
+    purrr::map(xml_headers,  ~ {
+      .[['accession']]
+    }) %>% unlist(.) %>% as_tibble(.)
+
   cv_params <-
     purrr::map(xml_headers,  ~ {
-      tibble(accession = .[['accession']], value = .[['value']])
-    }) %>% bind_rows()
+      .[['value']]
+    }) %>% unlist(.) %>% as_tibble(.) %>% tibble::add_column(., accession = cv_params_acc$value, .before = 'value')
+
+ #cv_params <- as_tibble(accession = cv_params_acc, value = cv_params_value) # stringsAsFactors = FALSE)
+
 
   return(cv_params)
 
@@ -98,7 +106,7 @@ get_all_cvParams <- function(x)
 #' Parse Q1 and Q3 mass values from scan filter string. This function is only used internally in \code{get_scan_header}
 #'
 #' @param x a vector of scan filters
-#' @return a \code{tibble} of Q1 and Q3
+#' @return a \code{data.frame} of Q1 and Q3
 #' @keywords internal
 
 get_Qmz <- function(x)
@@ -124,9 +132,10 @@ get_Qmz <- function(x)
 
   }
 
-  scan_index_tib <- tibble(header = x, Q1 = Q1value, Q3 = Q3value)
+  scan_index_df <- data.frame(header = x, Q1 = Q1value, Q3 = Q3value, stringsAsFactors = FALSE)
 
-  return(scan_index_tib)
+
+  return(scan_index_df)
 }
 
 
