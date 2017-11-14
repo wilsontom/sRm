@@ -1,0 +1,152 @@
+---
+title: 'sRm Usage'
+author: 'Tom Wilson'
+date: '`r Sys.Date()`'
+output:
+  html_document:
+    toc: true
+---
+
+## Introduction
+
+`sRm` is a package for parsing and visualising Selective Reaction Monoitoring (SRM) and Multiple Reaction Monitoring (MRM) Mass Spectrometry (MS) data. SRM-MS (and MRM-MS) differs from conventional mass spectrometry data as data is acquired and stored as a series of chromatograms; instead of a series of _m/z_ spectrums which are combined to create chromatograms. This package is intended for use with data acquried using a triple quadrupole (QqQ) mass spectrometer where SRM/MRM acquisition has been utilised. For SRM/MRM on a QqQ-MS
+
+- The parent mass value is selected in Q1
+- Optimised collision takes place in q2 
+- Detection of specified product ion occurs in Q3
+
+Therefore the resulting data is a time _x_ intensity array of the transition between the parent and product ion. 
+
+
+`sRm` parses data from a `.mzML` file and stores it in a `S4` object. The popular (and by far most comprehensive) package [mzR](http://bioconductor.org/packages/release/bioc/html/mzR.html) is able to read chromatorgrams from `.mzML` using the pwiz backend; but as support for these chromatograms has only begun recently there are still many elements of SRM-MS file unsupported by `mzR`. `sRm` utilises `mzR` only for the parsing and decoding of the time and intensity arrays. 
+
+The main aim `sRm` is too make it easier to visualise SRM-MS data and make it easier to extract subsets of data for futher processing and analysis. 
+
+
+## Installation
+
+To install `sRm` using devtools;
+
+```R
+instal.packages('devtools')
+devtools::install_github('wilsontom/sRm')
+```
+
+or to install from source;
+
+```sh
+git clone https://github.com/wilsontom/sRm
+R CMD build sRm
+R CMD INSTALL sRm_0.1.4.tar.gz
+```
+
+## File Input
+
+`sRm` only accepts `.mzML` file as input. `mzML` should be created using [msconvert](http://proteowizard.sourceforge.net/tools.shtml) from the Proteowizard tool kit. `sRm` has been developed using files which were converted from `.raw` (Thermo) to `.mzML` using `ProteoWizard 3.0.10246 64-bit`.
+
+
+## Getting Started
+
+The `openSRMfile` function is used to create a `SRM` `S4` class, parse the `mzML` file and store the results in the correct slots. The default `show-method` can be used to print a basic descrption of the file. 
+
+```{r, echo = TRUE}
+suppressPackageStartupMessages(library(sRm))
+
+srm_example <-
+openSRMfile(system.file('extdata/example_file.mzML', package = 'sRm'))
+
+srm_example
+```
+
+To view a minimal amount of meta information (instrument model and mzML Schema) the `meta` method can be used.
+
+```{r, echo = TRUE}
+meta(srm_example)
+```
+
+The sha-1 value for the `.mzML` file can be found in the `SHA1` slot;
+
+```{r, echo = TRUE}
+print(srm_example@SHA1)
+```
+
+
+To view all the measured transtions (in an easily readable format) the `transitions` method can be used. Transitions are printed in the format;
+
+* `Q1:  <m/z value>  ---> Q3: <m/z value> (+/-)`
+
+```{r, echo = TRUE}
+transitions(srm_example)
+```
+
+
+## Extracting Data
+
+The `SRM` object contains a series of slots which make it quick and easy to access the requrired data
+```{r, echo = TRUE}
+slotNames(srm_example)
+```
+The `totIonCount` slot contains a total ion count chromatogram for all SRMs combined. The `filter` slot is the scan filters as they are reported in the `chromatogram index` block of the `.mzML` file. 
+```{r, echo = TRUE}
+srm_example@filter[1]
+```
+
+The `index` slot contains the same `filter` information, but in more user friendly format. 
+```{r, echo = TRUE}
+srm_example@index[1]
+```
+
+The peaks slot is a list of `tibbles`, where each tibble is `time` and `intensity` for a single transition. 
+```{r, echo = TRUE}
+dplyr::glimpse(srm_example@peaks[[1]])
+```
+
+The `header` slot is a tibble of summary information, similar to the `header` function in `mzR`
+```{r, echo = TRUE}
+head(srm_example@header)
+```
+
+
+## Plotting Data
+
+`sRm` also contains a series of `plot` methods to make it easier to visually inspect different elements of the SRM-MS data. 
+
+-  `plotSRM` is used for plotting chromatograms of single transitions. The input for the method should the `SRM` object and the position number of the transition. So to plot `Q1: 181.044 --> Q3:122.132 (-)` which is the 5th transition measured;
+```{r, echo = TRUE}
+plotSRM(srm_example, 5)
+```
+
+
+- `plotAll` is used for plotting all transitions which belong in a "set". It is typical practise that a single parent will be have multiple transitions measured for a few product ions; with the most stable being used for quantification and the other transitions acting as qualifier values. To use `plotAll` a `transition` class first has to be created using the `combineTransitions` method.
+
+```{r, echo = TRUE}
+srm_combined <- combineTransitions(srm_example)
+```
+
+`srm_combined` is a list of `data.frames` where each elemment is the retention time, indivuidul transiton intentisy, and the combined `tic` for all transitions which belong to a unique parent m/z value. 
+```{r, echo = TRUE}
+head(srm_combined[[1]])
+```
+
+Also not the names of `srm_combined` reflect the transition sets.
+```{r, echo = TRUE}
+names(srm_combined)
+```
+
+This `transition` class can be passed to the `plotAll` method along with the position of the set to plot. So for `Q1: 187.026 --> Q3: 80.247  // 106.213  // 107.228 (-)` which is the 3rd set;
+```{r, echo = TRUE}
+plotAll(srm_combined,3)
+```
+
+
+There is also a `plotMulti` method which is a easy graphical representation of overlayed transitions. To plot the first three transitions (which all belong to the same parent mass);
+
+```{r, echo = TRUE}
+plotMulti(srm_example, c(1:3),addLabels = FALSE)
+```
+
+If `addLabels = TRUE` then the transition index is used to label the chromatograms. Or, you can define your own set of labels through the `label` argument;
+
+```{r, echo = TRUE}
+plotMulti(srm_example, c(1:3),addLabels = TRUE, labels = c('81.354', '108.161', '109.193'))
+```
