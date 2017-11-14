@@ -10,7 +10,7 @@ get_Qmz(x)
 \item{x}{a vector of scan filters}
 }
 \value{
-a \code{tibble} of Q1 and Q3
+a \code{data.frame} of Q1 and Q3
 }
 \description{
 Parse Q1 and Q3 mass values from scan filter string. This function is only used internally in \code{get_scan_header}
