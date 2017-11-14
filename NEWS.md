@@ -4,7 +4,7 @@
 #### v0.1.4
  - The main change is that extraction and decoding of chromatogram time and intensity arrays is now performed by `mzR`.
  - `xml2` is still used for extraction of header data which is currently unsupported by `mzR`
- - A lot of the internal workings have been updated / replaced with more efficent approaches; mainly utilising `dplyr`, `tibble` and `purrr`
+ - A lot of the internal workings have been updated / replaced with more efficient approaches; mainly utilising `dplyr`, `tibble` and `purrr`
  - New method `export_to_skyline` exports SRM transitions in a format that can saved as `.csv` and uploaded to [Skyline](https://skyline.ms/project/home/software/Skyline/begin.view)
  - The `peaks` slot in `SRM-object` is now a list of tibbles
  - `index` slot in `SRM-object` incorporates polarity (- or +)
@@ -13,7 +13,7 @@
  - Bug fix in `plotMulti` which caused switching of colours between `geom_lines` and labels
  - Bug fix in `plotAll` which was causing for a new index order to be created
  - Additional labelling options (default or custom) for `plotMulti`
- 
+
 
 #### v0.1.3
  - Add `plotMulti` for easy graphical representation of complex SRM-MS chromatograms
@@ -35,7 +35,7 @@
   - Fix `no visible binding' NOTE for 'ggplot2`
   - Update manual
   - Increase test coverage
-  
+
 #### v0.1.1
   - Adapt `combineTransitions` to catch SRM's of different lengths
   - Result of `combineTransitions` is now S3 class
