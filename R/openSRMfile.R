@@ -10,17 +10,17 @@
 #' @export
 #' @importFrom methods new
 #' @importFrom xml2 read_xml xml_attrs xml_children xml_text xml_find_all
-#' @importFrom dplyr tibble filter bind_rows %>% mutate left_join select
+#' @importFrom dplyr tibble filter bind_rows %>% mutate left_join select summarise
+#' @importFrom tibble as_tibble
 
 
 openSRMfile <- function(mzMLFile)
 {
   opentmp <- mzR::openMSfile(mzMLFile, backend = "pwiz")
   chromtmp <- mzR::chromatogram(opentmp)
+
   chromtib <-
-    purrr::map(chromtmp, ~ {
-      tibble(rt = .[, 1], int = .[, 2])
-    })
+    purrr::map(chromtmp, as_tibble, validate = FALSE) %>% purrr::map(., select, rt = 1, int = 2)
 
   if (names(chromtmp[[1]])[2] == 'TIC') {
     chromtib[[1]] <- NULL
@@ -42,10 +42,8 @@ openSRMfile <- function(mzMLFile)
   object@index <- scan_head_tmp$tidy_head
 
   header_tmp <-
-    purrr::map(object@peaks, ~ {
-      tibble(totIonCount = sum(.$int),
-             basePeakInt = max(.$int))
-    }) %>% bind_rows() %>% tibble::add_column(., header = scan_head_tmp$header)
+    purrr::map(object@peaks, summarise,totIonCount = sum(int), basePeakInt = max(int)) %>% bind_rows() %>%
+    mutate(., header = scan_head_tmp$header)
 
   scan_head_tmp <- scan_head_tmp  %>% left_join(header_tmp, by = 'header')
 

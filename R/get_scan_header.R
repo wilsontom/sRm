@@ -35,14 +35,11 @@ get_scan_header <- function(x)
     }) %>% purrr::map(., unlist)
 
   all_head_attr_tib <-
-    purrr::map(all_head_attr, ~ {
-      tibble(chrom = .)
-    })
-
+    purrr::map(all_head_attr, as_tibble)
 
   polarity_ont <-
     purrr::map(all_head_attr_tib, ~ {
-      filter(., chrom == 'MS:1000129' | chrom == 'MS:1000130')
+      filter(., value == 'MS:1000129' | value == 'MS:1000130')
     })
 
   polarity_check <- purrr::map(polarity_ont, ~ {
@@ -54,7 +51,7 @@ get_scan_header <- function(x)
   }) %>% bind_rows()
 
   header_tibble <-
-    tibble(header = scan_head, polarity = polarity_check$chrom)
+    tibble(header = scan_head, polarity = polarity_check$value)
 
   qmz_tib <- purrr::map(header_tibble$header, ~{get_Qmz(.)}) %>% bind_rows()
 

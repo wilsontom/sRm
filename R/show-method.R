@@ -11,7 +11,7 @@
 setMethod("show", signature = "SRM",
           function(object){
             cat("\n")
-            cat("File ID : ", object@meta$file_id)
+            cat("Filename : ", object@meta$filename)
             cat("\n", "\n")
             cat("Acquisition Date : ", object@meta$acquisition_date)
             cat("\n", "\n")
