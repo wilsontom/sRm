@@ -14,12 +14,12 @@ globalVariables(
     'name',
     'parent',
     'product',
-    'rt'
+    'rt',
+    'int',
+    'totIonCount',
+    'basePeakInt'
   )
 )
-
-
-
 
 
 #' Check file is .mzML
