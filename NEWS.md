@@ -13,6 +13,7 @@
  - Bug fix in `plotMulti` which caused switching of colours between `geom_lines` and labels
  - Bug fix in `plotAll` which was causing for a new index order to be created
  - Additional labelling options (default or custom) for `plotMulti`
+ - Added vignette
  
 
 #### v0.1.3
