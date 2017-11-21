@@ -6,7 +6,7 @@
 > __a minimal parser for selective reaction monitoring (SRM) mass spectrometry (MS) data__
 
 ```R
-devtools::nstall_github('wilsontom/sRm',build_vignettes = TRUE)
+devtools::install_github('wilsontom/sRm',build_vignettes = TRUE)
 ```
 ```R
 vignette('sRm-usage',package = 'sRm')
