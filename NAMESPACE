@@ -2,5 +2,6 @@
 
 export(get_meta)
 export(openSRM)
+export(plotSRM)
 exportMethods(show)
 importFrom(methods,show)
