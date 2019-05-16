@@ -10,7 +10,8 @@ License: GPL (>= 3)
 Depends:
     methods,
     xml2,
-    dplyr
+    dplyr,
+    ggplot2
 Imports:
     mzR,
     tibble,
