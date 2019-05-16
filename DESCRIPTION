@@ -2,30 +2,22 @@ Package: sRm
 Type: Package
 Title: Minimal parser for Selective Reaction Monitoring (SRM) mass spectrometry
     (MS) data
-Version: 0.1.4
-Author: Tom Wilson <tpw2@aber.ac.uk>
-Maintainer: Tom Wilson <tpw2@aber.ac.uk>
+Version: 0.2.0
+Authors@R: c(
+    person("Tom", "Wilson", , "tpw2@aber.ac.uk", c("aut", "cre")))
 Description: Functions for parsing SRM-MS data from .mzML files.
 License: GPL (>= 3)
 Depends:
     methods,
-    xml2 (>= 1.0),
-    ggplot2,
-    grid,
-    gridExtra,
+    xml2,
     dplyr
 Imports:
-    mzR (>= 2.1),
-    ggrepel,
+    mzR,
     tibble,
     purrr
 URL: https://github.com/wilsontom/sRm
 BugReports: https://github.com/wilsontom/sRm/issues
 LazyData: TRUE
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
 Suggests:
-    testthat,
-    knitr,
-    rmarkdown
-VignetteBuilder:
-    knitr
+    testthat
