@@ -9,20 +9,15 @@
 #' @importFrom methods show
 
 setMethod("show", signature = "SRM",
-          function(object){
-            cat("\n")
-            cat("Filename : ", object@meta$filename)
-            cat("\n", "\n")
-            cat("Acquisition Date : ", object@meta$acquisition_date)
-            cat("\n", "\n")
-            cat("Total Acquisition Time : ", round(max(object@totIonCount$rt), digits = 2), "mins")
-            cat("\n", "\n")
-            cat("-----Transition Data-----")
-            cat("\n")
-            cat(nrow(object@header), "SRM Transitions measured")
-            cat("\n")
-            cat(length(unique(object@header$parent)), "Unique Q1 (parent) Ions")
-            cat("\n")
-            cat(length(unique(object@header$product)), "Unique Q3 (product) Ions")
-          }
-)
+          function(object) {
+            cat('An SRM Object')
+            cat('\n')
+            cat('--------------')
+            cat('\n')
+            cat('Number of SRM Files: ', nrow(object@meta))
+            cat('\n')
+            trcnt <- object@transitions %>% filter(index != 'TIC') %>% nrow()
+            cat('Unique SRM Transitons Measured:', trcnt)
+            cat('\n')
+            cat('Total Object Size:', format(object.size(object), units = 'Mb'))
+          })
