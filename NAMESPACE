@@ -2,6 +2,7 @@
 
 export(get_meta)
 export(openSRM)
+export(plotParent)
 export(plotSRM)
 exportMethods(show)
 importFrom(methods,show)
