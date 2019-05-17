@@ -19,6 +19,7 @@ setMethod('plotSRM', signature = 'SRM',
                                    colour = 'sampleID'
                                  )) + geom_line(size = 0.45) + theme_bw() +
                 theme(legend.position = 'top') +
+                theme(legend.title = element_blank()) +
                 theme(strip.text.x = element_text(size = 10)) +
                 theme(
                   axis.text.y = element_text(size = 10),
@@ -41,6 +42,7 @@ setMethod('plotSRM', signature = 'SRM',
                                  aes_string(x = 'rt',
                                             y = 'int')) + geom_line(size = 0.45) + theme_bw() +
                 theme(legend.position = 'top') +
+                theme(legend.title = element_blank()) +
                 theme(strip.text.x = element_text(size = 10)) +
                 theme(
                   axis.text.y = element_text(size = 10),
