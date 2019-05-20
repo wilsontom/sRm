@@ -10,7 +10,7 @@
 #' @export
 
 setGeneric(
-  name = "plotSRM",
+  name = 'plotSRM',
   def = function(object, index, type = 'overlay')
   {
     standardGeneric('plotSRM')
@@ -35,3 +35,47 @@ setGeneric(
     standardGeneric('plotParent')
   }
 )
+
+
+#' Plot Sample
+#'
+#' @rdname plotSample
+#' @param object a SRM object
+#' @param sampleName
+#' @param polarity
+#' @return a ggplot plot object
+#'
+#' @author Tom Wilson \email{tpw2@@aber.ac.uk}
+#' @export
+
+
+setGeneric(
+  name = 'plotSample',
+  def = function(object, sampleName, polarity)
+  {
+    standardGeneric('plotSample')
+  }
+)
+
+
+
+#' Plot Compare Sample
+#'
+#' @rdname plotSample
+#' @param object a SRM object
+#' @param index
+#' @param sampleName
+#' @return a ggplot plot object
+#'
+#' @author Tom Wilson \email{tpw2@@aber.ac.uk}
+#' @export
+
+
+setGeneric(
+  name = 'plotCompareSample',
+  def = function(object, index, sampleName)
+  {
+    standardGeneric('plotCompareSample')
+  }
+)
+
