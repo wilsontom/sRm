@@ -41,8 +41,8 @@ setGeneric(
 #'
 #' @rdname plotSample
 #' @param object a SRM object
-#' @param sampleName
-#' @param polarity
+#' @param sampleName a character string of a valid `sampleName`
+#' @param polarity a character string of either `pos` or `neg` for positive and negative ionisation mode respectively
 #' @return a ggplot plot object
 #'
 #' @author Tom Wilson \email{tpw2@@aber.ac.uk}
@@ -61,10 +61,10 @@ setGeneric(
 
 #' Plot Compare Sample
 #'
-#' @rdname plotSample
+#' @rdname plotCompareSample
 #' @param object a SRM object
-#' @param index
-#' @param sampleName
+#' @param index a numeric value of the transition index to plot
+#' @param sampleName a character vector of `sampleName` to plot
 #' @return a ggplot plot object
 #'
 #' @author Tom Wilson \email{tpw2@@aber.ac.uk}
