@@ -11,7 +11,7 @@
 
 setGeneric(
   name = 'plotSRM',
-  def = function(object, index, type = 'overlay')
+  def = function(object, index, type)
   {
     standardGeneric('plotSRM')
   }
@@ -78,4 +78,25 @@ setGeneric(
     standardGeneric('plotCompareSample')
   }
 )
+
+#' Smooth Chromatograms
+#'
+#' @rdname smoothChrom
+#' @param object a SRM object
+#' @param method a character string indicating the smoothing method to use. `sgolay` for optimised Savitzky Golay smoothing.
+#' @param ... any additional parameters that are required by the smoothing method
+#' @return a SRM object
+#'
+#' @author Tom Wilson \email{tpw2@@aber.ac.uk}
+#' @export
+
+setGeneric(
+  name = 'smoothChrom',
+  def = function(object, method, ...)
+  {
+    standardGeneric('smoothChrom')
+  }
+)
+
+
 
