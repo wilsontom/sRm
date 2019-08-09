@@ -99,4 +99,31 @@ setGeneric(
 )
 
 
+#' Detect Peaks
+#'
+#' @rdname detectPeaks
+#' @param object a SRM object
+#' @param raw; logical
+#' @param method a character string indicating the peak detection method to use.
+#'     *
+#'     *
+#'     *
+#' @param ... any additional parameters that are required by the peak detection method
+#' @return a SRM object
+#'
+#' @author Tom Wilson \email{tpw2@@aber.ac.uk}
+#' @export
+
+setGeneric(
+  name = 'detectPeaks',
+  def = function(object, method, ...)
+  {
+    standardGeneric('detectPeaks')
+  }
+)
+
+
+
+
+
 
