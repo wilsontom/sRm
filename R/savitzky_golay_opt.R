@@ -12,21 +12,21 @@ savitzky_golay_opt <- function(rt, int, ford)
 
   filtered_int <- NULL
   for (i in seq_along(f)) {
-    filtered_int[[i]] <- pracma::savgol(int, f[i], forder = ford)
+    filtered_int[[i]] <- pracma::savgol(int, f[i], forder = ford, dorder = 0)
   }
 
-  noise <- estimate_noise(int)
+  min_filt_in <-
+    purrr::map_dbl(filtered_int, min) %>% tibble::tibble(x = f, y = .)
 
-  min_int <-
-    which(unlist(purrr::map(filtered_int, ~ {
-      abs(min(.)) > noise
-    })) == FALSE)
 
-  selected_f <- f[max(min_int)]
-  #selected_f <- 11
+  min_ratio <- (1 - min_filt_in$y / min_filt_in$x)
+  min_diff <- diff(min_ratio)
+
+  f_min <- which(min_diff == min(min_diff))
+
   smoothed_int <-
     pracma::savgol(int,
-                   fl = selected_f,
+                   fl = f[f_min+1],
                    forder = ford,
                    dorder = 0)
 
