@@ -103,11 +103,14 @@ openSRM <- function(files)
     file_hdrs_clean %>% bind_rows() %>% mutate(polarity = replace(polarity, polarity == 0, '-')) %>%
     mutate(polarity = replace(polarity, polarity == 1, '+')) %>%
     mutate(polarity = replace(polarity, polarity == -1, 'TIC')) %>%
-    mutate(transition = format_scan_header(.))
+    mutate(transition = format_scan_header(.)) %>%
+    filter(index != 'TIC')
 
 
   object@transitions <-
-    file_hdrs_clean %>% select(transition, index) %>% distinct()
+    file_hdrs_clean %>% select(transition, index) %>% distinct() %>% filter(index != 'TIC')
+
+  object@rawChrom <- object@rawChrom %>% filter(index != 'TIC')
 
   object@transitions <-
     object@transitions %>% mutate(index_n = seq(from = 1, to = nrow(.)))
