@@ -12,8 +12,10 @@ setMethod('smoothChrom', signature = 'SRM',
           if(method == 'sgolay') {
             smoothed_chrom <- chrom_split %>% purrr::map(., ~ {
               savitzky_golay_opt(.$rt, .$int, ford = arguments$ford)
+
             })
           }
+
 
           for(i in seq_along(chrom_split)){
             chrom_split[[i]]$int <- smoothed_chrom[[i]]
