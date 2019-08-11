@@ -1,7 +1,6 @@
-language: r
-warnings_are_errors: false
-sudo: required
-dist: trusty
+language: R
+warnings_are_errors: true
+sudo: false
 bio_required: true
 cache: packages
 
@@ -14,14 +13,6 @@ apt_packages:
  - libnetcdf-dev
  - udunits-bin
  - libudunits2-dev
-
-r_packages:
- - xml2
- - testthat
- - covr
-
-bioc_packages:
- - mzR
 
 after_success:
  - Rscript -e 'library(covr); codecov()'
