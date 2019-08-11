@@ -1,165 +1,127 @@
-#' Combine Transitions
-#' @rdname combineTransitions
-#'
-#' @param object a SRM object
-#' @return a \code{transition} class of SRM total ion chromatograms
-#'
-#' @author Tom Wilson \email{tpw2@@aber.ac.uk}
-#' @export
-
-setGeneric(
-  name = "combineTransitions",
-  def = function(object)
-  {
-    standardGeneric("combineTransitions")
-  }
-)
-
-
-#' Show meta data
-#' @rdname meta
-#'
-#' @param object a SRM object
-#' @return NULL
-#'
-#' @author Tom Wilson \email{tpw2@@aber.ac.uk}
-#' @export
-
-setGeneric(
-  name = "meta",
-  def = function(object)
-  {
-    standardGeneric("meta")
-  }
-)
-
-#' Show transitions
-#' @rdname transitions
-#'
-#' @param object a SRM object
-#' @return NULL
-#'
-#' @author Tom Wilson \email{tpw2@@aber.ac.uk}
-#' @export
-
-setGeneric(
-  name = "transitions",
-  def = function(object)
-  {
-    standardGeneric("transitions")
-  }
-)
-
-
-
 #' Plot SRM
+#'
 #' @rdname plotSRM
 #' @param object a SRM object
-#' @param idn the index number of a transition to plot
-#' @return NULL
+#' @param index a numeric value of the transition index to plot
+#' @param type a character string of either `overlay` or `facet`
+#' @return a ggplot plot object
 #'
 #' @author Tom Wilson \email{tpw2@@aber.ac.uk}
 #' @export
 
 setGeneric(
-  name = "plotSRM",
-  def = function(object, idn)
+  name = 'plotSRM',
+  def = function(object, index, type)
   {
-    standardGeneric("plotSRM")
+    standardGeneric('plotSRM')
   }
 )
 
 
-#' plotMulti
-#' @rdname plotMulti
+#' Plot Parent
+#'
+#' @rdname plotParent
 #' @param object a SRM object
-#' @param idn the index number of a transition to plot
-#' @param addLabels logical; If \code{TRUE} then labels for each \code{geom_line} are added
-#' @param labels an optional character vector of label names. Default is \code{NULL}. If \code{addLabels} is \code{TRUE} and \code{labels} is \code{NULL} then \code{object@index} is used for label text.
-#' @return NULL
+#' @param parentMass a numeric value of the parent mass (Q1) to extract
+#' @return a ggplot plot object
+#'
+#' @author Tom Wilson \email{tpw2@@aber.ac.uk}
+#' @export
+
+setGeneric(
+  name = 'plotParent',
+  def = function(object, parentMass)
+  {
+    standardGeneric('plotParent')
+  }
+)
+
+
+#' Plot Sample
+#'
+#' @rdname plotSample
+#' @param object a SRM object
+#' @param sampleName a character string of a valid `sampleName`
+#' @param polarity a character string of either `pos` or `neg` for positive and negative ionisation mode respectively
+#' @return a ggplot plot object
 #'
 #' @author Tom Wilson \email{tpw2@@aber.ac.uk}
 #' @export
 
 
 setGeneric(
-  name = "plotMulti",
-  def = function(object,
-                 idn,
-                 addLabels = FALSE,
-                 labels = NULL)
+  name = 'plotSample',
+  def = function(object, sampleName, polarity)
   {
-    standardGeneric("plotMulti")
+    standardGeneric('plotSample')
   }
 )
 
 
-#' export_to_skyline
-#' @rdname export_to_skyline
+
+#' Plot Compare Sample
+#'
+#' @rdname plotCompareSample
 #' @param object a SRM object
-#' @param transitions an optional \code{data.frame} containing the following columns for selected (or all) transitions.
-#' @return a \code{tibble} of transitions in a format which can be easily used with \code{Skyline}
+#' @param index a numeric value of the transition index to plot
+#' @param sampleName a character vector of `sampleName` to plot
+#' @return a ggplot plot object
+#'
+#' @author Tom Wilson \email{tpw2@@aber.ac.uk}
+#' @export
+
+
+setGeneric(
+  name = 'plotCompareSample',
+  def = function(object, index, sampleName)
+  {
+    standardGeneric('plotCompareSample')
+  }
+)
+
+#' Smooth Chromatograms
+#'
+#' @rdname smoothChrom
+#' @param object a SRM object
+#' @param method a character string indicating the smoothing method to use. `sgolay` for optimised Savitzky Golay smoothing.
+#' @param ... any additional parameters that are required by the smoothing method
+#' @return a SRM object
 #'
 #' @author Tom Wilson \email{tpw2@@aber.ac.uk}
 #' @export
 
 setGeneric(
-  name = 'export_to_skyline',
-  def = function(object, transitions = NULL)
+  name = 'smoothChrom',
+  def = function(object, method, ...)
   {
-    standardGeneric('export_to_skyline')
+    standardGeneric('smoothChrom')
   }
 )
 
 
-#' tic
-#' @rdname tic
+#' Detect Peaks
+#'
+#' @rdname detectPeaks
 #' @param object a SRM object
-#' @return a numeric value for the whole sample total ion count (tic)
+#' @param raw; logical
+#' @param method a character string indicating the peak detection method to use.
+#'     *
+#'     *
+#'     *
+#' @param ... any additional parameters that are required by the peak detection method
+#' @return a SRM object
 #'
 #' @author Tom Wilson \email{tpw2@@aber.ac.uk}
 #' @export
 
 setGeneric(
-  name = 'tic',
-  def = function(object)
+  name = 'detectPeaks',
+  def = function(object, method, ...)
   {
-    standardGeneric('tic')
+    standardGeneric('detectPeaks')
   }
 )
 
-
-#' bpi
-#' @rdname bpi
-#' @param object a SRM object
-#' @return a numeric value for the whole sample base peak intensity (bpi)
-#'
-#' @author Tom Wilson \email{tpw2@@aber.ac.uk}
-#' @export
-
-setGeneric(
-  name = 'bpi',
-  def = function(object)
-  {
-    standardGeneric('bpi')
-  }
-)
-
-#' get
-#' @rdname get
-#' @param object a SRM object
-#' @param Q1 a numeric value for parent m/z
-#' @param Q3 a numeric value for product m/z
-#' @param method either 'tic' or 'bpi' to return total ion count or base peak intensity respectively
-#' @return a \code{tibble} or parent and product mass, and either tic or bpi
-
-setGeneric(
-  name = 'get',
-  def = function(object, Q1, Q3, method)
-  {
-    standardGeneric('get')
-  }
-)
 
 
 

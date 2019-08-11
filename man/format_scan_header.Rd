@@ -7,12 +7,12 @@
 format_scan_header(x)
 }
 \arguments{
-\item{x}{a \code{tibble}}
+\item{x}{a `tibble`}
 }
 \value{
 a vector of tidy scan filters
 }
 \description{
-This function is only used internally in \code{get_scan_header}
+Format scan header
 }
 \keyword{internal}

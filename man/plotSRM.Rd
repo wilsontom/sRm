@@ -6,14 +6,19 @@
 \alias{plotSRM,SRM-method}
 \title{Plot SRM}
 \usage{
-plotSRM(object, idn)
+plotSRM(object, index, type)
 
-\S4method{plotSRM}{SRM}(object, idn)
+\S4method{plotSRM}{SRM}(object, index, type = "overlay")
 }
 \arguments{
 \item{object}{a SRM object}
 
-\item{idn}{the index number of a transition to plot}
+\item{index}{a numeric value of the transition index to plot}
+
+\item{type}{a character string of either `overlay` or `facet`}
+}
+\value{
+a ggplot plot object
 }
 \description{
 Plot SRM

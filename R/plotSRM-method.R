@@ -1,22 +1,66 @@
 #' @rdname plotSRM
 #'
-setMethod("plotSRM", signature = "SRM",
-            function(object,idn){
 
-          plot_df <- data.frame(object@peaks[idn])
-          names(plot_df) <- c("rt", "int")
+setMethod('plotSRM', signature = 'SRM',
+          function(object, index, type = 'overlay') {
+            plot_tr_name <- object@transitions %>% filter(index_n == !!index)
 
-          plot_title <- as.character(object@index[idn])
+            plot_tibble <-
+              object@rawChrom %>% filter(index == plot_tr_name$index) %>% select(-index)
 
-          ggplot(data = plot_df, aes_string(x = 'rt', y = 'int')) + geom_line(size = 0.5) + theme_bw() +
-            theme(legend.position = "none") +
-            theme(strip.text.x = element_text(size=12, face="bold")) +
-            theme(axis.text.y = element_text(size = 12, face = "bold"),
-                  axis.text.x = element_text(size = 12, face = "bold"),
-                  axis.title.y = element_text(size = 12, face = "bold"),
-                  axis.title.x = element_text(size = 12, face = "bold")) +
-                   xlab("Retention Time (mins)") + ylab("Intensity") +
-                   ggtitle(plot_title) + theme(plot.title=element_text(size = 14, face = "bold"))
+            plot_title <- plot_tr_name$transition
+
+            if (type == 'overlay') {
+              plot_out <- ggplot(data = plot_tibble,
+                                 aes_string(
+                                   x = 'rt',
+                                   y = 'int',
+                                   group = 'sampleID',
+                                   colour = 'sampleID'
+                                 )) + geom_line(size = 0.45) + theme_bw() +
+                theme(legend.position = 'top') +
+                theme(legend.title = element_blank()) +
+                theme(strip.text.x = element_text(size = 10)) +
+                theme(
+                  axis.text.y = element_text(size = 10),
+                  axis.text.x = element_text(size = 10),
+                  axis.title.y = element_text(size = 10),
+                  axis.title.x = element_text(size = 10)
+                ) +
+                scale_x_continuous(breaks = seq(
+                  from  = 0,
+                  to = round(max(plot_tibble$rt), digits = 1),
+                  by = 2
+                )) +
+                xlab("Retention Time (mins)") + ylab("Intensity") +
+                ggtitle(plot_title) + theme(plot.title = element_text(size = 14))
 
             }
-)
+
+            if (type == 'facet') {
+              plot_out <- ggplot(data = plot_tibble,
+                                 aes_string(x = 'rt',
+                                            y = 'int')) + geom_line(size = 0.45) + theme_bw() +
+                theme(legend.position = 'top') +
+                theme(legend.title = element_blank()) +
+                theme(strip.text.x = element_text(size = 10)) +
+                theme(
+                  axis.text.y = element_text(size = 10),
+                  axis.text.x = element_text(size = 10),
+                  axis.title.y = element_text(size = 10),
+                  axis.title.x = element_text(size = 10)
+                ) +
+                scale_x_continuous(breaks = seq(
+                  from  = 0,
+                  to = round(max(plot_tibble$rt), digits = 1),
+                  by = 2
+                )) +
+                xlab("Retention Time (mins)") + ylab("Intensity") +
+                ggtitle(plot_title) + theme(plot.title = element_text(size = 14)) +
+                facet_wrap( ~ sampleID)
+
+            }
+
+            return(plot_out)
+
+          })

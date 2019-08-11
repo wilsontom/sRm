@@ -7,21 +7,3 @@
 \description{
 A S4 class to store single reaction monitoring (SRM) mass spectrometry (MS) data
 }
-\section{Slots}{
-
-\describe{
-\item{\code{SHA1}}{character vector of the original SHA-1 checksum value}
-
-\item{\code{meta}}{list containing file meta data}
-
-\item{\code{totIonCount}}{\code{data.frame} of sample total ion count (TIC)}
-
-\item{\code{filter}}{character vector of scan filters; taken directly from \code{chromatogram idRefs}}
-
-\item{\code{index}}{character vector of readable scan index's; ie \code{Q1: 153.01 --> Q3: 65.271 (-)}}
-
-\item{\code{peaks}}{list of peak data}
-
-\item{\code{header}}{\code{data.frame} of summary information for each scan index;\code{parent}, \code{product}, \code{polarity}, \code{totIonCount}, \code{basePeakInt}}
-}}
-
