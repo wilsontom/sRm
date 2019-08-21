@@ -16,7 +16,24 @@ globalVariables(
     'rt',
     'int',
     'totIonCount',
-    'basePeakInt'
+    'basePeakInt',
+    'rtmin',
+    'rtmax',
+    'maxo',
+    'into',
+    'sn',
+    'index',
+    'peakId',
+    'index_n',
+    'Q1',
+    'sampleID',
+    'area',
+    'Datestamp',
+    'Instrument',
+    'sample_n',
+    'Schema',
+    'Timestamp',
+    'transition'
   )
 )
 

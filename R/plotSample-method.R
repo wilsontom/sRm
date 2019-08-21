@@ -43,7 +43,7 @@ setMethod('plotSample', signature = 'SRM',
                   by = 2
                 )) +
                 xlab("Retention Time (mins)") + ylab("Intensity") +
-                facet_wrap(~index, scale = 'free') +
+                facet_wrap(~index, scales = 'free') +
                 theme(strip.text.x = element_text(size = 8))
 
 

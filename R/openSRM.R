@@ -5,6 +5,7 @@
 #' @param files a character vector of absolute file paths of SRM files in `.mzML` format
 #' @return an SRM object
 #' @export
+#' @importFrom magrittr %>%
 
 openSRM <- function(files)
 {
@@ -101,9 +102,9 @@ openSRM <- function(files)
   }
 
   file_hdrs_clean <-
-    file_hdrs_clean %>% dplyr::bind_rows() %>% dplyr::mutate(polarity = dplyr::replace(polarity, polarity == 0, '-')) %>%
-    dplyr::mutate(polarity = dplyr::replace(polarity, polarity == 1, '+')) %>%
-    dplyr::mutate(polarity = dplyr::replace(polarity, polarity == -1, 'TIC')) %>%
+    file_hdrs_clean %>% dplyr::bind_rows() %>% dplyr::mutate(polarity = replace(polarity, polarity == 0, '-')) %>%
+    dplyr::mutate(polarity = replace(polarity, polarity == 1, '+')) %>%
+    dplyr::mutate(polarity = replace(polarity, polarity == -1, 'TIC')) %>%
     dplyr::mutate(transition = format_scan_header(.)) %>%
     dplyr::filter(index != 'TIC')
 

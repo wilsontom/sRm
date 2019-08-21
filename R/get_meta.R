@@ -4,13 +4,11 @@
 #'
 #' @param x a valid `.mzML` file
 #' @return a `tibble` containing;
-#' \itemize{
-#'     \item{`mzML Schema`}
-#'     \item{`Acquisition Date`}
-#'     \item{`Acquisition Time`}
-#'     \item{`Instrument Model`}
-#'     \item{`File ID`}
-#' }
+#'  * mzML Schema
+#'  * Acquisition Date
+#'  * Acquisition Time
+#'  * Instrument Model
+#'  * File ID
 #'
 #' @export
 
@@ -37,8 +35,8 @@ get_meta <- function(x)
 
   fileInfo <- xml2::xml_find_all(xmltmp, "//d1:sourceFileList")
 
-  fileName <- xml2::xml_attrs(xml_children(fileInfo))[[1]][['name']]
-  fileID <- xml2::xml_attrs(xml_children(fileInfo))[[1]][['id']]
+  fileName <- xml2::xml_attrs(xml2::xml_children(fileInfo))[[1]][['name']]
+  fileID <- xml2::xml_attrs(xml2::xml_children(fileInfo))[[1]][['id']]
 
 
   meta_tibble <-

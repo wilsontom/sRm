@@ -1,6 +1,5 @@
 #' @rdname plotSRM
-#'
-
+#' @importFrom ggplot2 ggplot aes_string geom_line theme_bw theme element_blank element_text scale_x_continuous xlab ylab facet_wrap labs ggtitle
 setMethod('plotSRM', signature = 'SRM',
           function(object, index, type = 'overlay') {
             plot_tr_name <-

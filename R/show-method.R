@@ -6,7 +6,8 @@
 #'
 #' @author Tom Wilson \email{tpw2@@aber.ac.uk}
 #' @export
-#' @importFrom methods show
+#' @importFrom methods show new
+#' @importFrom utils object.size
 
 setMethod("show", signature = "SRM",
           function(object) {
