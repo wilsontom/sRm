@@ -4,10 +4,10 @@
 setMethod('plotCompareSample', signature = 'SRM',
           function(object, index, sampleName) {
 
-            plot_tr_name <- object@transitions %>% filter(index_n == !!index)
+            plot_tr_name <- object@transitions %>% dplyr::filter(index_n == !!index)
 
             plot_tibble <-
-              object@rawChrom %>% filter(index == plot_tr_name$index) %>% select(-index) %>% filter(sampleID %in% !!sampleName)
+              object@rawChrom %>% dplyr::filter(index == plot_tr_name$index) %>% dplyr::select(-index) %>% dplyr::filter(sampleID %in% !!sampleName)
 
             plot_title <- plot_tr_name$transition
 

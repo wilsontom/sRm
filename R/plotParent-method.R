@@ -4,10 +4,10 @@
 setMethod('plotParent', signature = 'SRM',
           function(object, parentMass) {
             plot_tr_name <-
-              object@header %>% filter(Q1 == !!parentMass) %>% select(index) %>% distinct()
+              object@header %>% dplyr::filter(Q1 == !!parentMass) %>% dplyr::select(index) %>% dplyr::distinct()
 
             plot_tibble <-
-              object@rawChrom %>% filter(index %in% plot_tr_name$index)
+              object@rawChrom %>% dplyr::filter(index %in% plot_tr_name$index)
 
             transition_match <-
               match(plot_tibble$index, object@header$index)

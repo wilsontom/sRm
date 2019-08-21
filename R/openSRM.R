@@ -27,7 +27,7 @@ openSRM <- function(files)
   transition_names <- list()
   for (i in seq_along(chromtmp)) {
     transition_names[[i]] <-
-      purrr:::map_chr(chromtmp[[i]], ~ {
+      purrr::map_chr(chromtmp[[i]], ~ {
         names(.)[[2]]
       })
   }
@@ -38,7 +38,7 @@ openSRM <- function(files)
   chromtib <- list()
   for (i in seq_along(chromtmp)) {
     chromtib[[i]] <-
-      purrr::map(chromtmp[[i]], as_tibble, validate = FALSE) %>% purrr::map(., select, rt = 1, int = 2)
+      purrr::map(chromtmp[[i]], tibble::as_tibble, validate = FALSE) %>% purrr::map(., dplyr::select, rt = 1, int = 2)
   }
 
 
@@ -46,7 +46,7 @@ openSRM <- function(files)
   for (i in seq_along(chromtib)) {
     chromtib[[i]] <-
       purrr::map(chromtib[[i]], ~ {
-        mutate(., sampleID = basename(files[i]))
+        dplyr::mutate(., sampleID = basename(files[i]))
       })
 
   }
@@ -62,7 +62,8 @@ openSRM <- function(files)
 
 
   # create a long format tibble of all the peak data
-  peak_table <- unlist(chromtib, recursive = FALSE) %>% bind_rows()
+  peak_table <-
+    unlist(chromtib, recursive = FALSE) %>% dplyr::bind_rows()
 
   # remove file extentions
   peak_table$sampleID <-
@@ -100,33 +101,34 @@ openSRM <- function(files)
   }
 
   file_hdrs_clean <-
-    file_hdrs_clean %>% bind_rows() %>% mutate(polarity = replace(polarity, polarity == 0, '-')) %>%
-    mutate(polarity = replace(polarity, polarity == 1, '+')) %>%
-    mutate(polarity = replace(polarity, polarity == -1, 'TIC')) %>%
-    mutate(transition = format_scan_header(.)) %>%
-    filter(index != 'TIC')
+    file_hdrs_clean %>% dplyr::bind_rows() %>% dplyr::mutate(polarity = dplyr::replace(polarity, polarity == 0, '-')) %>%
+    dplyr::mutate(polarity = dplyr::replace(polarity, polarity == 1, '+')) %>%
+    dplyr::mutate(polarity = dplyr::replace(polarity, polarity == -1, 'TIC')) %>%
+    dplyr::mutate(transition = format_scan_header(.)) %>%
+    dplyr::filter(index != 'TIC')
 
 
   object@transitions <-
-    file_hdrs_clean %>% select(transition, index) %>% distinct() %>% filter(index != 'TIC')
+    file_hdrs_clean %>% dplyr::select(transition, index) %>% dplyr::distinct() %>% dplyr::filter(index != 'TIC')
 
-  object@rawChrom <- object@rawChrom %>% filter(index != 'TIC')
+  object@rawChrom <-
+    object@rawChrom %>% dplyr::filter(index != 'TIC')
 
   object@transitions <-
-    object@transitions %>% mutate(index_n = seq(from = 1, to = nrow(.)))
+    object@transitions %>% dplyr::mutate(index_n = seq(from = 1, to = nrow(.)))
 
   tic_bpi <-
-    object@rawChrom %>% group_by(sampleID, index) %>% summarise(tic = sum(int), bpi = max(int)) %>% ungroup()
+    object@rawChrom %>% dplyr::group_by(sampleID, index) %>% dplyr::summarise(tic = sum(int), bpi = max(int)) %>% dplyr::ungroup()
 
 
   object@header <-
-    full_join(tic_bpi, file_hdrs_clean, by = c('sampleID', 'index'))
+    dplyr::full_join(tic_bpi, file_hdrs_clean, by = c('sampleID', 'index'))
 
   meta_tibble <-
     purrr::map(files, get_meta) %>% purrr::map(., ~ {
       tidyr::spread(., name, value)
-    }) %>% bind_rows() %>% mutate(sample_n = seq(from = 1, to = nrow(.))) %>%
-    select(sampleID, sample_n, Datestamp, Timestamp, Instrument, Schema)
+    }) %>% dplyr::bind_rows() %>% dplyr::mutate(sample_n = seq(from = 1, to = nrow(.))) %>%
+    dplyr::select(sampleID, sample_n, Datestamp, Timestamp, Instrument, Schema)
 
 
   meta_ext <- tools::file_ext(meta_tibble$sampleID)
