@@ -15,7 +15,8 @@ Depends:
 Imports:
     mzR,
     tibble,
-    purrr
+    purrr,
+    xcms
 URL: https://github.com/wilsontom/sRm
 BugReports: https://github.com/wilsontom/sRm/issues
 LazyData: TRUE
