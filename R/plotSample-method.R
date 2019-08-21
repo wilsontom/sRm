@@ -5,7 +5,7 @@ setMethod('plotSample', signature = 'SRM',
           function(object, sampleName, polarity) {
 
             plot_tibble <-
-              object@rawChrom %>% filter(sampleID == !!sampleName) %>% filter(index != 'TIC')
+              object@rawChrom %>% dplyr::filter(sampleID == !!sampleName) %>% dplyr::filter(index != 'TIC')
 
             transition_match <-
               match(plot_tibble$index, object@header$index)
@@ -14,14 +14,14 @@ setMethod('plotSample', signature = 'SRM',
               paste0(object@header$Q1[transition_match], '//', object@header$Q3[transition_match])
 
               plot_tibble <-
-              plot_tibble %>% mutate(polarity = object@header$polarity[transition_match])
+              plot_tibble %>% dplyr::mutate(polarity = object@header$polarity[transition_match])
 
               if (polarity == 'pos') {
-                plot_filter <- plot_tibble %>% filter(polarity == '+')
+                plot_filter <- plot_tibble %>% dplyr::filter(polarity == '+')
               }
 
               if (polarity == 'neg') {
-                plot_filter <- plot_tibble %>% filter(polarity == '-')
+                plot_filter <- plot_tibble %>% dplyr::filter(polarity == '-')
               }
 
 
