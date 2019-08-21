@@ -11,13 +11,11 @@ get_meta(x)
 }
 \value{
 a `tibble` containing;
-\itemize{
-    \item{`mzML Schema`}
-    \item{`Acquisition Date`}
-    \item{`Acquisition Time`}
-    \item{`Instrument Model`}
-    \item{`File ID`}
-}
+ * mzML Schema
+ * Acquisition Date
+ * Acquisition Time
+ * Instrument Model
+ * File ID
 }
 \description{
 Extract a minimal amount meta data from a `.mzML` file

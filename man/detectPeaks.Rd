@@ -19,8 +19,6 @@ detectPeaks(object, method, ...)
 *}
 
 \item{...}{any additional parameters that are required by the peak detection method}
-
-\item{raw;}{logical}
 }
 \value{
 a SRM object
