@@ -1,22 +1,27 @@
 Package: sRm
 Type: Package
-Title: Minimal parser for Selective Reaction Monitoring (SRM) mass spectrometry
+Title: Toolkit for SRM-MS data
     (MS) data
 Version: 0.2.0
 Authors@R: c(
     person("Tom", "Wilson", , "tpw2@aber.ac.uk", c("aut", "cre")))
-Description: Functions for parsing SRM-MS data from .mzML files.
+Description: A complete toolkit for working with Selecive Reaction Monitoring (SRM) Mass Spectrometry (MS) data and other
+    variants of targeted Liquid Chromatography (LC) MS data. 
 License: GPL (>= 3)
 Depends:
     methods,
-    xml2,
-    dplyr,
-    ggplot2
+    ggplot2,
+    magrittr
 Imports:
     mzR,
     tibble,
     purrr,
-    xcms
+    dplyr,
+    tidyr,
+    xml2,
+    xcms,
+    pracma,
+    stringr
 URL: https://github.com/wilsontom/sRm
 BugReports: https://github.com/wilsontom/sRm/issues
 LazyData: TRUE
