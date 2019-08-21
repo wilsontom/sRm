@@ -1,6 +1,17 @@
 ### NEWS
 
 
+#### v0.2.0
+
+**Breaking Changes**
+
+- Multiple file input. `SRM` objects can be used for single `mzML` files or batch mode for multiple files
+- Basic support for peak smoothing (Savitzky-Golay implemented at present)
+- Support for chromatogram feature detection (pracma & xcms matchedFilter)
+- Improved plotting methods
+- Complete re-write of `openSRM` function and all underlying methods
+- All previous methods form v0.1.4 and lower; now deprecated
+
 #### v0.1.4
  - The main change is that extraction and decoding of chromatogram time and intensity arrays is now performed by `mzR`.
  - `xml2` is still used for extraction of header data which is currently unsupported by `mzR`
