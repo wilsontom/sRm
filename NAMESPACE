@@ -2,6 +2,7 @@
 
 export(detectPeaks)
 export(get_meta)
+export(matchedFilter)
 export(openSRM)
 export(plotCompareSample)
 export(plotParent)
