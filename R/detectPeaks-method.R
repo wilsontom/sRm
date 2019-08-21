@@ -8,10 +8,10 @@ setMethod('detectPeaks', signature = 'SRM',
 
             if (length(object@transformedChrom) == 0) {
               chrom_split  <-
-                object@rawChrom %>% group_by(sampleID, index) %>% group_split()
+                object@rawChrom %>% dplyr::group_by(sampleID, index) %>% dplyr::group_split()
             } else{
               chrom_split  <-
-                object@transformedChrom %>% group_by(sampleID, index) %>% group_split()
+                object@transformedChrom %>% dplyr::group_by(sampleID, index) %>% dplyr::group_split()
             }
 
 
@@ -24,9 +24,9 @@ setMethod('detectPeaks', signature = 'SRM',
 
               for (i in seq_along(chromPeaks)) {
                 chromPeaks[[i]] <-
-                  chromPeaks[[i]] %>% mutate(sampleID = chrom_split[[i]]$sampleID[1],
+                  chromPeaks[[i]] %>% dplyr::mutate(sampleID = chrom_split[[i]]$sampleID[1],
                                              index = chrom_split[[i]]$index[1]) %>%
-                  select(sampleID, index, rt, rtmin, rtmax, int, area, peakId)
+                  dplyr::select(sampleID, index, rt, rtmin, rtmax, int, area, peakId)
 
               }
 
@@ -41,9 +41,9 @@ setMethod('detectPeaks', signature = 'SRM',
 
                 for (i in seq_along(chromPeaks)) {
                   chromPeaks[[i]] <-
-                    chromPeaks[[i]] %>% mutate(sampleID = chrom_split[[i]]$sampleID[1],
+                    chromPeaks[[i]] %>% dplyr::mutate(sampleID = chrom_split[[i]]$sampleID[1],
                                                index = chrom_split[[i]]$index[1]) %>%
-                    select(sampleID, index, rt, rtmin, rtmax, int, area, sn, peakId)
+                    dplyr::select(sampleID, index, rt, rtmin, rtmax, int, area, sn, peakId)
 
                 }
 
@@ -52,7 +52,7 @@ setMethod('detectPeaks', signature = 'SRM',
 
 
 
-              object@peaks <-  chromPeaks %>% bind_rows()
+              object@peaks <-  chromPeaks %>% dplyr::bind_rows()
 
             }
 
