@@ -16,7 +16,7 @@ setMethod("show", signature = "SRM",
             cat('\n')
             cat('Number of SRM Files: ', nrow(object@meta))
             cat('\n')
-            trcnt <- object@transitions %>% filter(index != 'TIC') %>% nrow()
+            trcnt <- object@transitions %>% dplyr::filter(index != 'TIC') %>% nrow()
             cat('Unique SRM Transitons Measured:', trcnt)
             cat('\n')
             cat('Total Object Size:', format(object.size(object), units = 'Mb'))
