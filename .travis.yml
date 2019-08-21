@@ -13,6 +13,15 @@ apt_packages:
  - libnetcdf-dev
  - udunits-bin
  - libudunits2-dev
+ - netcdf-bin
+ 
+r_packages:
+ - xml2
+ - testthat
+ - covr
+
+bioc_packages:
+ - mzR
 
 after_success:
  - Rscript -e 'library(covr); codecov()'
