@@ -121,8 +121,22 @@ setGeneric(
   }
 )
 
+#' Plot Peak Area
+#'
+#' @rdname plotPeakArea
+#' @param object a SRM object
+#' @param index a numeric value of the transition index to plot
+#' @param sampleName a character string of `sampleName` to plot
+#' @param type a character string of either `raw` or `transformed`, indicating which chromatography data to use when plotting
+#' @return a ggplot plot object
+#'
+#' @author Tom Wilson \email{tpw2@@aber.ac.uk}
+#' @export
 
-
-
-
-
+setGeneric(
+  name = 'plotPeakArea',
+  def = function(object, index, sampleName, type)
+  {
+    standardGeneric('plotPeakArea')
+  }
+)
