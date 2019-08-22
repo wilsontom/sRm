@@ -103,10 +103,10 @@ setGeneric(
 #'
 #' @rdname detectPeaks
 #' @param object a SRM object
-#' @param method a character string indicating the peak detection method to use.
-#'     *
-#'     *
-#'     *
+#' @param method a character string indicating the peak detection method to use:
+#' - **pracma**
+#' - **matchedFilter**
+#'
 #' @param ... any additional parameters that are required by the peak detection method
 #' @return a SRM object
 #'
