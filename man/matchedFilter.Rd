@@ -14,7 +14,7 @@ matchedFilter(rt, int, snthresh)
 \item{snthresh}{a numeric value for the Signal-to-Noise cut off to use during peak detection}
 }
 \value{
-a `tibble` of detected peaks
+a \code{tibble} of detected peaks
 }
 \description{
 Wraper for xcms matchedFilter peak detection

@@ -7,7 +7,7 @@
 format_scan_header(x)
 }
 \arguments{
-\item{x}{a `tibble`}
+\item{x}{a \code{tibble}}
 }
 \value{
 a vector of tidy scan filters

@@ -15,7 +15,7 @@ plotSRM(object, index, type)
 
 \item{index}{a numeric value of the transition index to plot}
 
-\item{type}{a character string of either `overlay` or `facet`}
+\item{type}{a character string of either \code{overlay} or \code{facet}}
 }
 \value{
 a ggplot plot object

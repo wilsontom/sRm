@@ -13,9 +13,9 @@ plotSample(object, sampleName, polarity)
 \arguments{
 \item{object}{a SRM object}
 
-\item{sampleName}{a character string of a valid `sampleName`}
+\item{sampleName}{a character string of a valid \code{sampleName}}
 
-\item{polarity}{a character string of either `pos` or `neg` for positive and negative ionisation mode respectively}
+\item{polarity}{a character string of either \code{pos} or \code{neg} for positive and negative ionisation mode respectively}
 }
 \value{
 a ggplot plot object

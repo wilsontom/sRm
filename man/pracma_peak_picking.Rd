@@ -12,8 +12,8 @@ pracma_peak_picking(rt, int)
 \item{int}{a numeric vector of intensity}
 }
 \value{
-a `tibble` of peak infomation (rt, rtmin, rtmax, int, area, peakId)
+a \code{tibble} of peak infomation (rt, rtmin, rtmax, int, area, peakId)
 }
 \description{
-A wrapper around `pracma::findPeaks` for peak detection and integration
+A wrapper around \code{pracma::findPeaks} for peak detection and integration
 }

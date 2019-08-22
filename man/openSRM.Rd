@@ -7,11 +7,11 @@
 openSRM(files)
 }
 \arguments{
-\item{files}{a character vector of absolute file paths of SRM files in `.mzML` format}
+\item{files}{a character vector of absolute file paths of SRM files in \code{.mzML} format}
 }
 \value{
 an SRM object
 }
 \description{
-Open and parse SRM files into an `S4` SRM Object
+Open and parse SRM files into an \code{S4} SRM Object
 }

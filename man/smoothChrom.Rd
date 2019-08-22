@@ -13,7 +13,7 @@ smoothChrom(object, method, ...)
 \arguments{
 \item{object}{a SRM object}
 
-\item{method}{a character string indicating the smoothing method to use. `sgolay` for optimised Savitzky Golay smoothing.}
+\item{method}{a character string indicating the smoothing method to use. \code{sgolay} for optimised Savitzky Golay smoothing.}
 
 \item{...}{any additional parameters that are required by the smoothing method}
 }

@@ -15,7 +15,7 @@ plotCompareSample(object, index, sampleName)
 
 \item{index}{a numeric value of the transition index to plot}
 
-\item{sampleName}{a character vector of `sampleName` to plot}
+\item{sampleName}{a character vector of \code{sampleName} to plot}
 }
 \value{
 a ggplot plot object

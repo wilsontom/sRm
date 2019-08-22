@@ -13,10 +13,11 @@ detectPeaks(object, method, ...)
 \arguments{
 \item{object}{a SRM object}
 
-\item{method}{a character string indicating the peak detection method to use.
-*
-*
-*}
+\item{method}{a character string indicating the peak detection method to use:
+\itemize{
+\item pracma
+\item matchedFilter
+}}
 
 \item{...}{any additional parameters that are required by the peak detection method}
 }

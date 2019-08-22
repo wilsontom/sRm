@@ -7,16 +7,18 @@
 get_meta(x)
 }
 \arguments{
-\item{x}{a valid `.mzML` file}
+\item{x}{a valid \code{.mzML} file}
 }
 \value{
-a `tibble` containing;
- * mzML Schema
- * Acquisition Date
- * Acquisition Time
- * Instrument Model
- * File ID
+a \code{tibble} containing;
+\itemize{
+\item mzML Schema
+\item Acquisition Date
+\item Acquisition Time
+\item Instrument Model
+\item File ID
+}
 }
 \description{
-Extract a minimal amount meta data from a `.mzML` file
+Extract a minimal amount meta data from a \code{.mzML} file
 }
