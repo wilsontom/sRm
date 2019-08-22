@@ -4,17 +4,19 @@
 #' @param rt a numeric vector of chromatogram retention time in minutes
 #' @param int a numeric vector of chromatogram intensity
 #' @param snthresh a numeric value for the Signal-to-Noise cut off to use during peak detection
+#' @param fwhm a numeric value for the Full-Width at Half-Maximum to use
 #' @return a `tibble` of detected peaks
 #'
 #' @export
 
-matchedFilter <- function(rt, int, snthresh)
+matchedFilter <- function(rt, int, snthresh, fwhm)
 {
   MFpeaks <-
     suppressWarnings(xcms::peaksWithMatchedFilter(
       int = int,
       rt = rt * 60,
-      snthresh = snthresh
+      snthresh = snthresh,
+      fwhm = fwhm
     )) %>% tibble::as_tibble()
 
   if (nrow(MFpeaks) > 0) {

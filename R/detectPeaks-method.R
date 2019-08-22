@@ -6,7 +6,7 @@ setMethod('detectPeaks', signature = 'SRM',
             arguments <- list(...)
 
 
-            if (length(object@transformedChrom) == 0) {
+            if (length(object@transformedChrom) > 0) {
               chrom_split  <-
                 object@transformedChrom %>% dplyr::group_by(sampleID, index) %>% dplyr::group_split()
             } else{
@@ -36,7 +36,7 @@ setMethod('detectPeaks', signature = 'SRM',
             if (method == 'matchedFilter') {
               chromPeaks <-
                 purrr::map(chrom_split,  ~ {
-                  matchedFilter(.$rt, .$int, snthresh = arguments$snthresh)
+                  matchedFilter(.$rt, .$int, snthresh = arguments$snthresh, fwhm = arguments$fwhm)
                 })
 
 
