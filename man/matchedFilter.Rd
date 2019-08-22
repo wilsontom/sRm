@@ -4,7 +4,7 @@
 \alias{matchedFilter}
 \title{Wraper for xcms matchedFilter peak detection}
 \usage{
-matchedFilter(rt, int, snthresh)
+matchedFilter(rt, int, snthresh, fwhm)
 }
 \arguments{
 \item{rt}{a numeric vector of chromatogram retention time in minutes}
@@ -12,6 +12,8 @@ matchedFilter(rt, int, snthresh)
 \item{int}{a numeric vector of chromatogram intensity}
 
 \item{snthresh}{a numeric value for the Signal-to-Noise cut off to use during peak detection}
+
+\item{fwhm}{a numeric value for the Full-Width at Half-Maximum to use}
 }
 \value{
 a \code{tibble} of detected peaks

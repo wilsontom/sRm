@@ -15,8 +15,8 @@ detectPeaks(object, method, ...)
 
 \item{method}{a character string indicating the peak detection method to use:
 \itemize{
-\item pracma
-\item matchedFilter
+\item \strong{pracma}
+\item \strong{matchedFilter}
 }}
 
 \item{...}{any additional parameters that are required by the peak detection method}
