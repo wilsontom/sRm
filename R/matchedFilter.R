@@ -11,7 +11,7 @@
 matchedFilter <- function(rt, int, snthresh)
 {
   MFpeaks <-
-    xcms::peaksWithMatchedFilter(int, rt * 60, snthresh = snthresh) %>% tibble::as_tibble()
+    xcms::peaksWithMatchedFilter(int = int, rt = rt * 60, snthresh = snthresh) %>% tibble::as_tibble()
 
   if (nrow(MFpeaks) > 0) {
     peakTable <-
