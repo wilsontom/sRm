@@ -56,7 +56,6 @@ setMethod('detectPeaks', signature = 'SRM',
             object@peaks <- chromPeaks %>% dplyr::bind_rows()
 
 
-
             return(object)
 
           })
