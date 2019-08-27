@@ -9,7 +9,8 @@ setClass(Class = 'SRM', representation = representation(
           rawChrom = 'tbl_df',
           transformedChrom = 'tbl_df',
           peaks = 'tbl_df',
-          header = 'tbl_df'
+          header = 'tbl_df',
+          processingLog = 'list'
         )
     )
 
