@@ -140,3 +140,42 @@ setGeneric(
     standardGeneric('plotPeakArea')
   }
 )
+
+
+
+#' Filter Peaks
+#'
+#' @rdname filterPeaks
+#' @param object a SRM object
+#' @return a `SRM` object
+#'
+#' @author Tom Wilson \email{tpw2@@aber.ac.uk}
+#' @export
+
+setGeneric(
+  name = 'filterPeaks',
+  def = function(object)
+  {
+    standardGeneric('filterPeaks')
+  }
+)
+
+#' Peak Asymmetry
+#'
+#' @rdname peakAsymmetry
+#' @param object a SRM object
+#' @return a `SRM` object
+#'
+#' @author Tom Wilson \email{tpw2@@aber.ac.uk}
+#' @export
+
+setGeneric(
+  name = 'peakAsymmetry',
+  def = function(object)
+  {
+    standardGeneric('peakAsymmetry')
+  }
+)
+
+
+
