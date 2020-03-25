@@ -28,5 +28,8 @@ LazyData: TRUE
 Encoding: UTF-8
 RoxygenNote: 6.1.1
 Suggests:
-    testthat
+    testthat,
+    knitr,
+    rmarkdown
 Roxygen: list(markdown = TRUE)
+VignetteBuilder: knitr
