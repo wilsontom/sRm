@@ -7,6 +7,7 @@ on:
       - master
 
 name: R-CMD-check
+run: sudo apt-get install libxml2 libnetcdf-dev udunits-bin libudunits2-dev netcdf-bin
 
 jobs:
   R-CMD-check:
