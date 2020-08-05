@@ -4,10 +4,12 @@
 \alias{openSRM}
 \title{Open SRM Files}
 \usage{
-openSRM(files)
+openSRM(files, source_type)
 }
 \arguments{
 \item{files}{a character vector of absolute file paths of SRM files in \code{.mzML} format}
+
+\item{source_type}{a character string of the original file format (\code{raw} or \code{lcd})}
 }
 \value{
 an SRM object

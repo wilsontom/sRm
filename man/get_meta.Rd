@@ -4,10 +4,12 @@
 \alias{get_meta}
 \title{Extract meta information from .mzML file}
 \usage{
-get_meta(x)
+get_meta(x, type = "raw")
 }
 \arguments{
 \item{x}{a valid \code{.mzML} file}
+
+\item{type}{a character string of the original file format (\code{raw} or \code{lcd})}
 }
 \value{
 a \code{tibble} containing;
