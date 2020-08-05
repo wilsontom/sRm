@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 
 `sRm` is package which contains a selection of functions and methods for handling, processing and visualising Selective Reaction Monitoring (SRM) or Multiple Reaction Monitoring (MRM) Liquid Chromatography Mass Spectrometry Data (LC-MS). The key distinction between SRM/MRM data and other LC-MS data is that the data is acquired as a time-series in the form of chromatograms; whereas other LC-MS (ie DIA, DDA, PRM) acquire data as a series of mass specturms which can then be used to create chromatograms. 
 
-`sRm` is designed to make use of exisiting packages (ie, much of the heavy lifting is done by `mzR` and `xcms`) and create a simple S4 interface to the user for processing and visualisation. 
+`sRm` is designed to make use of existing packages (ie, much of the heavy lifting is done by `mzR` and `xcms`) and create a simple S4 interface to the user for processing and visualisation. 
 
 
 **`sRm` can be easily installed directly from GitHub using the `remotes` package.**
@@ -34,9 +34,9 @@ Open and parse a series of `.mzML` files using the `openSRM` function.
 ```{r, load}
 library(sRm)
 
-chrom_files <- list.files(system.file('extdata', package = 'sRm'), full.names = TRUE)
+chrom_files <- list.files(system.file('extdata/Thermo_RAW', package = 'sRm'), full.names = TRUE)
 
-srmExp <- openSRM(chrom_files)
+srmExp <- openSRM(chrom_files, source_type = 'raw')
 
 srmExp
 
@@ -98,7 +98,7 @@ plotParent(srmExp, 187.026)
 srmExpPeaks <-
   detectPeaks(srmExp,
               method = 'matchedFilter',
-              snthresh = 10,
+              snthresh = 2,
               fwhm = 70)
 ```
 
