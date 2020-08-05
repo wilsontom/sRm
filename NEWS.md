@@ -1,5 +1,9 @@
 ### NEWS
 
+#### V0.2.1
+
+- Support for Shimadzu QqQ-MS
+
 #### v0.2.0
 
 **Breaking Changes**
