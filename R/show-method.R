@@ -21,4 +21,5 @@ setMethod("show", signature = "SRM",
             cat('Unique SRM Transitons Measured:', trcnt)
             cat('\n')
             cat('Total Object Size:', format(object.size(object), units = 'Mb'))
+            cat('\n')
           })
