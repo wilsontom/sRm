@@ -3,11 +3,12 @@
 #' Open and parse SRM files into an `S4` SRM Object
 #'
 #' @param files a character vector of absolute file paths of SRM files in `.mzML` format
+#' @param source_type a character string of the original file format (`raw` or `lcd`)
 #' @return an SRM object
 #' @export
 #' @importFrom magrittr %>%
 
-openSRM <- function(files)
+openSRM <- function(files, source_type)
 {
   # map over input files and open with mzR
   opentmp <- purrr::map(files, ~ {
@@ -32,8 +33,6 @@ openSRM <- function(files)
         names(.)[[2]]
       })
   }
-
-
 
   # iterate over files + chromatograms and convert rt-int matrices to named tibbles
   chromtib <- list()
@@ -104,10 +103,12 @@ openSRM <- function(files)
   file_hdrs_clean <-
     file_hdrs_clean %>% dplyr::bind_rows() %>% dplyr::mutate(polarity = replace(polarity, polarity == 0, '-')) %>%
     dplyr::mutate(polarity = replace(polarity, polarity == 1, '+')) %>%
-    dplyr::mutate(polarity = replace(polarity, polarity == -1, 'TIC')) %>%
-    dplyr::mutate(transition = format_scan_header(.)) %>%
-    dplyr::filter(index != 'TIC')
+    dplyr::mutate(polarity = replace(polarity, polarity == -1, 'TIC'))
 
+    clean_transition <- unlist(format_scan_header(file_hdrs_clean))
+
+    file_hdrs_clean <- file_hdrs_clean %>% dplyr::mutate(transition = clean_transition) %>%
+    dplyr::filter(index != 'TIC')
 
   object@transitions <-
     file_hdrs_clean %>% dplyr::select(transition, index) %>% dplyr::distinct() %>% dplyr::filter(index != 'TIC')
@@ -126,7 +127,9 @@ openSRM <- function(files)
     dplyr::full_join(tic_bpi, file_hdrs_clean, by = c('sampleID', 'index'))
 
   meta_tibble <-
-    purrr::map(files, get_meta) %>% purrr::map(., ~ {
+    purrr::map(files, ~ {
+      get_meta(., type = source_type)
+    }) %>% purrr::map(., ~ {
       tidyr::spread(., name, value)
     }) %>% dplyr::bind_rows() %>% dplyr::mutate(sample_n = seq(from = 1, to = nrow(.))) %>%
     dplyr::select(sampleID, sample_n, Datestamp, Timestamp, Instrument, Schema)
