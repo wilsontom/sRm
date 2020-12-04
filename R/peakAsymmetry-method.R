@@ -6,7 +6,7 @@ setMethod('peakAsymmetry', signature = 'SRM',
             peakChromAsym <- list()
 
             for (i in 1:nrow(object@peaks)) {
-              rawChrom <-
+            rawChrom <-
                 object@rawChrom %>% dplyr::filter(
                   sampleID == object@peaks$sampleID[i] &
                     index == object@peaks$index[i] &
@@ -35,5 +35,6 @@ setMethod('peakAsymmetry', signature = 'SRM',
 
             object@peaks <- peakChromAsym %>% dplyr::bind_rows()
 
+            return(object)
 
           })

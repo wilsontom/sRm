@@ -39,8 +39,7 @@ setMethod('detectPeaks', signature = 'SRM',
                   matchedFilter(.$rt, .$int, snthresh = arguments$snthresh, fwhm = arguments$fwhm)
                 })
 
-
-              for (i in seq_along(chromPeaks)) {
+                for (i in seq_along(chromPeaks)) {
                 chromPeaks[[i]] <-
                   chromPeaks[[i]] %>% dplyr::mutate(sampleID = chrom_split[[i]]$sampleID[1],
                                                     index = chrom_split[[i]]$index[1]) %>%
@@ -48,13 +47,9 @@ setMethod('detectPeaks', signature = 'SRM',
 
               }
 
-
             }
 
-
-
-            object@peaks <- chromPeaks %>% dplyr::bind_rows()
-
+            object@peaks <- chromPeaks %>% dplyr::bind_rows() %>% dplyr::filter(peakId != 0)
 
             return(object)
 
