@@ -9,10 +9,10 @@ Description: A complete toolkit for working with Selecive Reaction Monitoring (S
     variants of targeted Liquid Chromatography (LC) MS data. 
 License: GPL (>= 3)
 Depends:
-    methods,
     ggplot2,
     magrittr
 Imports:
+    methods,
     mzR,
     tibble,
     purrr,
@@ -21,7 +21,9 @@ Imports:
     xml2,
     xcms,
     pracma,
-    stringr
+    stringr,
+    ptw,
+    MsCoreUtils
 URL: https://github.com/wilsontom/sRm
 BugReports: https://github.com/wilsontom/sRm/issues
 LazyData: TRUE
@@ -30,6 +32,7 @@ RoxygenNote: 7.1.0
 Suggests:
     testthat,
     knitr,
-    rmarkdown
+    rmarkdown,
+    patchwork
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
