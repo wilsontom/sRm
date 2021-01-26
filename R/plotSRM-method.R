@@ -1,12 +1,13 @@
 #' @rdname plotSRM
 #' @importFrom ggplot2 ggplot aes_string geom_line theme_bw theme element_blank element_text scale_x_continuous xlab ylab facet_wrap labs ggtitle
+
 setMethod('plotSRM', signature = 'SRM',
           function(object, index, type = 'overlay') {
             plot_tr_name <-
-              object@transitions %>% dplyr::filter(index_n == !!index)
+              object@transitions %>% dplyr::filter(index == !!index)
 
             plot_tibble <-
-              object@rawChrom %>% dplyr::filter(index == plot_tr_name$index) %>% dplyr::select(-index)
+              object@rawChrom %>% dplyr::filter(filter == plot_tr_name$filter) %>% dplyr::select(-filter)
 
             plot_title <- plot_tr_name$transition
 
@@ -57,7 +58,7 @@ setMethod('plotSRM', signature = 'SRM',
                 )) +
                 xlab("Retention Time (mins)") + ylab("Intensity") +
                 ggtitle(plot_title) + theme(plot.title = element_text(size = 14)) +
-                facet_wrap(~ sampleID)
+                facet_wrap( ~ sampleID)
 
             }
 

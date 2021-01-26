@@ -20,9 +20,16 @@ setMethod('peakAsymmetry', signature = 'SRM',
               peak_front_10 <-
                 rawChrom$rt[rawChrom$rt < rtmax][which.min(abs(rawChrom$int[rawChrom$rt < rtmax] - max(rawChrom$int) * 0.1))]
 
+              if(length(peak_front_10) == 0){
+                peak_front_10 <- 0
+              }
 
               peak_tail_10 <-
                 rawChrom$rt[rawChrom$rt > rtmax][which.min(abs(rawChrom$int[rawChrom$rt > rtmax] - max(rawChrom$int) * 0.1))]
+
+              if(length(peak_tail_10) == 0){
+                peak_tail_10 <- 0
+              }
 
               A10 <- rtmax - peak_front_10
               B10 <- peak_tail_10 - rtmax

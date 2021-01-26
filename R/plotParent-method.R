@@ -4,15 +4,15 @@
 setMethod('plotParent', signature = 'SRM',
           function(object, parentMass) {
             plot_tr_name <-
-              object@header %>% dplyr::filter(Q1 == !!parentMass) %>% dplyr::select(index) %>% dplyr::distinct()
+              object@header %>% dplyr::filter(Q1 == !!parentMass) %>% dplyr::select(filter) %>% dplyr::distinct()
 
             plot_tibble <-
-              object@rawChrom %>% dplyr::filter(index %in% plot_tr_name$index)
+              object@rawChrom %>% dplyr::filter(filter %in% plot_tr_name$filter)
 
             transition_match <-
-              match(plot_tibble$index, object@header$index)
+              match(plot_tibble$filter, object@header$filter)
 
-            plot_tibble$index <-
+            plot_tibble$filter <-
               object@header$transition[transition_match]
 
 
@@ -21,8 +21,8 @@ setMethod('plotParent', signature = 'SRM',
                                aes_string(
                                  x = 'rt',
                                  y = 'int',
-                                 group = 'index',
-                                 colour = 'index'
+                                 group = 'filter',
+                                 colour = 'filter'
                                )) + geom_line(size = 0.50) + theme_bw() +
               theme(legend.position = 'top') +
               theme(legend.title = element_blank()) +
