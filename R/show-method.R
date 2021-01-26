@@ -3,23 +3,27 @@
 #'
 #' @param object a SRM object
 #' @return NULL
-#'
-#' @author Tom Wilson \email{tpw2@@aber.ac.uk}
 #' @export
 #' @importFrom methods show new
 #' @importFrom utils object.size
 
 setMethod("show", signature = "SRM",
           function(object) {
-            cat('An SRM Object')
-            cat('\n')
-            cat('--------------')
-            cat('\n')
-            cat('Number of SRM Files: ', nrow(object@meta))
-            cat('\n')
-            trcnt <- object@transitions %>% dplyr::filter(index != 'TIC') %>% nrow()
-            cat('Unique SRM Transitons Measured:', trcnt)
-            cat('\n')
-            cat('Total Object Size:', format(object.size(object), units = 'Mb'))
-            cat('\n')
+            cat(cli::rule(
+              left = crayon::bold('SRM Object'),
+              right = paste0('sRm v', utils::packageVersion('sRm'))
+            ), '\n', '\n')
+
+            cat(crayon::yellow('SRM File Inputs:', nrow(object@meta), '\n', '\n'))
+
+            trcnt <-
+              object@transitions %>% dplyr::filter(index != 'TIC') %>% nrow()
+
+            cat(crayon::yellow('Transitions measured:', trcnt, '\n', '\n'))
+
+            cat(crayon::red(
+              'Object Size:',
+              format(utils::object.size(object), units = 'Mb'),
+              '\n'
+            ))
           })
