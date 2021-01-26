@@ -56,7 +56,7 @@ openSRM <- function(files, source_type)
   for (i in seq_along(chromtib)) {
     for (k in seq_along(chromtib[[i]])) {
       chromtib[[i]][[k]] <-
-        chromtib[[i]][[k]] %>% tibble::add_column(., index = file_hdrs[[i]]$chromatogramId[k])
+        chromtib[[i]][[k]] %>% tibble::add_column(., filter = file_hdrs[[i]]$chromatogramId[k])
     }
   }
 
@@ -65,26 +65,20 @@ openSRM <- function(files, source_type)
   peak_table <-
     unlist(chromtib, recursive = FALSE) %>% dplyr::bind_rows()
 
-  # remove file extentions
+  # remove file extensions
   peak_table$sampleID <-
     stringr::str_remove_all(peak_table$sampleID, '.mzML')
-
 
   object <- new("SRM")
   object@rawChrom <- peak_table
 
-
-  # checksum <-
-  #   purrr::map_chr(files, openssl::md5) %>% tibble(sampleID = basename(files), MD5 = .)
-
   names(file_hdrs) <- basename(files)
-
 
   # create a tidy tibble of file headers
   file_hdrs_clean <-
     purrr::map(file_hdrs, ~ {
       tibble::tibble(
-        index = .$chromatogramId,
+        filter = .$chromatogramId,
         polarity = .$polarity,
         Q1 = .$precursorIsolationWindowTargetMZ,
         Q3 = .$productIsolationWindowTargetMZ
@@ -96,7 +90,7 @@ openSRM <- function(files, source_type)
       tibble::add_column(
         file_hdrs_clean[[i]],
         sampleID = stringr::str_remove_all(basename(files[[i]]), '.mzML'),
-        .before = 'index'
+        .before = 'filter'
       )
   }
 
@@ -108,23 +102,22 @@ openSRM <- function(files, source_type)
     clean_transition <- unlist(format_scan_header(file_hdrs_clean))
 
     file_hdrs_clean <- file_hdrs_clean %>% dplyr::mutate(transition = clean_transition) %>%
-    dplyr::filter(index != 'TIC')
+    dplyr::filter(filter != 'TIC')
 
   object@transitions <-
-    file_hdrs_clean %>% dplyr::select(transition, index) %>% dplyr::distinct() %>% dplyr::filter(index != 'TIC')
+    file_hdrs_clean %>% dplyr::select(transition, filter) %>% dplyr::distinct() %>% dplyr::filter(filter != 'TIC')
 
   object@rawChrom <-
-    object@rawChrom %>% dplyr::filter(index != 'TIC')
+    object@rawChrom %>% dplyr::filter(filter != 'TIC')
 
   object@transitions <-
-    object@transitions %>% dplyr::mutate(index_n = seq(from = 1, to = nrow(.)))
+    object@transitions %>% dplyr::mutate(index = seq(from = 1, to = nrow(.)))
 
   tic_bpi <-
-    object@rawChrom %>% dplyr::group_by(sampleID, index) %>% dplyr::summarise(tic = sum(int), bpi = max(int)) %>% dplyr::ungroup()
+    object@rawChrom %>% dplyr::group_by(sampleID, filter) %>% dplyr::summarise(tic = sum(int), bpi = max(int)) %>% dplyr::ungroup()
 
-
-  object@header <-
-    dplyr::full_join(tic_bpi, file_hdrs_clean, by = c('sampleID', 'index'))
+object@header <-
+    dplyr::full_join(tic_bpi, file_hdrs_clean, by = c('sampleID', 'filter'))
 
   meta_tibble <-
     purrr::map(files, ~ {
