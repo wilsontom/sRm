@@ -24,6 +24,3 @@ a ggplot plot object
 \description{
 Plot Peak Area
 }
-\author{
-Tom Wilson \email{tpw2@aber.ac.uk}
-}

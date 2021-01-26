@@ -18,6 +18,3 @@ a \code{SRM} object
 \description{
 Peak Asymmetry
 }
-\author{
-Tom Wilson \email{tpw2@aber.ac.uk}
-}

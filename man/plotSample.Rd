@@ -22,6 +22,3 @@ a ggplot plot object
 \description{
 Plot Sample
 }
-\author{
-Tom Wilson \email{tpw2@aber.ac.uk}
-}

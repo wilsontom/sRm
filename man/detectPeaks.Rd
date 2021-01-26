@@ -5,27 +5,16 @@
 \alias{detectPeaks,SRM-method}
 \title{Detect Peaks}
 \usage{
-detectPeaks(object, method, ...)
+detectPeaks(object, raw = TRUE, snthresh, fwhm)
 
-\S4method{detectPeaks}{SRM}(object, method, ...)
+\S4method{detectPeaks}{SRM}(object, raw = TRUE, snthresh = 10, fwhm = 30)
 }
 \arguments{
 \item{object}{a SRM object}
-
-\item{method}{a character string indicating the peak detection method to use:
-\itemize{
-\item \strong{pracma}
-\item \strong{matchedFilter}
-}}
-
-\item{...}{any additional parameters that are required by the peak detection method}
 }
 \value{
 a SRM object
 }
 \description{
 Detect Peaks
-}
-\author{
-Tom Wilson \email{tpw2@aber.ac.uk}
 }
