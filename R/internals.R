@@ -131,8 +131,8 @@ inegrate_peak_pracma <- function(rt, int, range)
 format_scan_header <- function(x)
 {
   tidy_header <- NULL
-  for (i in seq_along(x$index)) {
-    if (x[i, 'index'] == 'TIC') {
+  for (i in seq_along(x$filter)) {
+    if (x[i, 'filter'] == 'TIC') {
       tidy_header[[i]] <- 'TIC'
     } else{
       tidy_header[[i]] <-
