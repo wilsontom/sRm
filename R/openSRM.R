@@ -81,7 +81,8 @@ openSRM <- function(files, source_type)
         filter = .$chromatogramId,
         polarity = .$polarity,
         Q1 = .$precursorIsolationWindowTargetMZ,
-        Q3 = .$productIsolationWindowTargetMZ
+        Q3 = .$productIsolationWindowTargetMZ,
+        CE = .$precursorCollisionEnergy
       )
     })
 
@@ -110,6 +111,11 @@ openSRM <- function(files, source_type)
   object@rawChrom <-
     object@rawChrom %>% dplyr::filter(filter != 'TIC')
 
+  if(source_type == 'lcd'){
+    object@rawChrom$rt <- object@rawChrom$rt / 60
+  }
+
+
   object@transitions <-
     object@transitions %>% dplyr::mutate(index = seq(from = 1, to = nrow(.)))
 
@@ -132,6 +138,7 @@ object@header <-
 
   meta_tibble$sampleID <-
     stringr::str_remove_all(meta_tibble$sampleID, paste0('.', meta_ext))
+
   object@meta <- meta_tibble
 
 
