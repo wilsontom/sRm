@@ -3,22 +3,16 @@
 
 
 setMethod('plotPeakArea', signature = 'SRM',
-          function(object, index, sampleName, type){
+          function(object, index, sampleName){
 
             plot_tr_name <-
-              object@transitions %>% dplyr::filter(index_n == !!index)
+              object@transitions %>% dplyr::filter(index == !!index)
 
-            if (type == 'raw') {
-              chrom_tibble <-
-                object@rawChrom %>% dplyr::filter(index == plot_tr_name$index &
-                                                    sampleID == !!sampleName) %>% dplyr::select(-index)
-            }
 
-            if (type == 'transformed') {
               chrom_tibble <-
-                object@transformedChrom %>% dplyr::filter(index == plot_tr_name$index &
-                                                            sampleID == !!sampleName) %>% dplyr::select(-index)
-            }
+                object@rawChrom %>% dplyr::filter(filter == plot_tr_name$filter &
+                                                    sampleID == !!sampleName) %>% dplyr::select(-filter)
+
 
             chrom_plot <-
               ggplot(data = chrom_tibble, aes(x = rt, y = int)) + geom_line(size = 0.45) +
@@ -33,7 +27,7 @@ setMethod('plotPeakArea', signature = 'SRM',
 
 
             peak_tibble <-
-              object@peaks %>% dplyr::filter(index == plot_tr_name$index &
+              object@peaks %>% dplyr::filter(filter == plot_tr_name$filter &
                                                sampleID == !!sampleName)
 
 

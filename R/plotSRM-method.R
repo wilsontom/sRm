@@ -29,9 +29,9 @@ setMethod('plotSRM', signature = 'SRM',
                   axis.title.x = element_text(size = 10)
                 ) +
                 scale_x_continuous(breaks = seq(
-                  from  = 0,
+                  from  = round(min(plot_tibble$rt), digits = 1),
                   to = round(max(plot_tibble$rt), digits = 1),
-                  by = 2
+                  by = 0.5
                 )) +
                 xlab("Retention Time (mins)") + ylab("Intensity") +
                 ggtitle(plot_title) + theme(plot.title = element_text(size = 14))
@@ -52,9 +52,9 @@ setMethod('plotSRM', signature = 'SRM',
                   axis.title.x = element_text(size = 10)
                 ) +
                 scale_x_continuous(breaks = seq(
-                  from  = 0,
+                  from  = round(min(plot_tibble$rt), digits = 1),
                   to = round(max(plot_tibble$rt), digits = 1),
-                  by = 2
+                  by = 0.5
                 )) +
                 xlab("Retention Time (mins)") + ylab("Intensity") +
                 ggtitle(plot_title) + theme(plot.title = element_text(size = 14)) +
