@@ -3,24 +3,21 @@
 
 setMethod('detectPeaks', signature = 'SRM',
           function(object,
-                   raw = TRUE,
                    snthresh = 10,
-                   fwhm = 30) {
-            if (isTRUE(raw)) {
+                   peakwidth = 30)
+            {
+
               chrom_split  <-
                 object@rawChrom %>% dplyr::group_by(sampleID, filter) %>% dplyr::group_split()
-            } else{
-              chrom_split  <-
-                object@transformedChrom %>% dplyr::group_by(sampleID, filter) %>% dplyr::group_split()
-            }
 
 
             chromPeaks <-
               purrr::map(chrom_split,  ~ {
-                matchedFilter(.$rt, .$int, snthresh = snthresh, fwhm = fwhm)
+                centWave(.$rt, .$int, snthresh = snthresh, peakwidth = peakwidth)
               })
 
-            for (i in seq_along(chromPeaks)) {
+
+                         for (i in seq_along(chromPeaks)) {
               chromPeaks[[i]] <-
                 chromPeaks[[i]] %>% dplyr::mutate(sampleID = chrom_split[[i]]$sampleID[1],
                                                   filter = chrom_split[[i]]$filter[1]) %>%
