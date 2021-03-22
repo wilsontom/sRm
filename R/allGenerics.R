@@ -101,7 +101,7 @@ setGeneric(
 
 setGeneric(
   name = 'detectPeaks',
-  def = function(object, raw = TRUE, snthresh, fwhm)
+  def = function(object, snthresh, peakwidth)
   {
     standardGeneric('detectPeaks')
   }
@@ -113,14 +113,13 @@ setGeneric(
 #' @param object a SRM object
 #' @param index a numeric value of the transition index to plot
 #' @param sampleName a character string of `sampleName` to plot
-#' @param type a character string of either `raw` or `transformed`, indicating which chromatography data to use when plotting
 #' @return a ggplot plot object
 #'
 #' @export
 
 setGeneric(
   name = 'plotPeakArea',
-  def = function(object, index, sampleName, type)
+  def = function(object, index, sampleName)
   {
     standardGeneric('plotPeakArea')
   }
