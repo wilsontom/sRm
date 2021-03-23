@@ -5,14 +5,14 @@
 \alias{plotTransform,SRM-method}
 \title{Plot Transform}
 \usage{
-plotTransform(object, index_n, sampleID)
+plotTransform(object, index, sampleID)
 
-\S4method{plotTransform}{SRM}(object, index_n, sampleID)
+\S4method{plotTransform}{SRM}(object, index, sampleID)
 }
 \arguments{
 \item{object}{a SRM object}
 
-\item{index_n}{a numeric value of the transition index to plot}
+\item{index}{a numeric value of the transition index to plot}
 
 \item{sampleID}{a character string of a valid \code{sampleName}}
 }

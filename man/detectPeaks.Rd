@@ -5,9 +5,9 @@
 \alias{detectPeaks,SRM-method}
 \title{Detect Peaks}
 \usage{
-detectPeaks(object, raw = TRUE, snthresh, fwhm)
+detectPeaks(object, snthresh, peakwidth)
 
-\S4method{detectPeaks}{SRM}(object, raw = TRUE, snthresh = 10, fwhm = 30)
+\S4method{detectPeaks}{SRM}(object, snthresh = 10, peakwidth = 30)
 }
 \arguments{
 \item{object}{a SRM object}
