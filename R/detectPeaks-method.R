@@ -8,7 +8,7 @@ setMethod('detectPeaks', signature = 'SRM',
             {
 
               chrom_split  <-
-                object@rawChrom %>% dplyr::group_by(sampleID, filter) %>% dplyr::group_split()
+                object@chroms %>% dplyr::group_by(sampleID, filter) %>% dplyr::group_split()
 
 
             chromPeaks <-
