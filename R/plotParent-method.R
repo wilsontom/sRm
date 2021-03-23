@@ -7,7 +7,7 @@ setMethod('plotParent', signature = 'SRM',
               object@header %>% dplyr::filter(Q1 == !!parentMass) %>% dplyr::select(filter) %>% dplyr::distinct()
 
             plot_tibble <-
-              object@rawChrom %>% dplyr::filter(filter %in% plot_tr_name$filter)
+              object@chroms %>% dplyr::filter(filter %in% plot_tr_name$filter)
 
             transition_match <-
               match(plot_tibble$filter, object@header$filter)

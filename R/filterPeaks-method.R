@@ -5,7 +5,7 @@ setMethod('filterPeaks', signature = 'SRM',
           function(object)
           {
             meanScanTime <-
-              object@rawChrom %>% dplyr::group_by(sampleID, index) %>%
+              object@chroms %>% dplyr::group_by(sampleID, index) %>%
               dplyr::group_split() %>% purrr::map(., ~ {
                 round(.$rt * 60, digits = 0)
               }) %>% purrr::map_dbl(., ~ {

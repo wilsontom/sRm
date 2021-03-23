@@ -70,7 +70,7 @@ openSRM <- function(files, source_type)
     stringr::str_remove_all(peak_table$sampleID, '.mzML')
 
   object <- new("SRM")
-  object@rawChrom <- peak_table
+  object@chroms <- peak_table
 
   names(file_hdrs) <- basename(files)
 
@@ -108,11 +108,11 @@ openSRM <- function(files, source_type)
   object@transitions <-
     file_hdrs_clean %>% dplyr::select(transition, filter) %>% dplyr::distinct() %>% dplyr::filter(filter != 'TIC')
 
-  object@rawChrom <-
-    object@rawChrom %>% dplyr::filter(filter != 'TIC')
+  object@chroms <-
+    object@chroms %>% dplyr::filter(filter != 'TIC')
 
   if(source_type == 'lcd'){
-    object@rawChrom$rt <- object@rawChrom$rt / 60
+    object@chroms$rt <- object@chroms$rt / 60
   }
 
 
@@ -120,7 +120,7 @@ openSRM <- function(files, source_type)
     object@transitions %>% dplyr::mutate(index = seq(from = 1, to = nrow(.)))
 
   tic_bpi <-
-    object@rawChrom %>% dplyr::group_by(sampleID, filter) %>% dplyr::summarise(tic = sum(int), bpi = max(int)) %>% dplyr::ungroup()
+    object@chroms %>% dplyr::group_by(sampleID, filter) %>% dplyr::summarise(tic = sum(int), bpi = max(int)) %>% dplyr::ungroup()
 
 object@header <-
     dplyr::full_join(tic_bpi, file_hdrs_clean, by = c('sampleID', 'filter'))

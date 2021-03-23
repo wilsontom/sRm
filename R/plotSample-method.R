@@ -5,12 +5,12 @@ setMethod('plotSample', signature = 'SRM',
           function(object, sampleName, polarity) {
 
             plot_tibble <-
-              object@rawChrom %>% dplyr::filter(sampleID == !!sampleName) %>% dplyr::filter(index != 'TIC')
+              object@chroms %>% dplyr::filter(sampleID == !!sampleName)
 
             transition_match <-
-              match(plot_tibble$index, object@header$index)
+              match(plot_tibble$filter, object@header$filter)
 
-            plot_tibble$index <-
+            plot_tibble$filter <-
               paste0(object@header$Q1[transition_match], '//', object@header$Q3[transition_match])
 
               plot_tibble <-
@@ -43,7 +43,7 @@ setMethod('plotSample', signature = 'SRM',
                   by = 2
                 )) +
                 xlab("Retention Time (mins)") + ylab("Intensity") +
-                facet_wrap(~index, scales = 'free') +
+                facet_wrap(~filter, scales = 'free') +
                 theme(strip.text.x = element_text(size = 8))
 
 

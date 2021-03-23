@@ -10,7 +10,7 @@ setMethod('plotPeakArea', signature = 'SRM',
 
 
               chrom_tibble <-
-                object@rawChrom %>% dplyr::filter(filter == plot_tr_name$filter &
+                object@chroms %>% dplyr::filter(filter == plot_tr_name$filter &
                                                     sampleID == !!sampleName) %>% dplyr::select(-filter)
 
 
