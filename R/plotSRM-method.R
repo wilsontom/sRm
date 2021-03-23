@@ -7,7 +7,7 @@ setMethod('plotSRM', signature = 'SRM',
               object@transitions %>% dplyr::filter(index == !!index)
 
             plot_tibble <-
-              object@rawChrom %>% dplyr::filter(filter == plot_tr_name$filter) %>% dplyr::select(-filter)
+              object@chroms %>% dplyr::filter(filter == plot_tr_name$filter) %>% dplyr::select(-filter)
 
             plot_title <- plot_tr_name$transition
 
