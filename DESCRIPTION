@@ -20,15 +20,13 @@ Imports:
     tidyr,
     xml2,
     xcms,
-    pracma,
     stringr,
-    ptw,
     MsCoreUtils
 URL: https://github.com/wilsontom/sRm
 BugReports: https://github.com/wilsontom/sRm/issues
 LazyData: TRUE
 Encoding: UTF-8
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Suggests:
     testthat,
     knitr,
