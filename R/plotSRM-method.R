@@ -31,7 +31,7 @@ setMethod('plotSRM', signature = 'SRM',
                 scale_x_continuous(breaks = seq(
                   from  = round(min(plot_tibble$rt), digits = 1),
                   to = round(max(plot_tibble$rt), digits = 1),
-                  by = 0.5
+                  by = 2
                 )) +
                 xlab("Retention Time (mins)") + ylab("Intensity") +
                 ggtitle(plot_title) + theme(plot.title = element_text(size = 14))
@@ -54,7 +54,7 @@ setMethod('plotSRM', signature = 'SRM',
                 scale_x_continuous(breaks = seq(
                   from  = round(min(plot_tibble$rt), digits = 1),
                   to = round(max(plot_tibble$rt), digits = 1),
-                  by = 0.5
+                  by = 2
                 )) +
                 xlab("Retention Time (mins)") + ylab("Intensity") +
                 ggtitle(plot_title) + theme(plot.title = element_text(size = 14)) +
