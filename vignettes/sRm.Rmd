@@ -89,16 +89,15 @@ plotParent(srmExp, 187.026)
 ```{r, peak_detection}
 srmExpPeaks <-
   detectPeaks(srmExp,
-              raw = TRUE,
               snthresh = 2,
-              fwhm = 70)
+              peakwidth = c(5,60))
 ```
 
 
 The `plotPeakArea` can then be used to determine the quality of the peak integration. 
 
 ```{r, plotArea, fig.width = 6, fig.height = 4,  fig.align = 'center'}
-plotPeakArea(srmExpPeaks, index = 11, sampleName = 'QC02', type = 'raw')
+plotPeakArea(srmExpPeaks, index = 11, sampleName = 'QC02')
 ```
 
 
