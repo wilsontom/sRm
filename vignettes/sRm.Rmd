@@ -84,7 +84,7 @@ plotParent(srmExp, 187.026)
 
 ### Peak Detection
 
-`sRm` utilises the `xcms::peaksWithMatchedFilter()` function to detection chromatogram features. 
+`sRm` utilises the `xcms::peaksWithCentWave()` function to detection chromatogram features. 
 
 ```{r, peak_detection}
 srmExpPeaks <-
