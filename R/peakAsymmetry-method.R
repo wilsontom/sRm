@@ -9,7 +9,7 @@ setMethod('peakAsymmetry', signature = 'SRM',
             rawChrom <-
                 object@chroms %>% dplyr::filter(
                   sampleID == object@peaks$sampleID[i] &
-                    index == object@peaks$index[i] &
+                    filter == object@peaks$filter[i] &
                     rt >= object@peaks$rtmin[i] &
                     rt <= object@peaks$rtmax[i]
                 )
