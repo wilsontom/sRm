@@ -1,4 +1,9 @@
 ### NEWS
+#### V0.2.2
+- Use the CentWave algorithm for peak detection
+- Remove explicit slot for transformed chromatograms
+- Standardise transition naming
+- Add peakAsymmetry method
 
 #### V0.2.1
 

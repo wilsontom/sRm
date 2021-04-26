@@ -5,27 +5,20 @@
 \alias{detectPeaks,SRM-method}
 \title{Detect Peaks}
 \usage{
-detectPeaks(object, method, ...)
+detectPeaks(object, snthresh, peakwidth)
 
-\S4method{detectPeaks}{SRM}(object, method, ...)
+\S4method{detectPeaks}{SRM}(object, snthresh = 10, peakwidth = 30)
 }
 \arguments{
 \item{object}{a SRM object}
 
-\item{method}{a character string indicating the peak detection method to use:
-\itemize{
-\item \strong{pracma}
-\item \strong{matchedFilter}
-}}
+\item{snthresh}{a numeric value for the signal-to-noise threshold to use}
 
-\item{...}{any additional parameters that are required by the peak detection method}
+\item{peakwidth}{a numeric vector indicating the minimum and maximum tolerated peak width}
 }
 \value{
 a SRM object
 }
 \description{
 Detect Peaks
-}
-\author{
-Tom Wilson \email{tpw2@aber.ac.uk}
 }

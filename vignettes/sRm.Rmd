@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 
 `sRm` is package which contains a selection of functions and methods for handling, processing and visualising Selective Reaction Monitoring (SRM) or Multiple Reaction Monitoring (MRM) Liquid Chromatography Mass Spectrometry Data (LC-MS). The key distinction between SRM/MRM data and other LC-MS data is that the data is acquired as a time-series in the form of chromatograms; whereas other LC-MS (ie DIA, DDA, PRM) acquire data as a series of mass specturms which can then be used to create chromatograms. 
 
-`sRm` is designed to make use of existing packages (ie, much of the heavy lifting is done by `mzR` and `xcms`) and create a simple S4 interface to the user for processing and visualisation. 
+`sRm` is designed to make use of existing packages (ie, much of the heavy lifting is done by `mzR` and `xcms`) and create a simple S4 interface to the user for processing, visualisation and reporting. 
 
 
 **`sRm` can be easily installed directly from GitHub using the `remotes` package.**
@@ -72,14 +72,6 @@ plotSRM(srmExp, index = 11, type = 'facet')
 
 ```
 
-#### plotCompareSample
-
-`plotCompare` sample is an extension of the `plotSRM` method, but for selected samples only. 
-
-```{r, plotCompareSample, fig.width = 6, fig.height = 4,  fig.align = 'center'}
-plotCompareSample(srmExp, index = 11, sampleName = c('QC01', 'QC02'))
-```
-
 
 #### plotParent 
 
@@ -92,22 +84,33 @@ plotParent(srmExp, 187.026)
 
 ### Peak Detection
 
-`sRm` utilises the `xcms::peaksWithMatchedFilter()` function to detection chromatogram features. 
+`sRm` utilises the `xcms::peaksWithCentWave()` function to detection chromatogram features. 
 
 ```{r, peak_detection}
 srmExpPeaks <-
   detectPeaks(srmExp,
-              method = 'matchedFilter',
               snthresh = 2,
-              fwhm = 70)
+              peakwidth = c(5,60))
 ```
 
 
 The `plotPeakArea` can then be used to determine the quality of the peak integration. 
 
 ```{r, plotArea, fig.width = 6, fig.height = 4,  fig.align = 'center'}
-plotPeakArea(srmExpPeaks, index = 11, sampleName = 'QC02', type = 'raw')
+plotPeakArea(srmExpPeaks, index = 11, sampleName = 'QC02')
 ```
+
+
+### Peak Measures
+
+
+
+
+
+
+
+
+
 
 
 

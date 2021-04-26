@@ -5,9 +5,9 @@
 \alias{plotPeakArea,SRM-method}
 \title{Plot Peak Area}
 \usage{
-plotPeakArea(object, index, sampleName, type)
+plotPeakArea(object, index, sampleName)
 
-\S4method{plotPeakArea}{SRM}(object, index, sampleName, type)
+\S4method{plotPeakArea}{SRM}(object, index, sampleName)
 }
 \arguments{
 \item{object}{a SRM object}
@@ -15,15 +15,10 @@ plotPeakArea(object, index, sampleName, type)
 \item{index}{a numeric value of the transition index to plot}
 
 \item{sampleName}{a character string of \code{sampleName} to plot}
-
-\item{type}{a character string of either \code{raw} or \code{transformed}, indicating which chromatography data to use when plotting}
 }
 \value{
 a ggplot plot object
 }
 \description{
 Plot Peak Area
-}
-\author{
-Tom Wilson \email{tpw2@aber.ac.uk}
 }

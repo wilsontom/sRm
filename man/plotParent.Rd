@@ -20,6 +20,3 @@ a ggplot plot object
 \description{
 Plot Parent
 }
-\author{
-Tom Wilson \email{tpw2@aber.ac.uk}
-}
