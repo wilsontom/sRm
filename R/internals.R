@@ -33,7 +33,9 @@ globalVariables(
     'sample_n',
     'Schema',
     'Timestamp',
-    'transition'
+    'transition',
+    'filter',
+    'width'
   )
 )
 

@@ -1,5 +1,5 @@
 #' @rdname plotSRM
-#' @importFrom ggplot2 ggplot aes_string geom_line theme_bw theme element_blank element_text scale_x_continuous xlab ylab facet_wrap labs ggtitle
+#' @importFrom ggplot2 ggplot aes aes_string geom_line theme_bw theme element_blank element_text scale_x_continuous xlab ylab facet_wrap labs ggtitle theme_classic
 
 setMethod('plotSRM', signature = 'SRM',
           function(object, index, type = 'overlay') {

@@ -94,6 +94,8 @@ setGeneric(
 #'
 #' @rdname detectPeaks
 #' @param object a SRM object
+#' @param snthresh a numeric value for the signal-to-noise threshold to use
+#' @param peakwidth a numeric vector indicating the minimum and maximum tolerated peak width
 #'
 #' @return a SRM object
 #'
