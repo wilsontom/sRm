@@ -11,6 +11,10 @@ detectPeaks(object, snthresh, peakwidth)
 }
 \arguments{
 \item{object}{a SRM object}
+
+\item{snthresh}{a numeric value for the signal-to-noise threshold to use}
+
+\item{peakwidth}{a numeric vector indicating the minimum and maximum tolerated peak width}
 }
 \value{
 a SRM object
