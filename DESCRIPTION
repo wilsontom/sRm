@@ -21,7 +21,10 @@ Imports:
     xml2,
     xcms,
     stringr,
-    MsCoreUtils
+    MsCoreUtils,
+    ptw,
+    cli,
+    crayon
 URL: https://github.com/wilsontom/sRm
 BugReports: https://github.com/wilsontom/sRm/issues
 LazyData: TRUE
