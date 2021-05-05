@@ -1,15 +1,14 @@
-### NEWS
-#### V0.2.2
+# sRm V0.2.2
 - Use the CentWave algorithm for peak detection
 - Remove explicit slot for transformed chromatograms
 - Standardise transition naming
 - Add peakAsymmetry method
 
-#### V0.2.1
+# sRm V0.2.1
 
 - Support for Shimadzu QqQ-MS
 
-#### v0.2.0
+# sRm v0.2.0
 
 **Breaking Changes**
 
@@ -20,7 +19,7 @@
 - Complete re-write of `openSRM` function and all underlying methods
 - All previous methods form v0.1.4 and lower; now deprecated
 
-#### v0.1.4
+# sRm v0.1.4
  - The main change is that extraction and decoding of chromatogram time and intensity arrays is now performed by `mzR`.
  - `xml2` is still used for extraction of header data which is currently unsupported by `mzR`
  - A lot of the internal workings have been updated / replaced with more efficent approaches; mainly utilising `dplyr`, `tibble` and `purrr`
@@ -35,7 +34,7 @@
  - Added vignette
  
 
-#### v0.1.3
+# sRm v0.1.3
  - Add `plotMulti` for easy graphical representation of complex SRM-MS chromatograms
  - Cleaned up filter naming throughout
  - Fixed CI build environment, so there is no longer a list of unnecessary Imports in DESCRIPTION
@@ -51,12 +50,12 @@
     - Unique filter ID strings are created from parsed `idRefs`
     - Where Rt lengths are unequal within unique transitions set; these are (for now) removed from the `transitions` class with a on-screen message stating which `idRefs` have been dropped
 
-#### v0.1.2
+# sRm v0.1.2
   - Fix `no visible binding' NOTE for 'ggplot2`
   - Update manual
   - Increase test coverage
   
-#### v0.1.1
+# sRm v0.1.1
   - Adapt `combineTransitions` to catch SRM's of different lengths
   - Result of `combineTransitions` is now S3 class
   - Plot method for `combineTransitions` class ;(`plotAll`)
@@ -64,7 +63,7 @@
   - Bug fixed for when time and intensity arrays are encoded with different precisions
   - `grid` and `gridExtra` are listed as Dependencies
 
-#### v0.1.0
+# sRm v0.1.0
   - First stable release
   - Reading and parsing of Thermo TSQ Vantage SRM data
   - Single function for reading and decoding peaks; stored to S4 object
