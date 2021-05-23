@@ -1,4 +1,12 @@
+#' Plot Peak Area
+#'
 #' @rdname plotPeakArea
+#' @param object a SRM object
+#' @param index a numeric value of the transition index to plot
+#' @param sampleName a character string of `sampleName` to plot
+#' @return a ggplot plot object
+#'
+#' @export
 #' @importFrom ggplot2 geom_polygon guides
 
 

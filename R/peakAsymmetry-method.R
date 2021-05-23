@@ -1,5 +1,11 @@
-#' @rdname peakAsymmetry
+#' Peak Asymmetry
 #'
+#' @rdname peakAsymmetry
+#' @param object a SRM object
+#' @return a `SRM` object
+#'
+#' @export
+
 
 setMethod('peakAsymmetry', signature = 'SRM',
           function(object) {

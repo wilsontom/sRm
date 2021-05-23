@@ -1,5 +1,12 @@
-#' @rdname filterPeaks
+#' Filter Peaks
 #'
+#' Filter detected peaks based on a series of heuristic measures
+#'
+#' @rdname filterPeaks
+#' @param object a SRM object
+#' @return a `SRM` object
+#'
+#' @export
 
 setMethod('filterPeaks', signature = 'SRM',
           function(object)

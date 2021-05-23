@@ -1,5 +1,12 @@
-#' @rdname plotSample
+#' Plot Sample
 #'
+#' @rdname plotSample
+#' @param object a SRM object
+#' @param sampleName a character string of a valid `sampleName`
+#' @param polarity a character string of either `pos` or `neg` for positive and negative ionisation mode respectively
+#' @return a ggplot plot object
+#'
+#' @export
 
 setMethod('plotSample', signature = 'SRM',
           function(object, sampleName, polarity) {

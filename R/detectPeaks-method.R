@@ -1,5 +1,13 @@
-#' @rdname detectPeaks
+#' Detect Peaks
 #'
+#' @rdname detectPeaks
+#' @param object a SRM object
+#' @param snthresh a numeric value for the signal-to-noise threshold to use
+#' @param peakwidth a numeric vector indicating the minimum and maximum tolerated peak width
+#'
+#' @return a SRM object
+#'
+#' @export
 
 setMethod('detectPeaks', signature = 'SRM',
           function(object,
@@ -25,7 +33,8 @@ setMethod('detectPeaks', signature = 'SRM',
             }
 
             object@peaks <-
-              chromPeaks %>% dplyr::bind_rows() %>% dplyr::filter(peakId != 0)
+              chromPeaks %>% dplyr::bind_rows() %>% dplyr::filter(peakId != 0) %>%
+              dplyr::left_join(., object@transitions, by = 'filter')
 
             return(object)
 
