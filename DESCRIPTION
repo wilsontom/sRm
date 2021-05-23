@@ -37,3 +37,22 @@ Suggests:
     patchwork
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
+Collate: 
+    'allGenerics.R'
+    'allClasses.R'
+    'accessor-method.R'
+    'centWave.R'
+    'chromTransform-method.R'
+    'detectPeaks-method.R'
+    'filterPeaks-method.R'
+    'freeScales.R'
+    'get_meta.R'
+    'groupPeaks-method.R'
+    'internals.R'
+    'openSRM.R'
+    'peakAsymmetry-method.R'
+    'plotParent-method.R'
+    'plotPeakArea-method.R'
+    'plotSRM-method.R'
+    'plotSample-method.R'
+    'show-method.R'
