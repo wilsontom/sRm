@@ -101,7 +101,24 @@ plotPeakArea(srmExpPeaks, index = 11, sampleName = 'QC02')
 ```
 
 
-### Peak Measures
+
+### Peak Grouping
+
+Once peak detection has been performed, the `groupPeaks` method can be used to assign features to corresponding peak groups. The only parameter that needs to be set is `rt_tolerance` which is the retention time width which will be used to group similar peaks together.
+
+```{r, peak_grouping}
+srmExpGroups <- groupPeaks(srmExpPeaks, rt_tolerance = 1.5)
+```
+
+
+
+
+
+### Summarising and Exporting
+
+
+
+
 
 
 
