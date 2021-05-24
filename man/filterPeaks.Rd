@@ -16,5 +16,5 @@ filterPeaks(object)
 a \code{SRM} object
 }
 \description{
-Filter Peaks
+Filter detected peaks based on a series of heuristic measures
 }
