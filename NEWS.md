@@ -3,6 +3,8 @@
 - Remove explicit slot for transformed chromatograms
 - Standardise transition naming
 - Add peakAsymmetry method
+- Add method for creating peak groups
+- Export results using peak group IDs
 
 # sRm V0.2.1
 
