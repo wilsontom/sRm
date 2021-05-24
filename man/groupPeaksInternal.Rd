@@ -4,7 +4,7 @@
 \alias{groupPeaksInternal}
 \title{Group Peaks}
 \usage{
-groupPeaksInternal(x, rt_tolerance = 0)
+groupPeaksInternal(x, rt_tolerance)
 }
 \arguments{
 \item{x}{a numeric vector of retention times}
