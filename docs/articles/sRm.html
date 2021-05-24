@@ -101,18 +101,18 @@
 <span class="co">#&gt; Loading required package: ggplot2</span>
 <span class="co">#&gt; Loading required package: magrittr</span>
 
-<span class="va">chrom_files</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">'extdata/Thermo_RAW'</span>, package <span class="op">=</span> <span class="st">'sRm'</span><span class="op">)</span>, full.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="va">chrom_files</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">'extdata/Shimadzu_LCD'</span>, package <span class="op">=</span> <span class="st">'sRm'</span><span class="op">)</span>, full.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
-<span class="va">srmExp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/openSRM.html">openSRM</a></span><span class="op">(</span><span class="va">chrom_files</span>, source_type <span class="op">=</span> <span class="st">'raw'</span><span class="op">)</span>
+<span class="va">srmExp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/openSRM.html">openSRM</a></span><span class="op">(</span><span class="va">chrom_files</span>, source_type <span class="op">=</span> <span class="st">'lcd'</span><span class="op">)</span>
 
 <span class="va">srmExp</span>
 <span class="co">#&gt; ── SRM Object ──────────────────────────────────────────────────── sRm v0.2.1 ── </span>
 <span class="co">#&gt;  </span>
 <span class="co">#&gt; SRM File Inputs: 4 </span>
 <span class="co">#&gt;  </span>
-<span class="co">#&gt; Transitions measured: 86 </span>
+<span class="co">#&gt; Transitions measured: 107 </span>
 <span class="co">#&gt;  </span>
-<span class="co">#&gt; Object Size: 7.9 Mb</span></code></pre></div>
+<span class="co">#&gt; Object Size: 2.5 Mb</span></code></pre></div>
 <p>The <code>SRM</code> object contains the following data;</p>
 <ul>
 <li>
@@ -168,7 +168,7 @@
 <a href="#plotparent" class="anchor"></a>plotParent</h4>
 <p><code>plotParent</code> use a numeric value of parent mass as an input, and plots all SRM transitions which feature the selected parent mass.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/plotParent.html">plotParent</a></span><span class="op">(</span><span class="va">srmExp</span>, <span class="fl">187.026</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/plotParent.html">plotParent</a></span><span class="op">(</span><span class="va">srmExp</span>, <span class="fl">303</span><span class="op">)</span></code></pre></div>
 <p><img src="sRm_files/figure-html/plotParent-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 </div>
@@ -179,11 +179,11 @@
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">srmExpPeaks</span> <span class="op">&lt;-</span>
   <span class="fu"><a href="../reference/detectPeaks.html">detectPeaks</a></span><span class="op">(</span><span class="va">srmExp</span>,
-              snthresh <span class="op">=</span> <span class="fl">2</span>,
-              peakwidth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">60</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+              snthresh <span class="op">=</span> <span class="fl">5</span>,
+              peakwidth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">75</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>The <code>plotPeakArea</code> can then be used to determine the quality of the peak integration.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/plotPeakArea.html">plotPeakArea</a></span><span class="op">(</span><span class="va">srmExpPeaks</span>, index <span class="op">=</span> <span class="fl">11</span>, sampleName <span class="op">=</span> <span class="st">'QC02'</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/plotPeakArea.html">plotPeakArea</a></span><span class="op">(</span><span class="va">srmExpPeaks</span>, index <span class="op">=</span> <span class="fl">5</span>, sampleName <span class="op">=</span> <span class="st">'QC02'</span><span class="op">)</span></code></pre></div>
 <p><img src="sRm_files/figure-html/plotArea-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 <div id="peak-grouping" class="section level3">
@@ -191,7 +191,34 @@
 <a href="#peak-grouping" class="anchor"></a>Peak Grouping</h3>
 <p>Once peak detection has been performed, the <code>groupPeaks</code> method can be used to assign features to corresponding peak groups. The only parameter that needs to be set is <code>rt_tolerance</code> which is the retention time width which will be used to group similar peaks together.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">srmExpGroups</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/groupPeaks.html">groupPeaks</a></span><span class="op">(</span><span class="va">srmExpPeaks</span>, rt_tolerance <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">srmExpGroups</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/groupPeaks.html">groupPeaks</a></span><span class="op">(</span><span class="va">srmExpPeaks</span>, rt_tolerance <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></code></pre></div>
+<p>A summary of the peak groups can created using the <code>groupSummary</code> method.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">group_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/groupSummary.html">groupSummary</a></span><span class="op">(</span><span class="va">srmExpGroups</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">group_table</span><span class="op">)</span>
+<span class="co">#&gt; # A tibble: 6 x 8</span>
+<span class="co">#&gt; # Groups:   transition [3]</span>
+<span class="co">#&gt;   transition      GroupID    Rt Rtmin Rtmax Rtwidth      SN count</span>
+<span class="co">#&gt;   &lt;chr&gt;           &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;int&gt;</span>
+<span class="co">#&gt; 1 204 &gt; 118.1 (+) G001     5.00  4.58  6.21   1.63     121.     4</span>
+<span class="co">#&gt; 2 204 &gt; 118.1 (+) G002     6.50  6.37  6.99   0.621  16561.     3</span>
+<span class="co">#&gt; 3 204 &gt; 144 (+)   G003     5.00  4.58  6.25   1.67  242567.     3</span>
+<span class="co">#&gt; 4 204 &gt; 144 (+)   G004     6.73  6.37  6.99   0.621  14830.     4</span>
+<span class="co">#&gt; 5 204 &gt; 162 (+)   G005     4.99  4.58  6.17   1.59     411      2</span>
+<span class="co">#&gt; 6 204 &gt; 162 (+)   G006     6.50  6.17  6.99   0.828   5285.     5</span></code></pre></div>
+<p>The output of the <code>groupSummary</code> method is a <code>tibble</code> so it can be easily processed further using <code>dplyr</code> to produce a list of the main GroupIDs which need exporting for further analysis.</p>
+<p>For example, we can filter out any group which have low occupancy (and suspiciously high occupancy), have retention times in the wash phase of the chromatogram gradient or the peak width is too large.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">number_of_samples</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">srmExp</span><span class="op">@</span><span class="va">meta</span><span class="op">)</span>
+
+<span class="va">group_table_filtered</span> <span class="op">&lt;-</span>
+  <span class="va">group_table</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Rt</span> <span class="op">&gt;=</span> <span class="fl">1.0</span> <span class="op">&amp;</span> <span class="va">Rt</span> <span class="op">&lt;=</span> <span class="fl">16.0</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Rtwidth</span> <span class="op">&lt;=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">count</span> <span class="op">&lt;=</span> <span class="va">number_of_samples</span><span class="op">)</span></code></pre></div>
+<p>The <code>plotGroup</code> method can also be used to a visual inspection of the group.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/plotGroup.html">plotGroup</a></span><span class="op">(</span><span class="va">srmExpGroups</span>, group <span class="op">=</span> <span class="st">'G001'</span><span class="op">)</span></code></pre></div>
+<p><img src="sRm_files/figure-html/plotGroup-1.png" width="700"></p>
 </div>
 <div id="summarising-and-exporting" class="section level3">
 <h3 class="hasAnchor">
