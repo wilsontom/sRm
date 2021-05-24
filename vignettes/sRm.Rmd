@@ -34,9 +34,9 @@ Open and parse a series of `.mzML` files using the `openSRM` function.
 ```{r, load}
 library(sRm)
 
-chrom_files <- list.files(system.file('extdata/Thermo_RAW', package = 'sRm'), full.names = TRUE)
+chrom_files <- list.files(system.file('extdata/Shimadzu_LCD', package = 'sRm'), full.names = TRUE)
 
-srmExp <- openSRM(chrom_files, source_type = 'raw')
+srmExp <- openSRM(chrom_files, source_type = 'lcd')
 
 srmExp
 
@@ -78,7 +78,7 @@ plotSRM(srmExp, index = 11, type = 'facet')
 `plotParent` use a numeric value of parent mass as an input, and plots all SRM transitions which feature the selected parent mass. 
 
 ```{r, plotParent,fig.width = 6, fig.height = 4,  fig.align = 'center'}
-plotParent(srmExp, 187.026)
+plotParent(srmExp, 303)
 ```
 
 
@@ -89,15 +89,15 @@ plotParent(srmExp, 187.026)
 ```{r, peak_detection}
 srmExpPeaks <-
   detectPeaks(srmExp,
-              snthresh = 2,
-              peakwidth = c(5,60))
+              snthresh = 5,
+              peakwidth = c(5,75))
 ```
 
 
 The `plotPeakArea` can then be used to determine the quality of the peak integration. 
 
 ```{r, plotArea, fig.width = 6, fig.height = 4,  fig.align = 'center'}
-plotPeakArea(srmExpPeaks, index = 11, sampleName = 'QC02')
+plotPeakArea(srmExpPeaks, index = 5, sampleName = 'QC02')
 ```
 
 
@@ -107,8 +107,43 @@ plotPeakArea(srmExpPeaks, index = 11, sampleName = 'QC02')
 Once peak detection has been performed, the `groupPeaks` method can be used to assign features to corresponding peak groups. The only parameter that needs to be set is `rt_tolerance` which is the retention time width which will be used to group similar peaks together.
 
 ```{r, peak_grouping}
-srmExpGroups <- groupPeaks(srmExpPeaks, rt_tolerance = 1.5)
+srmExpGroups <- groupPeaks(srmExpPeaks, rt_tolerance = 0.5)
 ```
+
+A summary of the peak groups can created using the `groupSummary` method. 
+
+```{r, group_summary}
+group_table <- groupSummary(srmExpGroups)
+
+head(group_table)
+```
+
+The output of the `groupSummary` method is a `tibble` so it can be easily processed further using `dplyr` to produce a list of the main GroupIDs which need exporting for further analysis. 
+
+For example, we can filter out any group which have low occupancy (and suspiciously high occupancy), have retention times in the wash phase of the chromatogram gradient or the peak width is too large. 
+
+
+```{r, group_filter}
+number_of_samples <- nrow(srmExp@meta)
+
+group_table_filtered <-
+  group_table %>% dplyr::filter(Rt >= 1.0 & Rt <= 16.0) %>%
+  dplyr::filter(Rtwidth <= 3) %>% dplyr::filter(count <= number_of_samples)
+
+```
+
+
+The `plotGroup` method can also be used to a visual inspection of the group. 
+
+```{r, plotGroup}
+plotGroup(srmExpGroups, group = 'G001')
+```
+
+
+
+
+
+
 
 
 
