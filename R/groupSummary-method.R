@@ -16,6 +16,7 @@ setMethod('groupSummary', signature = 'SRM',
                 Rt = median(rt),
                 Rtmin = min(rtmin),
                 Rtmax = max(rtmax),
+                Rtwidth = Rtmax - Rtmin,
                 SN = mean(sn),
                 count = dplyr::n()
               )
