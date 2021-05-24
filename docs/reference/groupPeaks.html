@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Filter Peaks — filterPeaks • sRm</title>
+<title>Group Peaks — groupPeaks • sRm</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Filter Peaks — filterPeaks" />
-<meta property="og:description" content="Filter detected peaks based on a series of heuristic measures" />
+<meta property="og:title" content="Group Peaks — groupPeaks" />
+<meta property="og:description" content="Group detected peaks based on retention time. Based on MsCoreUtils::group" />
 
 
 
@@ -114,19 +114,19 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Filter Peaks</h1>
-    <small class="dont-index">Source: <a href='https://github.com/wilsontom/sRm/blob/master/R/allGenerics.R'><code>R/allGenerics.R</code></a>, <a href='https://github.com/wilsontom/sRm/blob/master/R/filterPeaks-method.R'><code>R/filterPeaks-method.R</code></a></small>
-    <div class="hidden name"><code>filterPeaks.Rd</code></div>
+    <h1>Group Peaks</h1>
+    <small class="dont-index">Source: <a href='https://github.com/wilsontom/sRm/blob/master/R/allGenerics.R'><code>R/allGenerics.R</code></a>, <a href='https://github.com/wilsontom/sRm/blob/master/R/groupPeaks-method.R'><code>R/groupPeaks-method.R</code></a></small>
+    <div class="hidden name"><code>groupPeaks.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Filter detected peaks based on a series of heuristic measures</p>
+    <p>Group detected peaks based on retention time. Based on <code><a href='https://rdrr.io/pkg/MsCoreUtils/man/group.html'>MsCoreUtils::group</a></code></p>
     </div>
 
-    <pre class="usage"><span class='fu'>filterPeaks</span><span class='op'>(</span><span class='va'>object</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>groupPeaks</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>rt_tolerance</span><span class='op'>)</span>
 
 <span class='co'># S4 method for SRM</span>
-<span class='fu'>filterPeaks</span><span class='op'>(</span><span class='va'>object</span><span class='op'>)</span></pre>
+<span class='fu'>groupPeaks</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>rt_tolerance</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -134,6 +134,10 @@
     <tr>
       <th>object</th>
       <td><p>a SRM object</p></td>
+    </tr>
+    <tr>
+      <th>rt_tolerance</th>
+      <td><p>a numeric value for the tolerate retention grouping</p></td>
     </tr>
     </table>
 

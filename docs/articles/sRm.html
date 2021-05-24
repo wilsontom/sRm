@@ -70,7 +70,7 @@
 
       
 
-      </header><script src="sRm_files/header-attrs-2.7/header-attrs.js"></script><div class="row">
+      </header><script src="sRm_files/header-attrs-2.8/header-attrs.js"></script><script src="sRm_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>sRm</h1>
@@ -186,9 +186,16 @@
 <code class="sourceCode R"><span class="fu"><a href="../reference/plotPeakArea.html">plotPeakArea</a></span><span class="op">(</span><span class="va">srmExpPeaks</span>, index <span class="op">=</span> <span class="fl">11</span>, sampleName <span class="op">=</span> <span class="st">'QC02'</span><span class="op">)</span></code></pre></div>
 <p><img src="sRm_files/figure-html/plotArea-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
-<div id="peak-measures" class="section level3">
+<div id="peak-grouping" class="section level3">
 <h3 class="hasAnchor">
-<a href="#peak-measures" class="anchor"></a>Peak Measures</h3>
+<a href="#peak-grouping" class="anchor"></a>Peak Grouping</h3>
+<p>Once peak detection has been performed, the <code>groupPeaks</code> method can be used to assign features to corresponding peak groups. The only parameter that needs to be set is <code>rt_tolerance</code> which is the retention time width which will be used to group similar peaks together.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">srmExpGroups</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/groupPeaks.html">groupPeaks</a></span><span class="op">(</span><span class="va">srmExpPeaks</span>, rt_tolerance <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="summarising-and-exporting" class="section level3">
+<h3 class="hasAnchor">
+<a href="#summarising-and-exporting" class="anchor"></a>Summarising and Exporting</h3>
 </div>
   </div>
 
