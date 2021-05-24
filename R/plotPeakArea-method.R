@@ -41,9 +41,10 @@ setMethod('plotPeakArea', signature = 'SRM',
 
             polygon_indicies <- list()
             for (i in 1:nrow(peak_tibble)) {
-              left_idx <- which(chrom_tibble$rt == peak_tibble$rtmin[i])
+              left_idx <- which.min(abs(chrom_tibble$rt - peak_tibble$rtmin[i]))
               right_idx <-
-                which(chrom_tibble$rt == peak_tibble$rtmax[i])
+                which.min(abs(chrom_tibble$rt - peak_tibble$rtmax[i]))
+
 
               polygon_indicies[[i]] <-
                 tibble::tibble(

@@ -12,7 +12,7 @@
 setMethod('detectPeaks', signature = 'SRM',
           function(object,
                    snthresh = 10,
-                   peakwidth = 30)
+                   peakwidth = c(2,30))
             {
 
               chrom_split  <-

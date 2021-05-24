@@ -74,7 +74,7 @@ format_scan_header <- function(x)
 #'
 #' @keywords internal
 
-groupPeaksInternal <- function(x, rt_tolerance = 0) {
+groupPeaksInternal <- function(x, rt_tolerance) {
   if (is.unsorted(x)) {
     idx <- order(x)
     x <- x[idx]
