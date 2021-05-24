@@ -148,6 +148,15 @@ setGeneric(
 )
 
 
+#' @rdname plotGroup
+
+setGeneric(
+  name = 'plotGroup',
+  def = function(object, group)
+  {
+    standardGeneric('plotGroup')
+  }
+)
 
 
 
