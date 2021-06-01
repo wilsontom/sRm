@@ -48,14 +48,12 @@ The `SRM` object contains the following data;
     * a `tibble` of a minimal amount of meta data.
  * **transitions**
     * a `tibble` of all transitions names. Transitions are all given a numeric index to make accessing transitions easier for plotting.
- * **rawChrom**
+ * **chroms**
     * a `tibble` of retention time (rt) and intensity (int) values for all imported SRM chromatograms.
- * **transformedChrom**
  * **peaks**
     * a `tibble` of detected peaks for each SRM chromatogram.
  * **header**
-    * a `tibble` of formated header data from `mzR::header()`
-
+    * a `tibble` of formatted header data from `mzR::header()`
 
 ### Plotting Data
 
@@ -118,7 +116,7 @@ group_table <- groupSummary(srmExpGroups)
 head(group_table)
 ```
 
-The output of the `groupSummary` method is a `tibble` so it can be easily processed further using `dplyr` to produce a list of the main GroupIDs which need exporting for further analysis. 
+The output of the `groupSummary` method is a `tibble` so it can be easily processed further using `dplyr` to produce a list of the main **GroupIDs** which need exporting for further analysis. 
 
 For example, we can filter out any group which have low occupancy (and suspiciously high occupancy), have retention times in the wash phase of the chromatogram gradient or the peak width is too large. 
 
@@ -135,13 +133,9 @@ group_table_filtered <-
 
 The `plotGroup` method can also be used to a visual inspection of the group. 
 
-```{r, plotGroup}
+```{r, plotGroup, fig.width = 8, fig.height = 4,  fig.align = 'center'}
 plotGroup(srmExpGroups, group = 'G001')
 ```
-
-
-
-
 
 
 
