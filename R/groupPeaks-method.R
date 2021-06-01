@@ -7,6 +7,7 @@
 #' @return a `SRM` object
 #'
 #' @export
+#' @importFrom stats median
 
 setMethod('groupPeaks', signature = 'SRM',
           function(object, rt_tolerance)
