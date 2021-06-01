@@ -35,7 +35,12 @@ globalVariables(
     'Timestamp',
     'transition',
     'filter',
-    'width'
+    'width',
+    'GroupID',
+    'SampleID',
+    'Rtmax',
+    'Rtmin',
+    'group'
   )
 )
 
