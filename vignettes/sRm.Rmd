@@ -124,6 +124,8 @@ For example, we can filter out any group which have low occupancy (and suspiciou
 ```{r, group_filter}
 number_of_samples <- nrow(srmExp@meta)
 
+# Only keep groups with have Rt width of 3.0 minutes or less and total group occupancy is less than or equal to the total number of samples. 
+
 group_table_filtered <-
   group_table %>% dplyr::filter(Rt >= 1.0 & Rt <= 16.0) %>%
   dplyr::filter(Rtwidth <= 3) %>% dplyr::filter(count <= number_of_samples)
@@ -131,17 +133,16 @@ group_table_filtered <-
 ```
 
 
-The `plotGroup` method can also be used to a visual inspection of the group. 
+The `plotGroup` method can also be used for a visual inspection of the group. 
 
 ```{r, plotGroup, fig.width = 8, fig.height = 4,  fig.align = 'center'}
 plotGroup(srmExpGroups, group = 'G001')
 ```
 
 
+## Accessor Methods
 
-
-
-
+All the available slots in the SRM object have a corresponding accessor method which can be used to retrieve the slot contents, instead of having to use; `object@<slot_name>`.
 
 ### Summarising and Exporting
 
