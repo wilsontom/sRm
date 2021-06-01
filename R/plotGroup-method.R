@@ -6,6 +6,7 @@
 #' @return a ggplot plot object
 #'
 #' @export
+#' @importFrom ggplot2 geom_jitter
 
 setMethod('plotGroup', signature = 'SRM',
           function(object, group) {
@@ -56,6 +57,33 @@ setMethod('plotGroup', signature = 'SRM',
               )
 
 
-            return(p_group)
+            group_info$rt <- round(group_info$rt, digits = 2)
+
+            group_rt_min <- min(group_info$rt)
+            group_rt_max <- max(group_info$rt)
+
+            p_info <-
+              ggplot(group_info, aes(x = rt, y = int / max(int))) +
+              geom_jitter(
+                aes(fill = sampleID),
+                shape = 21,
+                size = 3.5,
+                height = 0.2,
+                width = 0
+              ) + theme_classic() +
+              theme(
+                axis.text.y = element_text(size = 10, face = "bold"),
+                axis.text.x = element_text(size = 10, face = "bold"),
+                axis.title.y = element_text(size = 10, face = "bold"),
+                axis.title.x = element_text(size = 10, face = "bold")
+              ) + labs(
+                x = 'Rt (mins)',
+                y = 'Relative Intensity',
+                subtitle = paste0('Rt width: ', group_rt_min, ' - ', group_rt_max)
+              )
+
+            group_plot2 <- patchwork::wrap_plots(p_group,p_info)
+
+            return(group_plot2)
 
           })
