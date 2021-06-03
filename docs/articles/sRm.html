@@ -128,12 +128,11 @@
 </ul>
 </li>
 <li>
-<strong>rawChrom</strong>
+<strong>chroms</strong>
 <ul>
 <li>a <code>tibble</code> of retention time (rt) and intensity (int) values for all imported SRM chromatograms.</li>
 </ul>
 </li>
-<li><strong>transformedChrom</strong></li>
 <li>
 <strong>peaks</strong>
 <ul>
@@ -143,7 +142,7 @@
 <li>
 <strong>header</strong>
 <ul>
-<li>a <code>tibble</code> of formated header data from <code><a href="https://rdrr.io/pkg/mzR/man/peaks.html">mzR::header()</a></code>
+<li>a <code>tibble</code> of formatted header data from <code><a href="https://rdrr.io/pkg/mzR/man/peaks.html">mzR::header()</a></code>
 </li>
 </ul>
 </li>
@@ -207,28 +206,94 @@
 <span class="co">#&gt; 4 204 &gt; 144 (+)   G004     6.73  6.37  6.99   0.621  14830.     4</span>
 <span class="co">#&gt; 5 204 &gt; 162 (+)   G005     4.99  4.58  6.17   1.59     411      2</span>
 <span class="co">#&gt; 6 204 &gt; 162 (+)   G006     6.50  6.17  6.99   0.828   5285.     5</span></code></pre></div>
-<p>The output of the <code>groupSummary</code> method is a <code>tibble</code> so it can be easily processed further using <code>dplyr</code> to produce a list of the main GroupIDs which need exporting for further analysis.</p>
+<p>The output of the <code>groupSummary</code> method is a <code>tibble</code> so it can be easily processed further using <code>dplyr</code> to produce a list of the main <strong>GroupIDs</strong> which need exporting for further analysis.</p>
 <p>For example, we can filter out any group which have low occupancy (and suspiciously high occupancy), have retention times in the wash phase of the chromatogram gradient or the peak width is too large.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">number_of_samples</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">srmExp</span><span class="op">@</span><span class="va">meta</span><span class="op">)</span>
 
+<span class="co"># Only keep groups with have Rt width of 3.0 minutes or less and total group occupancy is less than or equal to the total number of samples. </span>
+
 <span class="va">group_table_filtered</span> <span class="op">&lt;-</span>
   <span class="va">group_table</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Rt</span> <span class="op">&gt;=</span> <span class="fl">1.0</span> <span class="op">&amp;</span> <span class="va">Rt</span> <span class="op">&lt;=</span> <span class="fl">16.0</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Rtwidth</span> <span class="op">&lt;=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">count</span> <span class="op">&lt;=</span> <span class="va">number_of_samples</span><span class="op">)</span></code></pre></div>
-<p>The <code>plotGroup</code> method can also be used to a visual inspection of the group.</p>
+<p>The <code>plotGroup</code> method can also be used for a visual inspection of the group.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/plotGroup.html">plotGroup</a></span><span class="op">(</span><span class="va">srmExpGroups</span>, group <span class="op">=</span> <span class="st">'G001'</span><span class="op">)</span></code></pre></div>
-<p><img src="sRm_files/figure-html/plotGroup-1.png" width="700"></p>
+<p><img src="sRm_files/figure-html/plotGroup-1.png" width="768" style="display: block; margin: auto;"></p>
 </div>
+<div id="accessor-methods" class="section level2">
+<h2 class="hasAnchor">
+<a href="#accessor-methods" class="anchor"></a>Accessor Methods</h2>
+<p>All the available slots in the SRM object have a corresponding accessor method which can be used to retrieve the slot contents, instead of having to use; <code>object@&lt;slot_name&gt;</code>.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/meta.html">meta</a></span><span class="op">(</span><span class="va">srmExpGroups</span><span class="op">)</span>
+<span class="co">#&gt; # A tibble: 4 x 6</span>
+<span class="co">#&gt;   sampleID      sample_n Datestamp Timestamp Instrument     Schema              </span>
+<span class="co">#&gt;   &lt;chr&gt;            &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;          &lt;chr&gt;               </span>
+<span class="co">#&gt; 1 free_biltong…        1 &lt;NA&gt;      &lt;NA&gt;      Shimadzu inst… http://psi.hupo.org…</span>
+<span class="co">#&gt; 2 free_biltong…        2 &lt;NA&gt;      &lt;NA&gt;      Shimadzu inst… http://psi.hupo.org…</span>
+<span class="co">#&gt; 3 free_biltong…        3 &lt;NA&gt;      &lt;NA&gt;      Shimadzu inst… http://psi.hupo.org…</span>
+<span class="co">#&gt; 4 free_biltong…        4 &lt;NA&gt;      &lt;NA&gt;      Shimadzu inst… http://psi.hupo.org…</span>
+
+<span class="fu"><a href="../reference/transitions.html">transitions</a></span><span class="op">(</span><span class="va">srmExpGroups</span><span class="op">)</span>
+<span class="co">#&gt; # A tibble: 107 x 3</span>
+<span class="co">#&gt;    transition        filter                                                index</span>
+<span class="co">#&gt;    &lt;chr&gt;             &lt;chr&gt;                                                 &lt;int&gt;</span>
+<span class="co">#&gt;  1 303 &gt; 70.2 (+)    SRM SIC Q1=303 Q3=70.2 Channel=1 Event=1 Segment=1 C…     1</span>
+<span class="co">#&gt;  2 303 &gt; 156 (+)     SRM SIC Q1=303 Q3=156 Channel=2 Event=1 Segment=1 CE…     2</span>
+<span class="co">#&gt;  3 303 &gt; 286.2 (+)   SRM SIC Q1=303 Q3=286.2 Channel=3 Event=1 Segment=1 …     3</span>
+<span class="co">#&gt;  4 317.1 &gt; 84.15 (+) SRM SIC Q1=317.1 Q3=84.15 Channel=1 Event=2 Segment=…     4</span>
+<span class="co">#&gt;  5 317.1 &gt; 170.2 (+) SRM SIC Q1=317.1 Q3=170.2 Channel=2 Event=2 Segment=…     5</span>
+<span class="co">#&gt;  6 317.1 &gt; 128.1 (+) SRM SIC Q1=317.1 Q3=128.1 Channel=3 Event=2 Segment=…     6</span>
+<span class="co">#&gt;  7 304.1 &gt; 156.1 (+) SRM SIC Q1=304.1 Q3=156.1 Channel=1 Event=3 Segment=…     7</span>
+<span class="co">#&gt;  8 304.1 &gt; 113.1 (+) SRM SIC Q1=304.1 Q3=113.1 Channel=2 Event=3 Segment=…     8</span>
+<span class="co">#&gt;  9 304.1 &gt; 287.2 (+) SRM SIC Q1=304.1 Q3=287.2 Channel=3 Event=3 Segment=…     9</span>
+<span class="co">#&gt; 10 234.1 &gt; 216.2 (+) SRM SIC Q1=234.1 Q3=216.2 Channel=1 Event=4 Segment=…    10</span>
+<span class="co">#&gt; # … with 97 more rows</span>
+
+<span class="fu"><a href="../reference/peaks.html">peaks</a></span><span class="op">(</span><span class="va">srmExpGroups</span><span class="op">)</span>
+<span class="co">#&gt; # A tibble: 2,195 x 12</span>
+<span class="co">#&gt;    sampleID filter         rt rtmin rtmax    int   area     sn peakId transition</span>
+<span class="co">#&gt;    &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;     </span>
+<span class="co">#&gt;  1 QC01     SRM SIC Q1…  5.00  4.62  6.21 395845 1.15e7     62      1 204 &gt; 118…</span>
+<span class="co">#&gt;  2 QC02     SRM SIC Q1…  5.00  4.60  6.21 409379 1.17e7    111      1 204 &gt; 118…</span>
+<span class="co">#&gt;  3 QC02     SRM SIC Q1…  6.95  6.87  6.99  12458 1.22e5  12457      2 204 &gt; 118…</span>
+<span class="co">#&gt;  4 QC02     SRM SIC Q1…  6.50  6.37  6.70  18099 3.70e5  18098      3 204 &gt; 118…</span>
+<span class="co">#&gt;  5 QC03     SRM SIC Q1…  5.00  4.58  6.21 398475 1.15e7     62      1 204 &gt; 118…</span>
+<span class="co">#&gt;  6 QC04     SRM SIC Q1…  5.00  4.65  6.21 400348 1.18e7    250      1 204 &gt; 118…</span>
+<span class="co">#&gt;  7 QC04     SRM SIC Q1…  6.46  6.37  6.62  19130 2.90e5  19129      2 204 &gt; 118…</span>
+<span class="co">#&gt;  8 QC01     SRM SIC Q1…  5.00  4.65  6.17 361915 1.03e7    278      1 204 &gt; 144…</span>
+<span class="co">#&gt;  9 QC01     SRM SIC Q1…  6.66  6.37  6.99  16279 5.69e5  16278      2 204 &gt; 144…</span>
+<span class="co">#&gt; 10 QC02     SRM SIC Q1…  5.00  4.58  6.17 360968 1.03e7 360967      1 204 &gt; 144…</span>
+<span class="co">#&gt; # … with 2,185 more rows, and 2 more variables: index &lt;int&gt;, GroupID &lt;chr&gt;</span>
+
+<span class="fu"><a href="../reference/header.html">header</a></span><span class="op">(</span><span class="va">srmExpGroups</span><span class="op">)</span>
+<span class="co">#&gt; # A tibble: 428 x 9</span>
+<span class="co">#&gt;    sampleID filter             tic    bpi polarity    Q1    Q3    CE transition </span>
+<span class="co">#&gt;    &lt;chr&gt;    &lt;chr&gt;            &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      </span>
+<span class="co">#&gt;  1 QC01     SRM SIC Q1=204… 6.36e6 3.96e5 +         204  118.     12 204 &gt; 118.…</span>
+<span class="co">#&gt;  2 QC01     SRM SIC Q1=204… 5.90e6 3.62e5 +         204  144      10 204 &gt; 144 …</span>
+<span class="co">#&gt;  3 QC01     SRM SIC Q1=204… 1.87e6 1.11e5 +         204  162      10 204 &gt; 162 …</span>
+<span class="co">#&gt;  4 QC01     SRM SIC Q1=218… 4.95e7 5.63e6 +         218. 116      12 218.1 &gt; 11…</span>
+<span class="co">#&gt;  5 QC01     SRM SIC Q1=218… 9.56e7 1.34e7 +         218. 130.     13 218.1 &gt; 13…</span>
+<span class="co">#&gt;  6 QC01     SRM SIC Q1=218… 8.45e7 8.28e6 +         218. 158.      9 218.1 &gt; 15…</span>
+<span class="co">#&gt;  7 QC01     SRM SIC Q1=218… 7.90e7 7.76e6 +         218. 158.     10 218.1 &gt; 15…</span>
+<span class="co">#&gt;  8 QC01     SRM SIC Q1=218… 2.36e7 3.07e6 +         218.  88.1    19 218.1 &gt; 88…</span>
+<span class="co">#&gt;  9 QC01     SRM SIC Q1=218… 2.36e7 3.16e6 +         218.  88.1    18 218.1 &gt; 88…</span>
+<span class="co">#&gt; 10 QC01     SRM SIC Q1=233… 1.23e5 1.33e4 +         233. 130.     15 233.1 &gt; 13…</span>
+<span class="co">#&gt; # … with 418 more rows</span></code></pre></div>
 <div id="summarising-and-exporting" class="section level3">
 <h3 class="hasAnchor">
 <a href="#summarising-and-exporting" class="anchor"></a>Summarising and Exporting</h3>
+</div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-      </div>
+        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+    </nav>
+</div>
 
 </div>
 
