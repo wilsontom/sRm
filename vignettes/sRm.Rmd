@@ -144,6 +144,19 @@ plotGroup(srmExpGroups, group = 'G001')
 
 All the available slots in the SRM object have a corresponding accessor method which can be used to retrieve the slot contents, instead of having to use; `object@<slot_name>`.
 
+```{r, accessor_methods}
+meta(srmExpGroups)
+
+transitions(srmExpGroups)
+
+peaks(srmExpGroups)
+
+header(srmExpGroups)
+
+```
+
+
+
 ### Summarising and Exporting
 
 
