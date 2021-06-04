@@ -43,6 +43,7 @@ Collate:
     'accessor-method.R'
     'centWave.R'
     'chromTransform-method.R'
+    'createGroup-method.R'
     'detectPeaks-method.R'
     'filterPeaks-method.R'
     'freeScales.R'

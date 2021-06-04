@@ -18,6 +18,8 @@ A S4 class to store single reaction monitoring (SRM) mass spectrometry (MS) data
 
 \item{\code{peaks}}{a \code{tibble} of detected peaks}
 
+\item{\code{groups}}{a \code{tibble} of peak information for user defined groups}
+
 \item{\code{header}}{a \code{tibble} of formatted header data from \code{mzR::header()}}
 }}
 
