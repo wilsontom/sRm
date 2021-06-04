@@ -170,6 +170,17 @@ setGeneric(
 )
 
 
+#' @rdname indexRT
+
+setGeneric(
+  name = 'indexRT',
+  def = function(object,index, sampleName)
+  {
+    standardGeneric('indexRT')
+  }
+)
+
+
 
 
 
