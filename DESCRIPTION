@@ -50,6 +50,7 @@ Collate:
     'get_meta.R'
     'groupPeaks-method.R'
     'groupSummary-method.R'
+    'indexRT-method.R'
     'internals.R'
     'openSRM.R'
     'peakAsymmetry-method.R'
