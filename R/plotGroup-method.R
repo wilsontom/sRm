@@ -10,7 +10,38 @@
 
 setMethod('plotGroup', signature = 'SRM',
           function(object, group) {
-            group_info <- object@peaks %>% dplyr::filter(GroupID == group)
+
+            if (!'GroupID' %in% names(object@peaks) &
+                length(object@groups) == 0) {
+              message(crayon::red(
+                crayon::bold('!'),
+                crayon::yellow('No Peak Group information found')
+              ))
+              return(invisible(NULL))
+            }
+
+
+            if (!'GroupID' %in% names(object@peaks)) {
+              if (group %in% object@groups$GroupID) {
+                group_info <- object@groups %>% dplyr::filter(GroupID == group)
+              }else{
+                message(crayon::red(crayon::bold(cli::symbol$cross),
+                                    crayon::yellow('Group:', group, 'not found')))
+                return(invisible(NULL))
+              }
+            }
+
+            if (length(object@groups) == 0) {
+              if (!group %in% object@peaks$GroupID) {
+                message(crayon::red(crayon::bold(cli::symbol$cross),
+                                    crayon::yellow('Group:', group, 'not found')))
+                return(invisible(NULL))
+              } else{
+                group_info <- object@peaks %>% dplyr::filter(GroupID == group)
+              }
+            }
+
+
 
             peak_indicies <- list()
             for (i in 1:nrow(group_info)) {
@@ -82,7 +113,7 @@ setMethod('plotGroup', signature = 'SRM',
                 subtitle = paste0('Rt width: ', group_rt_min, ' - ', group_rt_max)
               )
 
-            group_plot2 <- patchwork::wrap_plots(p_group,p_info)
+            group_plot2 <- patchwork::wrap_plots(p_group, p_info)
 
             return(group_plot2)
 
