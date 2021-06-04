@@ -159,6 +159,15 @@ setGeneric(
 )
 
 
+#' @rdname createGroup
+
+setGeneric(
+  name = 'createGroup',
+  def = function(object,index, rt, width, id)
+  {
+    standardGeneric('createGroup')
+  }
+)
 
 
 
