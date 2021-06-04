@@ -85,7 +85,7 @@ setMethod('plotGroup', signature = 'SRM',
                 y = "Intensity",
                 title = paste0('Group: ', group),
                 subtitle = unique(group_info$transition)
-              )
+              ) + guides(colour = 'none')
 
 
             group_info$rt <- round(group_info$rt, digits = 2)
@@ -111,7 +111,7 @@ setMethod('plotGroup', signature = 'SRM',
                 x = 'Rt (mins)',
                 y = 'Relative Intensity',
                 subtitle = paste0('Rt width: ', group_rt_min, ' - ', group_rt_max)
-              )
+              ) + guides(fill = 'none')
 
             group_plot2 <- patchwork::wrap_plots(p_group, p_info)
 
