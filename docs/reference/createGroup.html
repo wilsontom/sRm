@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • sRm</title>
+<title>Create Group — createGroup • sRm</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,8 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Create Group — createGroup" />
+<meta property="og:description" content="Create peak group based on user specified retention time" />
 
 
 
@@ -58,7 +59,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -111,168 +112,52 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Create Group</h1>
+    <small class="dont-index">Source: <a href='https://github.com/wilsontom/sRm/blob/master/R/allGenerics.R'><code>R/allGenerics.R</code></a>, <a href='https://github.com/wilsontom/sRm/blob/master/R/createGroup-method.R'><code>R/createGroup-method.R</code></a></small>
+    <div class="hidden name"><code>createGroup.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p>Create peak group based on user specified retention time</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='fu'>createGroup</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>index</span>, <span class='va'>rt</span>, <span class='va'>width</span>, <span class='va'>id</span><span class='op'>)</span>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="SRM-class.html">SRM-class</a></code> </p>
-        </td>
-        <td><p>SRM</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="centWave.html">centWave()</a></code> </p>
-        </td>
-        <td><p>Wraper for xcms centWave peak detection</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="chromTransform.html">chromTransform()</a></code> </p>
-        </td>
-        <td><p>Transform Chromatograms</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="createGroup.html">createGroup()</a></code> </p>
-        </td>
-        <td><p>Create Group</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="detectPeaks.html">detectPeaks()</a></code> </p>
-        </td>
-        <td><p>Detect Peaks</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="filterPeaks.html">filterPeaks()</a></code> </p>
-        </td>
-        <td><p>Filter Peaks</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="freeScales.html">freeScales()</a></code> </p>
-        </td>
-        <td><p>Free Scales</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_meta.html">get_meta()</a></code> </p>
-        </td>
-        <td><p>Extract meta information from .mzML file</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="groupPeaks.html">groupPeaks()</a></code> </p>
-        </td>
-        <td><p>Group Peaks</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="groupSummary.html">groupSummary()</a></code> </p>
-        </td>
-        <td><p>Group Summary</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="header.html">header()</a></code> </p>
-        </td>
-        <td><p>header</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="meta.html">meta()</a></code> </p>
-        </td>
-        <td><p>meta</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="openSRM.html">openSRM()</a></code> </p>
-        </td>
-        <td><p>Open SRM Files</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="peakAsymmetry.html">peakAsymmetry()</a></code> </p>
-        </td>
-        <td><p>Peak Asymmetry</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="peaks.html">peaks()</a></code> </p>
-        </td>
-        <td><p>peaks</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="plotGroup.html">plotGroup()</a></code> </p>
-        </td>
-        <td><p>Plot Group</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="plotParent.html">plotParent()</a></code> </p>
-        </td>
-        <td><p>Plot Parent</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="plotPeakArea.html">plotPeakArea()</a></code> </p>
-        </td>
-        <td><p>Plot Peak Area</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="plotSRM.html">plotSRM()</a></code> </p>
-        </td>
-        <td><p>Plot SRM</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="plotSample.html">plotSample()</a></code> </p>
-        </td>
-        <td><p>Plot Sample</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="show.html">show(<i>&lt;SRM&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>show-SRM</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="transitions.html">transitions()</a></code> </p>
-        </td>
-        <td><p>Accessor Methods for the SRM S4 class</p></td>
-      </tr>
-    </tbody>
+<span class='co'># S4 method for SRM</span>
+<span class='fu'>createGroup</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>index</span>, <span class='va'>rt</span>, <span class='va'>width</span>, <span class='va'>id</span><span class='op'>)</span></pre>
+
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>object</th>
+      <td><p>a SRM object</p></td>
+    </tr>
+    <tr>
+      <th>index</th>
+      <td><p>a numeric value of the target transition index</p></td>
+    </tr>
+    <tr>
+      <th>rt</th>
+      <td><p>a numeric value of target Rt time (in minutes)</p></td>
+    </tr>
+    <tr>
+      <th>width</th>
+      <td><p>a numeric value of tolerated Rt width (in seconds)</p></td>
+    </tr>
+    <tr>
+      <th>id</th>
+      <td><p>a character string for peak group identification</p></td>
+    </tr>
     </table>
-  </div>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>a <code>SRM</code> object</p>
+
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
