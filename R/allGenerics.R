@@ -3,7 +3,7 @@
 
 setGeneric(
   name = 'plotSRM',
-  def = function(object, index, type)
+  def = function(object, index, type = 'overlay')
   {
     standardGeneric('plotSRM')
   }
