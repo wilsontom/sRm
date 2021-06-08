@@ -6,7 +6,7 @@ on:
     branches:
       - master
 
-name: R-CMD-check-release
+name: R-CMD-check - release
 
 jobs:
   R-CMD-check:
