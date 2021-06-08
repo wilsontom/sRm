@@ -174,7 +174,7 @@ setGeneric(
 
 setGeneric(
   name = 'indexRT',
-  def = function(object,index, sampleName)
+  def = function(object,index, sampleName, n)
   {
     standardGeneric('indexRT')
   }
