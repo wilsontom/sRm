@@ -5,7 +5,7 @@
 \alias{plotSRM,SRM-method}
 \title{Plot SRM}
 \usage{
-plotSRM(object, index, type)
+plotSRM(object, index, type = "overlay")
 
 \S4method{plotSRM}{SRM}(object, index, type = "overlay")
 }
