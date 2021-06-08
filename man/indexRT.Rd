@@ -5,9 +5,9 @@
 \alias{indexRT,SRM-method}
 \title{Find Target Retention Time (Rt) for a transition}
 \usage{
-indexRT(object, index, sampleName)
+indexRT(object, index, sampleName, n)
 
-\S4method{indexRT}{SRM}(object, index, sampleName)
+\S4method{indexRT}{SRM}(object, index, sampleName, n = 1)
 }
 \arguments{
 \item{object}{a SRM object}
@@ -15,6 +15,8 @@ indexRT(object, index, sampleName)
 \item{index}{a numeric value for the transition index}
 
 \item{sampleName}{a character string}
+
+\item{n}{a numeric value for the number of Rts to return (if > 1 is available)}
 }
 \value{
 a numeric vector or Rt targets
