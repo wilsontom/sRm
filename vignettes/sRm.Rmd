@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 ### Introduction
 
-`sRm` is package which contains a selection of functions and methods for handling, processing and visualising Selective Reaction Monitoring (SRM) or Multiple Reaction Monitoring (MRM) Liquid Chromatography Mass Spectrometry Data (LC-MS). The key distinction between SRM/MRM data and other LC-MS data is that the data is acquired as a time-series in the form of chromatograms; whereas other LC-MS (ie DIA, DDA, PRM) acquire data as a series of mass specturms which can then be used to create chromatograms. 
+`sRm` is package which contains a selection of functions and methods for handling, processing and visualising Selective Reaction Monitoring (SRM) or Multiple Reaction Monitoring (MRM) Liquid Chromatography Mass Spectrometry Data (LC-MS). The key distinction between SRM/MRM data and other LC-MS data is that the data is acquired as a time-series in the form of chromatograms; whereas other LC-MS (ie DIA, DDA, PRM) acquire data as a series of mass spectrums which can then be used to create chromatograms. 
 
 `sRm` is designed to make use of existing packages (ie, much of the heavy lifting is done by `mzR` and `xcms`) and create a simple S4 interface to the user for processing, visualisation and reporting. 
 
@@ -138,6 +138,11 @@ The `plotGroup` method can also be used for a visual inspection of the group.
 ```{r, plotGroup, fig.width = 8, fig.height = 4,  fig.align = 'center'}
 plotGroup(srmExpGroups, group = 'G001')
 ```
+
+
+
+
+
 
 
 ## Accessor Methods
