@@ -71,6 +71,7 @@ jobs:
           remotes::install_cran("BiocManager")
           BiocManager::install("mzR")
           BiocManager::install("xcms")
+          remotes::install_github("wilsontom/q3ML")
         shell: Rscript {0}
 
       - name: Check
