@@ -36,7 +36,7 @@ library(sRm)
 
 chrom_files <- list.files(system.file('extdata/Shimadzu_LCD', package = 'sRm'), full.names = TRUE)
 
-srmExp <- openSRM(chrom_files, source_type = 'lcd')
+srmExp <- openSRM(chrom_files, source_type = 'lcd', backend = 'mzR')
 
 srmExp
 
