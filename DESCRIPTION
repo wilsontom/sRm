@@ -24,7 +24,8 @@ Imports:
     MsCoreUtils,
     ptw,
     cli,
-    crayon
+    crayon,
+    q3ML
 URL: https://github.com/wilsontom/sRm
 BugReports: https://github.com/wilsontom/sRm/issues
 LazyData: TRUE
