@@ -123,10 +123,10 @@
     <p>Find Target Retention Time (Rt) for a transition</p>
     </div>
 
-    <pre class="usage"><span class='fu'>indexRT</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>index</span>, <span class='va'>sampleName</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>indexRT</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>index</span>, <span class='va'>sampleName</span>, <span class='va'>n</span><span class='op'>)</span>
 
 <span class='co'># S4 method for SRM</span>
-<span class='fu'>indexRT</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>index</span>, <span class='va'>sampleName</span><span class='op'>)</span></pre>
+<span class='fu'>indexRT</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>index</span>, <span class='va'>sampleName</span>, n <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -142,6 +142,10 @@
     <tr>
       <th>sampleName</th>
       <td><p>a character string</p></td>
+    </tr>
+    <tr>
+      <th>n</th>
+      <td><p>a numeric value for the number of Rts to return (if &gt; 1 is available)</p></td>
     </tr>
     </table>
 

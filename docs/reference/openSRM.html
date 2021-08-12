@@ -123,7 +123,7 @@
     <p>Open and parse SRM files into an <code>S4</code> SRM Object</p>
     </div>
 
-    <pre class="usage"><span class='fu'>openSRM</span><span class='op'>(</span><span class='va'>files</span>, <span class='va'>source_type</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>openSRM</span><span class='op'>(</span><span class='va'>files</span>, <span class='va'>source_type</span>, backend <span class='op'>=</span> <span class='st'>"mzR"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -135,6 +135,11 @@
     <tr>
       <th>source_type</th>
       <td><p>a character string of the original file format (<code>raw</code> or <code>lcd</code>)</p></td>
+    </tr>
+    <tr>
+      <th>backend</th>
+      <td><p>a character string of either <code>mzR</code> (Default) or <code>q3ML</code>. <code>q3ML</code> should only be used as a backend for files
+which have been converted using a version of pwiz which is not supported by <code>mzR</code>,</p></td>
     </tr>
     </table>
 

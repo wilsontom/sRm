@@ -70,7 +70,7 @@
 
       
 
-      </header><script src="sRm_files/header-attrs-2.8/header-attrs.js"></script><div class="row">
+      </header><script src="sRm_files/header-attrs-2.8/header-attrs.js"></script><script src="sRm_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>sRm</h1>
@@ -86,7 +86,7 @@
 <div id="introduction" class="section level3">
 <h3 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h3>
-<p><code>sRm</code> is package which contains a selection of functions and methods for handling, processing and visualising Selective Reaction Monitoring (SRM) or Multiple Reaction Monitoring (MRM) Liquid Chromatography Mass Spectrometry Data (LC-MS). The key distinction between SRM/MRM data and other LC-MS data is that the data is acquired as a time-series in the form of chromatograms; whereas other LC-MS (ie DIA, DDA, PRM) acquire data as a series of mass specturms which can then be used to create chromatograms.</p>
+<p><code>sRm</code> is package which contains a selection of functions and methods for handling, processing and visualising Selective Reaction Monitoring (SRM) or Multiple Reaction Monitoring (MRM) Liquid Chromatography Mass Spectrometry Data (LC-MS). The key distinction between SRM/MRM data and other LC-MS data is that the data is acquired as a time-series in the form of chromatograms; whereas other LC-MS (ie DIA, DDA, PRM) acquire data as a series of mass spectrums which can then be used to create chromatograms.</p>
 <p><code>sRm</code> is designed to make use of existing packages (ie, much of the heavy lifting is done by <code>mzR</code> and <code>xcms</code>) and create a simple S4 interface to the user for processing, visualisation and reporting.</p>
 <p><strong><code>sRm</code> can be easily installed directly from GitHub using the <code>remotes</code> package.</strong></p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -103,7 +103,7 @@
 
 <span class="va">chrom_files</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">'extdata/Shimadzu_LCD'</span>, package <span class="op">=</span> <span class="st">'sRm'</span><span class="op">)</span>, full.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
-<span class="va">srmExp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/openSRM.html">openSRM</a></span><span class="op">(</span><span class="va">chrom_files</span>, source_type <span class="op">=</span> <span class="st">'lcd'</span><span class="op">)</span>
+<span class="va">srmExp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/openSRM.html">openSRM</a></span><span class="op">(</span><span class="va">chrom_files</span>, source_type <span class="op">=</span> <span class="st">'lcd'</span>, backend <span class="op">=</span> <span class="st">'mzR'</span><span class="op">)</span>
 
 <span class="va">srmExp</span>
 <span class="co">#&gt; ── SRM Object ──────────────────────────────────────────────────── sRm v0.2.1 ── </span>
