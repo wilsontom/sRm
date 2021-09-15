@@ -1,5 +1,5 @@
 ---
-title: "sRm"
+title: "sRm: Getting Started"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{sRm}
@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-### Introduction
+## Introduction
 
 `sRm` is package which contains a selection of functions and methods for handling, processing and visualising Selective Reaction Monitoring (SRM) or Multiple Reaction Monitoring (MRM) Liquid Chromatography Mass Spectrometry Data (LC-MS). The key distinction between SRM/MRM data and other LC-MS data is that the data is acquired as a time-series in the form of chromatograms; whereas other LC-MS (ie DIA, DDA, PRM) acquire data as a series of mass spectrums which can then be used to create chromatograms. 
 
@@ -27,7 +27,7 @@ knitr::opts_chunk$set(
 remotes::install_github('wilsontom/sRm')
 ```
 
-### Loading Data
+## Loading Data
 
 Open and parse a series of `.mzML` files using the `openSRM` function. 
 
@@ -42,6 +42,12 @@ srmExp
 
 ```
 
+
+The backend argument has to either be set as `mzR` or `q3ML`. In (hopefully) most instances `mzR` should be used as the backend, however due to a recent issue with backward compatability between `pwiz` and `mzR` (see [here](https://github.com/sneumann/mzR/issues/245) and [here](https://github.com/sneumann/mzR/issues/250) for more details) then the package [q3ML](https://github.com/wilsontom/q3ML) is a `pwiz` independent parser for SRM-MS .mzML files. 
+
+
+### Object Structure
+
 The `SRM` object contains the following data;
 
  * **meta**
@@ -55,9 +61,10 @@ The `SRM` object contains the following data;
  * **header**
     * a `tibble` of formatted header data from `mzR::header()`
 
-### Plotting Data
 
-#### plotSRM
+## Plotting Data
+
+### plotSRM
 
 The main feature of `sRm` is a series of plotting methods which are useful for visualising the raw data. The `plotSRM` method uses the numeric index of the transition. These can be found in the `transitions` slot. The `plotSRM` method has two `type` options; overlay and facet. 
 
@@ -71,7 +78,7 @@ plotSRM(srmExp, index = 11, type = 'facet')
 ```
 
 
-#### plotParent 
+### plotParent 
 
 `plotParent` use a numeric value of parent mass as an input, and plots all SRM transitions which feature the selected parent mass. 
 
@@ -97,7 +104,6 @@ The `plotPeakArea` can then be used to determine the quality of the peak integra
 ```{r, plotArea, fig.width = 6, fig.height = 4,  fig.align = 'center'}
 plotPeakArea(srmExpPeaks, index = 5, sampleName = 'QC02')
 ```
-
 
 
 ### Peak Grouping
@@ -140,8 +146,24 @@ plotGroup(srmExpGroups, group = 'G001')
 ```
 
 
+#### Create Group
+
+There will occasions (ie, during standard optimisation) where using a data-driven approach to peak grouping (detailed above) is appropriate, but for targeted assays, the target retention time (Rt) is usually already known. Using the `createGroup` method, peak groups are created around the specified Rt at a given tolerance. 
+
+```{r, createGroup}
+srmExpGroupTarg <- createGroup(srmExpPeaks, index = 1, rt = 3.2,  width = 30, id = 'Group01')
+
+srmExpGroupTarg@groups
+```
 
 
+```{r, plotGroup2, fig.width = 6, fig.height = 6,  fig.align = 'center'}
+patchwork::wrap_plots(
+  plotSRM(srmExpGroupTarg, index = 1),
+  plotGroup(srmExpGroupTarg, group = 'Group01'),
+  ncol = 1
+)
+```
 
 
 
@@ -159,12 +181,6 @@ peaks(srmExpGroups)
 header(srmExpGroups)
 
 ```
-
-
-
-### Summarising and Exporting
-
-
 
 
 
