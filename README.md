@@ -4,9 +4,6 @@
 
 > __Toolkit for Selective Reaction Monitoring (SRM) Mass Spectrometry (MS) Data__
 
-* [Installation](#installation)
-* [Getting Started](#getting-started)
-
 ## Installation
 
 `sRm` can de installed directly from GitHub using the `remotes` packages
@@ -14,11 +11,9 @@
 ```r
 remotes::install_github('wilsontom/sRm')
 ```
+## Learn More
 
-## Usage
-
-`sRm` is designed to work primarily with Selective Reaction Monitoring (SRM) and Mulitple Reaction Monitoring (MRM) LC-MS data for the purpose of biomarker quantification. 
-
+The package documentation can be browsed online at [https://wilsontom/github.io/sRm](https://wilsontom/github.io/sRm). The [Getting Started](https://wilsontom.github.io/sRm/articles/sRm.html) vignette is the best place to start for an introduction into using the package. 
 
 
 
