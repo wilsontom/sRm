@@ -6,6 +6,7 @@
 - Add method for creating peak groups
 - Export results using peak group IDs
 - Add `backend` as an argument in `openSRM`. Select either `mzR` (Default) or `q3ML` (this is *hopefully* a short term solution to mzML files which have been converted using newer versions of pwiz, and are currently not supported by `mzR`. 
+
 # sRm V0.2.1
 
 - Support for Shimadzu QqQ-MS
