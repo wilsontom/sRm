@@ -1,5 +1,5 @@
 ---
-title: "sRm: Getting Started"
+title: "Getting Started"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{sRm}
@@ -87,7 +87,7 @@ plotParent(srmExp, 303)
 ```
 
 
-### Peak Detection
+## Peak Detection
 
 `sRm` utilises the `xcms::peaksWithCentWave()` function to detection chromatogram features. 
 
@@ -146,7 +146,7 @@ plotGroup(srmExpGroups, group = 'G001')
 ```
 
 
-#### Create Group
+### Create Group
 
 There will occasions (ie, during standard optimisation) where using a data-driven approach to peak grouping (detailed above) is appropriate, but for targeted assays, the target retention time (Rt) is usually already known. Using the `createGroup` method, peak groups are created around the specified Rt at a given tolerance. 
 
