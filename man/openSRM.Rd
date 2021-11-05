@@ -4,12 +4,15 @@
 \alias{openSRM}
 \title{Open SRM Files}
 \usage{
-openSRM(files, source_type)
+openSRM(files, source_type, backend = "mzR")
 }
 \arguments{
 \item{files}{a character vector of absolute file paths of SRM files in \code{.mzML} format}
 
 \item{source_type}{a character string of the original file format (\code{raw} or \code{lcd})}
+
+\item{backend}{a character string of either \code{mzR} (Default) or \code{q3ML}. \code{q3ML} should only be used as a backend for files
+which have been converted using a version of pwiz which is not supported by \code{mzR},}
 }
 \value{
 an SRM object

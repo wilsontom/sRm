@@ -1,4 +1,11 @@
+#' Plot SRM
+#'
 #' @rdname plotSRM
+#' @param object a SRM object
+#' @param index a numeric value of the transition index to plot
+#' @param type a character string of either `overlay` or `facet`
+#' @return a ggplot plot object
+#' @export
 #' @importFrom ggplot2 ggplot aes aes_string geom_line theme_bw theme element_blank element_text scale_x_continuous xlab ylab facet_wrap labs ggtitle theme_classic
 
 setMethod('plotSRM', signature = 'SRM',
@@ -58,7 +65,7 @@ setMethod('plotSRM', signature = 'SRM',
                 )) +
                 xlab("Retention Time (mins)") + ylab("Intensity") +
                 ggtitle(plot_title) + theme(plot.title = element_text(size = 14)) +
-                facet_wrap( ~ sampleID)
+                facet_wrap(~ sampleID)
 
             }
 

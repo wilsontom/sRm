@@ -1,5 +1,5 @@
 ---
-title: "sRm"
+title: "Getting Started"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{sRm}
@@ -14,9 +14,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-### Introduction
+## Introduction
 
-`sRm` is package which contains a selection of functions and methods for handling, processing and visualising Selective Reaction Monitoring (SRM) or Multiple Reaction Monitoring (MRM) Liquid Chromatography Mass Spectrometry Data (LC-MS). The key distinction between SRM/MRM data and other LC-MS data is that the data is acquired as a time-series in the form of chromatograms; whereas other LC-MS (ie DIA, DDA, PRM) acquire data as a series of mass specturms which can then be used to create chromatograms. 
+`sRm` is package which contains a selection of functions and methods for handling, processing and visualising Selective Reaction Monitoring (SRM) or Multiple Reaction Monitoring (MRM) Liquid Chromatography Mass Spectrometry Data (LC-MS). The key distinction between SRM/MRM data and other LC-MS data is that the data is acquired as a time-series in the form of chromatograms; whereas other LC-MS (ie DIA, DDA, PRM) acquire data as a series of mass spectrums which can then be used to create chromatograms. 
 
 `sRm` is designed to make use of existing packages (ie, much of the heavy lifting is done by `mzR` and `xcms`) and create a simple S4 interface to the user for processing, visualisation and reporting. 
 
@@ -27,20 +27,26 @@ knitr::opts_chunk$set(
 remotes::install_github('wilsontom/sRm')
 ```
 
-### Loading Data
+## Loading Data
 
 Open and parse a series of `.mzML` files using the `openSRM` function. 
 
 ```{r, load}
 library(sRm)
 
-chrom_files <- list.files(system.file('extdata/Thermo_RAW', package = 'sRm'), full.names = TRUE)
+chrom_files <- list.files(system.file('extdata/Shimadzu_LCD', package = 'sRm'), full.names = TRUE)
 
-srmExp <- openSRM(chrom_files, source_type = 'raw')
+srmExp <- openSRM(chrom_files, source_type = 'lcd', backend = 'mzR')
 
 srmExp
 
 ```
+
+
+The backend argument has to either be set as `mzR` or `q3ML`. In (hopefully) most instances `mzR` should be used as the backend, however due to a recent issue with backward compatability between `pwiz` and `mzR` (see [here](https://github.com/sneumann/mzR/issues/245) and [here](https://github.com/sneumann/mzR/issues/250) for more details) then the package [q3ML](https://github.com/wilsontom/q3ML) is a `pwiz` independent parser for SRM-MS .mzML files. 
+
+
+### Object Structure
 
 The `SRM` object contains the following data;
 
@@ -48,18 +54,17 @@ The `SRM` object contains the following data;
     * a `tibble` of a minimal amount of meta data.
  * **transitions**
     * a `tibble` of all transitions names. Transitions are all given a numeric index to make accessing transitions easier for plotting.
- * **rawChrom**
+ * **chroms**
     * a `tibble` of retention time (rt) and intensity (int) values for all imported SRM chromatograms.
- * **transformedChrom**
  * **peaks**
     * a `tibble` of detected peaks for each SRM chromatogram.
  * **header**
-    * a `tibble` of formated header data from `mzR::header()`
+    * a `tibble` of formatted header data from `mzR::header()`
 
 
-### Plotting Data
+## Plotting Data
 
-#### plotSRM
+### plotSRM
 
 The main feature of `sRm` is a series of plotting methods which are useful for visualising the raw data. The `plotSRM` method uses the numeric index of the transition. These can be found in the `transitions` slot. The `plotSRM` method has two `type` options; overlay and facet. 
 
@@ -73,35 +78,111 @@ plotSRM(srmExp, index = 11, type = 'facet')
 ```
 
 
-#### plotParent 
+### plotParent 
 
 `plotParent` use a numeric value of parent mass as an input, and plots all SRM transitions which feature the selected parent mass. 
 
 ```{r, plotParent,fig.width = 6, fig.height = 4,  fig.align = 'center'}
-plotParent(srmExp, 187.026)
+plotParent(srmExp, 303)
 ```
 
 
-### Peak Detection
+## Peak Detection
 
 `sRm` utilises the `xcms::peaksWithCentWave()` function to detection chromatogram features. 
 
 ```{r, peak_detection}
 srmExpPeaks <-
   detectPeaks(srmExp,
-              snthresh = 2,
-              peakwidth = c(5,60))
+              snthresh = 5,
+              peakwidth = c(5,75))
 ```
 
 
 The `plotPeakArea` can then be used to determine the quality of the peak integration. 
 
 ```{r, plotArea, fig.width = 6, fig.height = 4,  fig.align = 'center'}
-plotPeakArea(srmExpPeaks, index = 11, sampleName = 'QC02')
+plotPeakArea(srmExpPeaks, index = 5, sampleName = 'QC02')
 ```
 
 
-### Peak Measures
+### Peak Grouping
+
+Once peak detection has been performed, the `groupPeaks` method can be used to assign features to corresponding peak groups. The only parameter that needs to be set is `rt_tolerance` which is the retention time width which will be used to group similar peaks together.
+
+```{r, peak_grouping}
+srmExpGroups <- groupPeaks(srmExpPeaks, rt_tolerance = 0.5)
+```
+
+A summary of the peak groups can created using the `groupSummary` method. 
+
+```{r, group_summary}
+group_table <- groupSummary(srmExpGroups)
+
+head(group_table)
+```
+
+The output of the `groupSummary` method is a `tibble` so it can be easily processed further using `dplyr` to produce a list of the main **GroupIDs** which need exporting for further analysis. 
+
+For example, we can filter out any group which have low occupancy (and suspiciously high occupancy), have retention times in the wash phase of the chromatogram gradient or the peak width is too large. 
+
+
+```{r, group_filter}
+number_of_samples <- nrow(srmExp@meta)
+
+# Only keep groups with have Rt width of 3.0 minutes or less and total group occupancy is less than or equal to the total number of samples. 
+
+group_table_filtered <-
+  group_table %>% dplyr::filter(Rt >= 1.0 & Rt <= 16.0) %>%
+  dplyr::filter(Rtwidth <= 3) %>% dplyr::filter(count <= number_of_samples)
+
+```
+
+
+The `plotGroup` method can also be used for a visual inspection of the group. 
+
+```{r, plotGroup, fig.width = 8, fig.height = 4,  fig.align = 'center'}
+plotGroup(srmExpGroups, group = 'G001')
+```
+
+
+### Create Group
+
+There will occasions (ie, during standard optimisation) where using a data-driven approach to peak grouping (detailed above) is appropriate, but for targeted assays, the target retention time (Rt) is usually already known. Using the `createGroup` method, peak groups are created around the specified Rt at a given tolerance. 
+
+```{r, createGroup}
+srmExpGroupTarg <- createGroup(srmExpPeaks, index = 1, rt = 3.2,  width = 30, id = 'Group01')
+
+srmExpGroupTarg@groups
+```
+
+
+```{r, plotGroup2, fig.width = 6, fig.height = 6,  fig.align = 'center'}
+patchwork::wrap_plots(
+  plotSRM(srmExpGroupTarg, index = 1),
+  plotGroup(srmExpGroupTarg, group = 'Group01'),
+  ncol = 1
+)
+```
+
+
+
+## Accessor Methods
+
+All the available slots in the SRM object have a corresponding accessor method which can be used to retrieve the slot contents, instead of having to use; `object@<slot_name>`.
+
+```{r, accessor_methods}
+meta(srmExpGroups)
+
+transitions(srmExpGroups)
+
+peaks(srmExpGroups)
+
+header(srmExpGroups)
+
+```
+
+
 
 
 

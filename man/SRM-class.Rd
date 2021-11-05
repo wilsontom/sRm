@@ -7,3 +7,19 @@
 \description{
 A S4 class to store single reaction monitoring (SRM) mass spectrometry (MS) data
 }
+\section{Slots}{
+
+\describe{
+\item{\code{meta}}{a \code{tibble} of a minimal amount of meta data.}
+
+\item{\code{transitions}}{a \code{tibble} of all transitions names}
+
+\item{\code{chroms}}{a \code{tibble} of retention time (rt) and intensity (int) values for all imported SRM chromatograms}
+
+\item{\code{peaks}}{a \code{tibble} of detected peaks}
+
+\item{\code{groups}}{a \code{tibble} of peak information for user defined groups}
+
+\item{\code{header}}{a \code{tibble} of formatted header data from \code{mzR::header()}}
+}}
+

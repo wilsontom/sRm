@@ -4,26 +4,45 @@
 #'
 #' @param files a character vector of absolute file paths of SRM files in `.mzML` format
 #' @param source_type a character string of the original file format (`raw` or `lcd`)
+#' @param backend a character string of either `mzR` (Default) or `q3ML`. `q3ML` should only be used as a backend for files
+#' which have been converted using a version of pwiz which is not supported by `mzR`,
 #' @return an SRM object
 #' @export
 #' @importFrom magrittr %>%
 
-openSRM <- function(files, source_type)
+openSRM <- function(files, source_type, backend = 'mzR')
 {
   # map over input files and open with mzR
-  opentmp <- purrr::map(files, ~ {
-    mzR::openMSfile(., backend = "pwiz")
-  })
 
-  # map over inputs and extract chromatograms
-  chromtmp <- purrr::map(opentmp, ~ {
-    mzR::chromatogram(.)
-  })
+  if (backend == 'mzR') {
+    opentmp <- purrr::map(files, ~ {
+      mzR::openMSfile(., backend = "pwiz")
+    })
 
-  # extract chromatogram headers. this replaces old xml2 parsing code. Most cvParams are now supported by mzR
-  file_hdrs <- purrr::map(opentmp, ~ {
-    mzR::chromatogramHeader(.)
-  })
+    # map over inputs and extract chromatograms
+    chromtmp <- purrr::map(opentmp, ~ {
+      mzR::chromatogram(.)
+    })
+
+    # extract chromatogram headers. this replaces old xml2 parsing code. Most cvParams are now supported by mzR
+    file_hdrs <- purrr::map(opentmp, ~ {
+      mzR::chromatogramHeader(.)
+    })
+  }
+
+  if (backend == 'q3ML') {
+    opentmp <- purrr::map(files, q3ML::openFile)
+
+    chromtmp <- purrr::map(opentmp, ~ {
+      .$peaks
+    })
+
+    file_hdrs <- purrr::map(opentmp, ~ {
+      .$header
+    })
+
+  }
+
 
   # extract transition names from the chromatograms
   transition_names <- list()
@@ -100,9 +119,10 @@ openSRM <- function(files, source_type)
     dplyr::mutate(polarity = replace(polarity, polarity == 1, '+')) %>%
     dplyr::mutate(polarity = replace(polarity, polarity == -1, 'TIC'))
 
-    clean_transition <- unlist(format_scan_header(file_hdrs_clean))
+  clean_transition <- unlist(format_scan_header(file_hdrs_clean))
 
-    file_hdrs_clean <- file_hdrs_clean %>% dplyr::mutate(transition = clean_transition) %>%
+  file_hdrs_clean <-
+    file_hdrs_clean %>% dplyr::mutate(transition = clean_transition) %>%
     dplyr::filter(filter != 'TIC')
 
   object@transitions <-
@@ -111,7 +131,7 @@ openSRM <- function(files, source_type)
   object@chroms <-
     object@chroms %>% dplyr::filter(filter != 'TIC')
 
-  if(source_type == 'lcd'){
+  if (source_type == 'lcd') {
     object@chroms$rt <- object@chroms$rt / 60
   }
 
@@ -122,7 +142,7 @@ openSRM <- function(files, source_type)
   tic_bpi <-
     object@chroms %>% dplyr::group_by(sampleID, filter) %>% dplyr::summarise(tic = sum(int), bpi = max(int)) %>% dplyr::ungroup()
 
-object@header <-
+  object@header <-
     dplyr::full_join(tic_bpi, file_hdrs_clean, by = c('sampleID', 'filter'))
 
   meta_tibble <-

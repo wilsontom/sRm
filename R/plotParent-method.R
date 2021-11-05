@@ -1,5 +1,12 @@
-#' @rdname plotParent
+#' Plot Parent
 #'
+#' @rdname plotParent
+#' @param object a SRM object
+#' @param parentMass a numeric value of the parent mass (Q1) to extract
+#' @return a ggplot plot object
+#'
+#' @export
+
 
 setMethod('plotParent', signature = 'SRM',
           function(object, parentMass) {

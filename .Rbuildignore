@@ -7,3 +7,4 @@ TODO.md
 sRm-wiki.R
 dev.R
 .github/
+^\.github$

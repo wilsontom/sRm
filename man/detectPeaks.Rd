@@ -7,7 +7,7 @@
 \usage{
 detectPeaks(object, snthresh, peakwidth)
 
-\S4method{detectPeaks}{SRM}(object, snthresh = 10, peakwidth = 30)
+\S4method{detectPeaks}{SRM}(object, snthresh = 10, peakwidth = c(2, 30))
 }
 \arguments{
 \item{object}{a SRM object}

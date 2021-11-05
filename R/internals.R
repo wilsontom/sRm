@@ -35,7 +35,12 @@ globalVariables(
     'Timestamp',
     'transition',
     'filter',
-    'width'
+    'width',
+    'GroupID',
+    'SampleID',
+    'Rtmax',
+    'Rtmin',
+    'group'
   )
 )
 
@@ -62,3 +67,28 @@ format_scan_header <- function(x)
 
   return(tidy_header)
 }
+
+
+#' Group Peaks
+#'
+#' Group detected peaks based on retention time. Based on `MsCoreUtils::group`
+#'
+#' @param x a numeric vector of retention times
+#' @param rt_tolerance a numeric value for the tolerate retention grouping
+#' @return a numeric vector of retention time groups
+#'
+#' @keywords internal
+
+groupPeaksInternal <- function(x, rt_tolerance) {
+  if (is.unsorted(x)) {
+    idx <- order(x)
+    x <- x[idx]
+  } else
+    idx <- integer()
+  rt_tolerance <- rt_tolerance + sqrt(.Machine$double.eps)
+  res <- cumsum(c(1L, diff(x) >= rt_tolerance))
+  res[idx] <- res
+  res
+}
+
+
