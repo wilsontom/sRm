@@ -1,3 +1,7 @@
+# sRm v0.2.3
+- Add parallel support *via* `future_map` to `openSRM` and `detectPeaks`
+- Add `keepTransitions` method to remove redundant data from SRM objects
+
 # sRm V0.2.2
 - Use the CentWave algorithm for peak detection
 - Remove explicit slot for transformed chromatograms

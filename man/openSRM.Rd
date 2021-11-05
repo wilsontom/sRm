@@ -4,7 +4,7 @@
 \alias{openSRM}
 \title{Open SRM Files}
 \usage{
-openSRM(files, source_type, backend = "mzR")
+openSRM(files, source_type, backend = "mzR", parallel = FALSE, cores)
 }
 \arguments{
 \item{files}{a character vector of absolute file paths of SRM files in \code{.mzML} format}
@@ -13,6 +13,10 @@ openSRM(files, source_type, backend = "mzR")
 
 \item{backend}{a character string of either \code{mzR} (Default) or \code{q3ML}. \code{q3ML} should only be used as a backend for files
 which have been converted using a version of pwiz which is not supported by \code{mzR},}
+
+\item{parallel}{logical; if \code{TRUE} then \code{future_map} is used for opening files}
+
+\item{cores}{a numeric value for the number of parallel workers to enable, if \code{parallel = TRUE}}
 }
 \value{
 an SRM object

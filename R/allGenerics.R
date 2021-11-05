@@ -1,4 +1,5 @@
 
+
 #' @rdname plotSRM
 
 setGeneric(
@@ -46,7 +47,11 @@ setGeneric(
 
 setGeneric(
   name = 'detectPeaks',
-  def = function(object, snthresh, peakwidth)
+  def = function(object,
+                 snthresh,
+                 peakwidth,
+                 parallel,
+                 cores)
   {
     standardGeneric('detectPeaks')
   }
@@ -163,7 +168,7 @@ setGeneric(
 
 setGeneric(
   name = 'createGroup',
-  def = function(object,index, rt, width, id)
+  def = function(object, index, rt, width, id)
   {
     standardGeneric('createGroup')
   }
@@ -174,25 +179,19 @@ setGeneric(
 
 setGeneric(
   name = 'indexRT',
-  def = function(object,index, sampleName, n)
+  def = function(object, index, sampleName, n)
   {
     standardGeneric('indexRT')
   }
 )
 
 
+#' @rdname keepTransitions
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+setGeneric(
+  name = 'keepTransitions',
+  def = function(object, index_keep)
+  {
+    standardGeneric('keepTransitions')
+  }
+)
