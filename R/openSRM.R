@@ -7,7 +7,6 @@
 #' @param backend a character string of either `mzR` (Default) or `q3ML`. `q3ML` should only be used as a backend for files
 #' which have been converted using a version of pwiz which is not supported by `mzR`,
 #' @param parallel logical; if `TRUE` then `future_map` is used for opening files
-#' @param cores a numeric value for the number of parallel workers to enable, if `parallel = TRUE`
 #' @return an SRM object
 #' @export
 #' @importFrom magrittr %>%
@@ -16,8 +15,7 @@ openSRM <-
   function(files,
            source_type,
            backend = 'mzR',
-           parallel = FALSE,
-           cores)
+           parallel = FALSE)
   {
     # map over input files and open with mzR
     if (parallel == FALSE) {
@@ -52,7 +50,7 @@ openSRM <-
     }
 
     if (parallel == TRUE) {
-      future::plan(future::multisession, workers = cores)
+
       if (backend == 'mzR') {
         opentmp <- furrr::future_map(files, ~ {
           mzR::openMSfile(., backend = "pwiz")
@@ -81,7 +79,7 @@ openSRM <-
         })
 
       }
-      future::plan(future::sequential)
+
     }
 
     # extract transition names from the chromatograms

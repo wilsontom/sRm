@@ -50,8 +50,7 @@ setGeneric(
   def = function(object,
                  snthresh,
                  peakwidth,
-                 parallel,
-                 cores)
+                 parallel)
   {
     standardGeneric('detectPeaks')
   }

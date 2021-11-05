@@ -5,15 +5,9 @@
 \alias{detectPeaks,SRM-method}
 \title{Detect Peaks}
 \usage{
-detectPeaks(object, snthresh, peakwidth, parallel, cores)
+detectPeaks(object, snthresh, peakwidth, parallel)
 
-\S4method{detectPeaks}{SRM}(
-  object,
-  snthresh = 10,
-  peakwidth = c(2, 30),
-  parallel = FALSE,
-  cores = 4
-)
+\S4method{detectPeaks}{SRM}(object, snthresh = 10, peakwidth = c(2, 30), parallel = FALSE)
 }
 \arguments{
 \item{object}{a SRM object}
@@ -23,8 +17,6 @@ detectPeaks(object, snthresh, peakwidth, parallel, cores)
 \item{peakwidth}{a numeric vector indicating the minimum and maximum tolerated peak width}
 
 \item{parallel}{logical; if \code{TRUE} then \code{future_map} is used for peak detection}
-
-\item{cores}{a numeric value for the number of parallel workers to enable, if \code{parallel = TRUE}}
 }
 \value{
 a SRM object
