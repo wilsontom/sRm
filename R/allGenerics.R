@@ -163,3 +163,19 @@ setGeneric(
 
 
 
+#' Keep Transitions
+#'
+#' @rdname keepTransitions
+#' @param object a SRM object
+#' @param index_keep a numeric vector of transition index to retain
+#' @return a `SRM` object
+#'
+#' @export
+
+setGeneric(
+  name = 'keepTransitions',
+  def = function(object, index_keep)
+  {
+    standardGeneric('keepTransitions')
+  }
+)
