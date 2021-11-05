@@ -2,7 +2,7 @@ Package: sRm
 Type: Package
 Title: Toolkit for SRM-MS data
     (MS) data
-Version: 0.2.2
+Version: 0.2.3
 Authors@R: c(
     person("Tom", "Wilson", , "tpw2@aber.ac.uk", c("aut", "cre")))
 Description: A complete toolkit for working with Selecive Reaction Monitoring (SRM) Mass Spectrometry (MS) data and other
@@ -25,7 +25,9 @@ Imports:
     ptw,
     cli,
     crayon,
-    q3ML
+    q3ML,
+    furrr,
+    future
 URL: https://github.com/wilsontom/sRm
 BugReports: https://github.com/wilsontom/sRm/issues
 LazyData: TRUE
@@ -53,6 +55,7 @@ Collate:
     'groupSummary-method.R'
     'indexRT-method.R'
     'internals.R'
+    'keepTransitions-method.R'
     'openSRM.R'
     'peakAsymmetry-method.R'
     'plotGroup-method.R'
