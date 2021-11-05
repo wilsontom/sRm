@@ -1,5 +1,10 @@
+#' Keep Transitions
 #' @rdname keepTransitions
+#' @param object a SRM object
+#' @param index_keep a numeric vector of transition index to retain
+#' @return a `SRM` object
 #'
+#' @export
 
 setMethod('keepTransitions', signature = 'SRM',
           function(object, index_keep = c())
