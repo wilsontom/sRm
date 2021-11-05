@@ -95,7 +95,8 @@ plotParent(srmExp, 303)
 srmExpPeaks <-
   detectPeaks(srmExp,
               snthresh = 5,
-              peakwidth = c(5,75))
+              peakwidth = c(5,75), 
+              parallel = FALSE)
 ```
 
 

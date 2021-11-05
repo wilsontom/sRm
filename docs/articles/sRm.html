@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sRm</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.3</span>
       </span>
     </div>
 
@@ -70,7 +70,7 @@
 
       
 
-      </header><script src="sRm_files/header-attrs-2.8/header-attrs.js"></script><script src="sRm_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Getting Started</h1>
@@ -100,13 +100,12 @@
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/wilsontom/sRm">sRm</a></span><span class="op">)</span>
 <span class="co">#&gt; Loading required package: ggplot2</span>
 <span class="co">#&gt; Loading required package: magrittr</span>
-
 <span class="va">chrom_files</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">'extdata/Shimadzu_LCD'</span>, package <span class="op">=</span> <span class="st">'sRm'</span><span class="op">)</span>, full.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
 <span class="va">srmExp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/openSRM.html">openSRM</a></span><span class="op">(</span><span class="va">chrom_files</span>, source_type <span class="op">=</span> <span class="st">'lcd'</span>, backend <span class="op">=</span> <span class="st">'mzR'</span><span class="op">)</span>
 
 <span class="va">srmExp</span>
-<span class="co">#&gt; ── SRM Object ──────────────────────────────────────────────────── sRm v0.2.2 ── </span>
+<span class="co">#&gt; ── SRM Object ──────────────────────────────────────────────────── sRm v0.2.3 ── </span>
 <span class="co">#&gt;  </span>
 <span class="co">#&gt; SRM File Inputs: 4 </span>
 <span class="co">#&gt;  </span>
@@ -184,7 +183,8 @@
 <code class="sourceCode R"><span class="va">srmExpPeaks</span> <span class="op">&lt;-</span>
   <span class="fu"><a href="../reference/detectPeaks.html">detectPeaks</a></span><span class="op">(</span><span class="va">srmExp</span>,
               snthresh <span class="op">=</span> <span class="fl">5</span>,
-              peakwidth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">75</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+              peakwidth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">75</span><span class="op">)</span>, 
+              parallel <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p>The <code>plotPeakArea</code> can then be used to determine the quality of the peak integration.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/plotPeakArea.html">plotPeakArea</a></span><span class="op">(</span><span class="va">srmExpPeaks</span>, index <span class="op">=</span> <span class="fl">5</span>, sampleName <span class="op">=</span> <span class="st">'QC02'</span><span class="op">)</span></code></pre></div>
@@ -200,7 +200,7 @@
 <code class="sourceCode R"><span class="va">group_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/groupSummary.html">groupSummary</a></span><span class="op">(</span><span class="va">srmExpGroups</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">group_table</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 6 x 8</span>
+<span class="co">#&gt; # A tibble: 6 × 8</span>
 <span class="co">#&gt; # Groups:   transition [3]</span>
 <span class="co">#&gt;   transition      GroupID    Rt Rtmin Rtmax Rtwidth      SN count</span>
 <span class="co">#&gt;   &lt;chr&gt;           &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;int&gt;</span>
@@ -218,8 +218,8 @@
 <span class="co"># Only keep groups with have Rt width of 3.0 minutes or less and total group occupancy is less than or equal to the total number of samples. </span>
 
 <span class="va">group_table_filtered</span> <span class="op">&lt;-</span>
-  <span class="va">group_table</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Rt</span> <span class="op">&gt;=</span> <span class="fl">1.0</span> <span class="op">&amp;</span> <span class="va">Rt</span> <span class="op">&lt;=</span> <span class="fl">16.0</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Rtwidth</span> <span class="op">&lt;=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">count</span> <span class="op">&lt;=</span> <span class="va">number_of_samples</span><span class="op">)</span></code></pre></div>
+  <span class="va">group_table</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Rt</span> <span class="op">&gt;=</span> <span class="fl">1.0</span> <span class="op">&amp;</span> <span class="va">Rt</span> <span class="op">&lt;=</span> <span class="fl">16.0</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Rtwidth</span> <span class="op">&lt;=</span> <span class="fl">3</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">count</span> <span class="op">&lt;=</span> <span class="va">number_of_samples</span><span class="op">)</span></code></pre></div>
 <p>The <code>plotGroup</code> method can also be used for a visual inspection of the group.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/plotGroup.html">plotGroup</a></span><span class="op">(</span><span class="va">srmExpGroups</span>, group <span class="op">=</span> <span class="st">'G001'</span><span class="op">)</span></code></pre></div>
@@ -233,7 +233,7 @@
 <code class="sourceCode R"><span class="va">srmExpGroupTarg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/createGroup.html">createGroup</a></span><span class="op">(</span><span class="va">srmExpPeaks</span>, index <span class="op">=</span> <span class="fl">1</span>, rt <span class="op">=</span> <span class="fl">3.2</span>,  width <span class="op">=</span> <span class="fl">30</span>, id <span class="op">=</span> <span class="st">'Group01'</span><span class="op">)</span>
 
 <span class="va">srmExpGroupTarg</span><span class="op">@</span><span class="va">groups</span>
-<span class="co">#&gt; # A tibble: 4 x 12</span>
+<span class="co">#&gt; # A tibble: 4 × 12</span>
 <span class="co">#&gt;   sampleID filter    rt rtmin rtmax    int   area     sn peakId transition index</span>
 <span class="co">#&gt;   &lt;chr&gt;    &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;      &lt;int&gt;</span>
 <span class="co">#&gt; 1 QC01     SRM S…  3.27  2.97  3.88 1.21e6 1.70e7 1.21e6      1 303 &gt; 70.…     1</span>
@@ -256,16 +256,15 @@
 <p>All the available slots in the SRM object have a corresponding accessor method which can be used to retrieve the slot contents, instead of having to use; <code>object@&lt;slot_name&gt;</code>.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/meta.html">meta</a></span><span class="op">(</span><span class="va">srmExpGroups</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 4 x 6</span>
+<span class="co">#&gt; # A tibble: 4 × 6</span>
 <span class="co">#&gt;   sampleID      sample_n Datestamp Timestamp Instrument     Schema              </span>
 <span class="co">#&gt;   &lt;chr&gt;            &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;          &lt;chr&gt;               </span>
 <span class="co">#&gt; 1 free_biltong…        1 &lt;NA&gt;      &lt;NA&gt;      Shimadzu inst… http://psi.hupo.org…</span>
 <span class="co">#&gt; 2 free_biltong…        2 &lt;NA&gt;      &lt;NA&gt;      Shimadzu inst… http://psi.hupo.org…</span>
 <span class="co">#&gt; 3 free_biltong…        3 &lt;NA&gt;      &lt;NA&gt;      Shimadzu inst… http://psi.hupo.org…</span>
 <span class="co">#&gt; 4 free_biltong…        4 &lt;NA&gt;      &lt;NA&gt;      Shimadzu inst… http://psi.hupo.org…</span>
-
 <span class="fu"><a href="../reference/transitions.html">transitions</a></span><span class="op">(</span><span class="va">srmExpGroups</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 107 x 3</span>
+<span class="co">#&gt; # A tibble: 107 × 3</span>
 <span class="co">#&gt;    transition        filter                                                index</span>
 <span class="co">#&gt;    &lt;chr&gt;             &lt;chr&gt;                                                 &lt;int&gt;</span>
 <span class="co">#&gt;  1 303 &gt; 70.2 (+)    SRM SIC Q1=303 Q3=70.2 Channel=1 Event=1 Segment=1 C…     1</span>
@@ -279,9 +278,8 @@
 <span class="co">#&gt;  9 304.1 &gt; 287.2 (+) SRM SIC Q1=304.1 Q3=287.2 Channel=3 Event=3 Segment=…     9</span>
 <span class="co">#&gt; 10 234.1 &gt; 216.2 (+) SRM SIC Q1=234.1 Q3=216.2 Channel=1 Event=4 Segment=…    10</span>
 <span class="co">#&gt; # … with 97 more rows</span>
-
 <span class="fu"><a href="../reference/peaks.html">peaks</a></span><span class="op">(</span><span class="va">srmExpGroups</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 2,195 x 12</span>
+<span class="co">#&gt; # A tibble: 2,195 × 12</span>
 <span class="co">#&gt;    sampleID filter         rt rtmin rtmax    int   area     sn peakId transition</span>
 <span class="co">#&gt;    &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;     </span>
 <span class="co">#&gt;  1 QC01     SRM SIC Q1…  5.00  4.62  6.21 395845 1.15e7     62      1 204 &gt; 118…</span>
@@ -295,9 +293,8 @@
 <span class="co">#&gt;  9 QC01     SRM SIC Q1…  6.66  6.37  6.99  16279 5.69e5  16278      2 204 &gt; 144…</span>
 <span class="co">#&gt; 10 QC02     SRM SIC Q1…  5.00  4.58  6.17 360968 1.03e7 360967      1 204 &gt; 144…</span>
 <span class="co">#&gt; # … with 2,185 more rows, and 2 more variables: index &lt;int&gt;, GroupID &lt;chr&gt;</span>
-
 <span class="fu"><a href="../reference/header.html">header</a></span><span class="op">(</span><span class="va">srmExpGroups</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 428 x 9</span>
+<span class="co">#&gt; # A tibble: 428 × 9</span>
 <span class="co">#&gt;    sampleID filter             tic    bpi polarity    Q1    Q3    CE transition </span>
 <span class="co">#&gt;    &lt;chr&gt;    &lt;chr&gt;            &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      </span>
 <span class="co">#&gt;  1 QC01     SRM SIC Q1=204… 6.36e6 3.96e5 +         204  118.     12 204 &gt; 118.…</span>

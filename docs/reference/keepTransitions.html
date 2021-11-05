@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Wraper for xcms centWave peak detection — centWave • sRm</title>
+<title>Keep Transitions — keepTransitions • sRm</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Wraper for xcms centWave peak detection — centWave" />
-<meta property="og:description" content="Wraper for xcms centWave peak detection" />
+<meta property="og:title" content="Keep Transitions — keepTransitions" />
+<meta property="og:description" content="Keep Transitions" />
 
 
 
@@ -114,41 +114,36 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Wraper for xcms centWave peak detection</h1>
-    <small class="dont-index">Source: <a href='https://github.com/wilsontom/sRm/blob/master/R/centWave.R'><code>R/centWave.R</code></a></small>
-    <div class="hidden name"><code>centWave.Rd</code></div>
+    <h1>Keep Transitions</h1>
+    <small class="dont-index">Source: <a href='https://github.com/wilsontom/sRm/blob/master/R/allGenerics.R'><code>R/allGenerics.R</code></a>, <a href='https://github.com/wilsontom/sRm/blob/master/R/keepTransitions-method.R'><code>R/keepTransitions-method.R</code></a></small>
+    <div class="hidden name"><code>keepTransitions.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Wraper for xcms centWave peak detection</p>
+    <p>Keep Transitions</p>
     </div>
 
-    <pre class="usage"><span class='fu'>centWave</span><span class='op'>(</span><span class='va'>rt</span>, <span class='va'>int</span>, <span class='va'>snthresh</span>, <span class='va'>peakwidth</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>keepTransitions</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>index_keep</span><span class='op'>)</span>
+
+<span class='co'># S4 method for SRM</span>
+<span class='fu'>keepTransitions</span><span class='op'>(</span><span class='va'>object</span>, index_keep <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>rt</th>
-      <td><p>a numeric vector of chromatogram retention time in minutes</p></td>
+      <th>object</th>
+      <td><p>a SRM object</p></td>
     </tr>
     <tr>
-      <th>int</th>
-      <td><p>a numeric vector of chromatogram intensity</p></td>
-    </tr>
-    <tr>
-      <th>snthresh</th>
-      <td><p>a numeric value for the Signal-to-Noise cut off to use during peak detection</p></td>
-    </tr>
-    <tr>
-      <th>peakwidth</th>
-      <td><p>a numeric value for the minimum and maximum tolerated peak width.</p></td>
+      <th>index_keep</th>
+      <td><p>a numeric vector of transition index to retain</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a <code>tibble</code> of detected peaks</p>
+    <p>a <code>SRM</code> object</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

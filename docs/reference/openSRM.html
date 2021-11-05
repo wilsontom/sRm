@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sRm</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.3</span>
       </span>
     </div>
 
@@ -123,7 +123,7 @@
     <p>Open and parse SRM files into an <code>S4</code> SRM Object</p>
     </div>
 
-    <pre class="usage"><span class='fu'>openSRM</span><span class='op'>(</span><span class='va'>files</span>, <span class='va'>source_type</span>, backend <span class='op'>=</span> <span class='st'>"mzR"</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>openSRM</span><span class='op'>(</span><span class='va'>files</span>, <span class='va'>source_type</span>, backend <span class='op'>=</span> <span class='st'>"mzR"</span>, parallel <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>cores</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -140,6 +140,14 @@
       <th>backend</th>
       <td><p>a character string of either <code>mzR</code> (Default) or <code>q3ML</code>. <code>q3ML</code> should only be used as a backend for files
 which have been converted using a version of pwiz which is not supported by <code>mzR</code>,</p></td>
+    </tr>
+    <tr>
+      <th>parallel</th>
+      <td><p>logical; if <code>TRUE</code> then <code>future_map</code> is used for opening files</p></td>
+    </tr>
+    <tr>
+      <th>cores</th>
+      <td><p>a numeric value for the number of parallel workers to enable, if <code>parallel = TRUE</code></p></td>
     </tr>
     </table>
 

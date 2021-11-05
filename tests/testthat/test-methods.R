@@ -13,6 +13,8 @@ test_that("sRm-methods", {
     detectPeaks(TestObject,
                 snthresh = 100,
                 peakwidth = c(10, 30))
+
+
   expect_true(tibble::is_tibble(TestObjectPks@peaks))
   expect_false('GroupID' %in% names(TestObjectPks@peaks))
 

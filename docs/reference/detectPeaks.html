@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sRm</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.3</span>
       </span>
     </div>
 
@@ -123,10 +123,16 @@
     <p>Detect Peaks</p>
     </div>
 
-    <pre class="usage"><span class='fu'>detectPeaks</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>snthresh</span>, <span class='va'>peakwidth</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>detectPeaks</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>snthresh</span>, <span class='va'>peakwidth</span>, <span class='va'>parallel</span>, <span class='va'>cores</span><span class='op'>)</span>
 
 <span class='co'># S4 method for SRM</span>
-<span class='fu'>detectPeaks</span><span class='op'>(</span><span class='va'>object</span>, snthresh <span class='op'>=</span> <span class='fl'>10</span>, peakwidth <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>30</span><span class='op'>)</span><span class='op'>)</span></pre>
+<span class='fu'>detectPeaks</span><span class='op'>(</span>
+  <span class='va'>object</span>,
+  snthresh <span class='op'>=</span> <span class='fl'>10</span>,
+  peakwidth <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>30</span><span class='op'>)</span>,
+  parallel <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  cores <span class='op'>=</span> <span class='fl'>4</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -142,6 +148,14 @@
     <tr>
       <th>peakwidth</th>
       <td><p>a numeric vector indicating the minimum and maximum tolerated peak width</p></td>
+    </tr>
+    <tr>
+      <th>parallel</th>
+      <td><p>logical; if <code>TRUE</code> then <code>future_map</code> is used for peak detection</p></td>
+    </tr>
+    <tr>
+      <th>cores</th>
+      <td><p>a numeric value for the number of parallel workers to enable, if <code>parallel = TRUE</code></p></td>
     </tr>
     </table>
 
