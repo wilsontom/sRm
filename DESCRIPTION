@@ -2,7 +2,7 @@ Package: sRm
 Type: Package
 Title: Toolkit for SRM-MS data
     (MS) data
-Version: 0.2.3
+Version: 0.2.4
 Authors@R: c(
     person("Tom", "Wilson", , "tpw2@aber.ac.uk", c("aut", "cre")))
 Description: A complete toolkit for working with Selecive Reaction Monitoring (SRM) Mass Spectrometry (MS) data and other
@@ -63,4 +63,5 @@ Collate:
     'plotPeakArea-method.R'
     'plotSRM-method.R'
     'plotSample-method.R'
+    'removeSample-method.R'
     'show-method.R'
