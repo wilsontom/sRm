@@ -5,14 +5,14 @@ test_that("sRm-methods", {
                full.names = TRUE)
 
 
-  TestObject <- openSRM(ShimadzuRawFiles, source_type = 'lcd')
+  TestObject <- openSRM(ShimadzuRawFiles, source_type = 'lcd', parallel = FALSE)
   expect_false(tibble::is_tibble(TestObject@peaks))
 
 
   TestObjectPks <-
     detectPeaks(TestObject,
                 snthresh = 100,
-                peakwidth = c(10, 30))
+                peakwidth = c(10, 30), parallel = FALSE)
   expect_true(tibble::is_tibble(TestObjectPks@peaks))
   expect_false('GroupID' %in% names(TestObjectPks@peaks))
 
