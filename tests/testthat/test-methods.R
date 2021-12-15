@@ -23,5 +23,14 @@ test_that("sRm-methods", {
   expect_true(tibble::is_tibble(TestSummary))
 
 
+  TestFilter <- keepTransitions(TestObject, index_keep = c(1:5))
+  expect_true(nrow(transitions(TestFilter)) == 5)
+  expect_true(nrow(transitions(TestFilter)) < nrow(transitions(TestObject)))
+
+
+  TestFilterSample <- removeSample(TestObject, 'QC01')
+  expect_true(nrow(TestFilterSample@chroms) < nrow(TestObject@chroms))
+  expect_true(nrow(TestFilterSample@header) < nrow(TestObject@header))
+
 
 })
