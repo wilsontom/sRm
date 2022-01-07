@@ -1,3 +1,6 @@
+# sRm v0.2.4
+- Add `removeSample` method to remove unwanted samples form SRM objects
+
 # sRm v0.2.3
 - Add parallel support *via* `future_map` to `openSRM` and `detectPeaks`
 - Add `keepTransitions` method to remove redundant data from SRM objects

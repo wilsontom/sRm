@@ -50,8 +50,7 @@ setGeneric(
   def = function(object,
                  snthresh,
                  peakwidth,
-                 parallel,
-                 cores)
+                 parallel)
   {
     standardGeneric('detectPeaks')
   }
@@ -195,3 +194,15 @@ setGeneric(
     standardGeneric('keepTransitions')
   }
 )
+
+
+#' @rdname removeSample
+
+setGeneric(
+  name = 'removeSample',
+  def = function(object, sampleName)
+  {
+    standardGeneric('removeSample')
+  }
+)
+

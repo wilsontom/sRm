@@ -36,7 +36,7 @@ library(sRm)
 
 chrom_files <- list.files(system.file('extdata/Shimadzu_LCD', package = 'sRm'), full.names = TRUE)
 
-srmExp <- openSRM(chrom_files, source_type = 'lcd', backend = 'mzR')
+srmExp <- openSRM(chrom_files, source_type = 'lcd', backend = 'mzR', parallel = FALSE)
 
 srmExp
 
@@ -94,8 +94,8 @@ plotParent(srmExp, 303)
 ```{r, peak_detection}
 srmExpPeaks <-
   detectPeaks(srmExp,
-              snthresh = 5,
-              peakwidth = c(5,75), 
+              snthresh = 5
+              peakwidth = c(5,75),
               parallel = FALSE)
 ```
 
