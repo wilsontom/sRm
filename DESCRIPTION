@@ -63,4 +63,5 @@ Collate:
     'plotPeakArea-method.R'
     'plotSRM-method.R'
     'plotSample-method.R'
+    'reducePeaks-method.R'
     'show-method.R'
