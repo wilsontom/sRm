@@ -3,7 +3,6 @@
 #' Extract a minimal amount meta data from a `.mzML` file
 #'
 #' @param x a valid `.mzML` file
-#' @param type a character string of the original file format (`raw` or `lcd`)
 #' @return a `tibble` containing;
 #'  * mzML Schema
 #'  * Acquisition Date
@@ -13,14 +12,24 @@
 #'
 #' @export
 
-get_meta <- function(x, type = 'raw')
+get_meta <- function(x)
 {
   xmltmp <- xml2::read_xml(x)
+
 
   refGroup <-
     xml2::xml_find_all(xmltmp, '//d1:referenceableParamGroup')
   mzml_schema <-
     xml2::xml_attrs(xml2::xml_children(xmltmp)[[1]])[['schemaLocation']]
+
+
+  InstrumentModel <- q3ML::detectInstrumentModel(x)
+  if(stringr::str_detect(InstrumentModel, 'Shimadzu')) {
+    type <- 'lcd'
+  } else{
+    type <- 'raw'
+  }
+
 
   if (type == 'raw') {
     UserParam <- xml2::xml_find_all(xmltmp, "//d1:userParam")
