@@ -195,3 +195,14 @@ setGeneric(
     standardGeneric('keepTransitions')
   }
 )
+
+
+#' @rdname reducePeaks
+
+setGeneric(
+  name = 'reducePeaks',
+  def = function(object, relative_area)
+  {
+    standardGeneric('reducePeaks')
+  }
+)
