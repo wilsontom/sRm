@@ -172,7 +172,7 @@ openSRM <-
 
 
 
-    InstrumentModel <- q3ML::detectInstrumentModel(files[1])
+    InstrumentModel <- detectInstrumentModel(files[1])
 
     if(stringr::str_detect(InstrumentModel, 'Shimadzu')) {
       object@chroms$rt <- object@chroms$rt / 60
@@ -189,7 +189,7 @@ openSRM <-
 
     meta_tibble <-
       purrr::map(files, ~ {
-        get_meta(.)
+        fileMetaData(.)
       }) %>% purrr::map(., ~ {
         tidyr::spread(., name, value)
       }) %>% dplyr::bind_rows() %>% dplyr::mutate(sample_n = seq(from = 1, to = nrow(.))) %>%
