@@ -13,8 +13,8 @@
 
 setMethod('detectPeaks', signature = 'SRM',
           function(object,
-                   snthresh = 10,
-                   peakwidth = c(2, 30),
+                   snthresh,
+                   peakwidth,
                    parallel = FALSE,
                    cores = 4)
           {
