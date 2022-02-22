@@ -9,7 +9,6 @@
 #' @export
 #' @importFrom ggplot2 geom_polygon guides
 
-
 setMethod('plotPeakArea', signature = 'SRM',
           function(object, index, sampleName){
 
@@ -22,21 +21,26 @@ setMethod('plotPeakArea', signature = 'SRM',
                                                     sampleID == !!sampleName) %>% dplyr::select(-filter)
 
 
-            chrom_plot <-
-              ggplot(data = chrom_tibble, aes(x = rt, y = int)) + geom_line(size = 0.45) +
+
+
+              peak_tibble <-
+                object@peaks %>% dplyr::filter(filter == plot_tr_name$filter &
+                                                 sampleID == !!sampleName)
+
+
+            chrom_plot <- ggplot(data = chrom_tibble, aes(x = rt, y = int)) + geom_line(size = 0.45) +
               theme_classic() + xlab("Rt (mins)") + ylab("Intensity") +
               theme(
                 axis.text.y = element_text(size = 10, face = "bold"),
                 axis.text.x = element_text(size = 10, face = "bold"),
                 axis.title.y = element_text(size = 10, face = "bold"),
                 axis.title.x = element_text(size = 10, face = "bold")
-              )
-
-
-
-            peak_tibble <-
-              object@peaks %>% dplyr::filter(filter == plot_tr_name$filter &
-                                               sampleID == !!sampleName)
+              ) + ggrepel::geom_label_repel(data = subset(chrom_tibble, rt %in% peak_tibble$rt),
+                                            aes(label = round(rt, digits = 2)),
+                                                size = 3.5,
+                                                box.padding = unit(0.35, "lines"),
+                                                arrow = arrow(length = unit(0.1, 'lines')),
+                                                max.overlaps = 30)
 
 
             polygon_indicies <- list()
