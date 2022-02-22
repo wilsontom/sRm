@@ -32,13 +32,13 @@ setGeneric(
 )
 
 
-#' @rdname chromTransform
+#' @rdname smoothChrom
 
 setGeneric(
-  name = 'chromTransform',
+  name = 'smoothChrom',
   def = function(object, cf)
   {
-    standardGeneric('chromTransform')
+    standardGeneric('smoothChrom')
   }
 )
 
@@ -204,5 +204,16 @@ setGeneric(
   def = function(object, relative_area)
   {
     standardGeneric('reducePeaks')
+  }
+)
+
+
+#' @rdname adjustBaseline
+
+setGeneric(
+  name = 'adjustBaseline',
+  def = function(object, hwm)
+  {
+    standardGeneric('adjustBaseline')
   }
 )
