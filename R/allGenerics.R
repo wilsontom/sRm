@@ -1,5 +1,6 @@
 
 
+
 #' @rdname plotSRM
 
 setGeneric(
@@ -215,5 +216,16 @@ setGeneric(
   def = function(object, hwm)
   {
     standardGeneric('adjustBaseline')
+  }
+)
+
+
+#' @rdname removeSample
+
+setGeneric(
+  name = 'removeSample',
+  def = function(object, sampleName)
+  {
+    standardGeneric('removeSample')
   }
 )
