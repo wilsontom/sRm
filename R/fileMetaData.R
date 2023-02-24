@@ -16,7 +16,6 @@ fileMetaData <- function(x)
 {
   xmltmp <- xml2::read_xml(x)
 
-
   refGroup <-
     xml2::xml_find_all(xmltmp, '//d1:referenceableParamGroup')
   mzml_schema <-
@@ -32,8 +31,16 @@ fileMetaData <- function(x)
 
 
   if (type == 'raw') {
-    UserParam <- xml2::xml_find_all(xmltmp, "//d1:userParam")
-    inst_model <- xml2::xml_attrs(UserParam)[[1]][['value']]
+    InstrumentParam <-
+      xml2::xml_find_all(xmltmp, "//d1:referenceableParamGroup")[[1]] %>%
+      xml2::xml_children()
+
+    ModelCV <- InstrumentParam[[1]] %>% xml2::xml_attrs() %>%
+      .[['accession']]
+
+    SerialCV <- InstrumentParam[[2]] %>% xml2::xml_attrs() %>%
+      .[['accession']]
+
     runHeader <- xml2::xml_find_all(xmltmp, "//d1:run")
     acqStamp <- xml2::xml_attrs(runHeader)[[1]][["startTimeStamp"]]
     acqDate <- strsplit(acqStamp, "T")[[1]][1]
@@ -70,7 +77,7 @@ fileMetaData <- function(x)
           'Instrument',
           'sampleID'
         ),
-        value = c(mzml_schema, acqDate, acqTime_hhmm, inst_model, fileName)
+        value = c(mzml_schema, acqDate, acqTime_hhmm, stringr::str_c(ModelCV,'//', SerialCV), fileName)
       )
   }
 
