@@ -38,8 +38,13 @@ fileMetaData <- function(x)
     ModelCV <- InstrumentParam[[1]] %>% xml2::xml_attrs() %>%
       .[['accession']]
 
-    SerialCV <- InstrumentParam[[2]] %>% xml2::xml_attrs() %>%
-      .[['accession']]
+
+    ResolveCV <- httr::GET(glue::glue('http://www.ebi.ac.uk/ols/api/terms?obo_id=', {
+      ModelCV
+      })) %>% httr::content('parsed')
+
+    ModelCV_Name <- ResolveCV$`_embedded`$terms[[1]]$label
+
 
     runHeader <- xml2::xml_find_all(xmltmp, "//d1:run")
     acqStamp <- xml2::xml_attrs(runHeader)[[1]][["startTimeStamp"]]
@@ -77,7 +82,7 @@ fileMetaData <- function(x)
           'Instrument',
           'sampleID'
         ),
-        value = c(mzml_schema, acqDate, acqTime_hhmm, stringr::str_c(ModelCV,'//', SerialCV), fileName)
+        value = c(mzml_schema, acqDate, acqTime_hhmm, ModelCV_Name, fileName)
       )
   }
 
