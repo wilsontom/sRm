@@ -13,7 +13,6 @@
 
 openSRM <-
   function(files,
-           source_type,
            backend = 'mzR',
            parallel = FALSE,
            cores)
