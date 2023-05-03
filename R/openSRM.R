@@ -96,7 +96,7 @@ openSRM <-
     chromtib <- list()
     for (i in seq_along(chromtmp)) {
       chromtib[[i]] <-
-        purrr::map(chromtmp[[i]], tibble::as_tibble, validate = FALSE) %>% purrr::map(., dplyr::select, rt = 1, int = 2)
+        purrr::map(chromtmp[[i]], tibble::as_tibble, .name_repair = 'minimal') %>% purrr::map(., dplyr::select, rt = 1, int = 2)
     }
 
 
