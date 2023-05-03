@@ -4,7 +4,7 @@
 \alias{openSRM}
 \title{Open SRM Files}
 \usage{
-openSRM(files, source_type, backend = "mzR", parallel = FALSE, cores)
+openSRM(files, backend = "mzR", parallel = FALSE, cores)
 }
 \arguments{
 \item{files}{a character vector of absolute file paths of SRM files in \code{.mzML} format}
