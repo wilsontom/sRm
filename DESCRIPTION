@@ -38,6 +38,7 @@ Suggests:
     knitr,
     rmarkdown,
     patchwork
+Remotes: wilsontom/q3ML
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
 Collate: 
