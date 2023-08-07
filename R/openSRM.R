@@ -125,7 +125,7 @@ openSRM <-
     # remove file extensions
     peak_table <- dplyr::mutate(
       peak_table,
-      sampleID = basename(sampleID)
+      sampleID = tools::file_path_sans_ext(basename(sampleID),compression = TRUE)
     )
 
     object <- new("SRM")
