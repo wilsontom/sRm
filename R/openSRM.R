@@ -103,7 +103,7 @@ openSRM <-
     for (i in seq_along(chromtib)) {
       chromtib[[i]] <-
         purrr::map(chromtib[[i]], ~ {
-          dplyr::mutate(., sampleID = basename(files[i]))
+          dplyr::mutate(., sampleID = tools::file_path_sans_ext(basename(files[[i]]),compression = TRUE))
         })
 
     }
@@ -149,7 +149,7 @@ openSRM <-
       file_hdrs_clean[[i]] <-
         tibble::add_column(
           file_hdrs_clean[[i]],
-          sampleID = basename(files[[i]]),
+          sampleID = tools::file_path_sans_ext(basename(files[[i]]),compression = TRUE),
           .before = 'filter'
         )
     }
