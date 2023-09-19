@@ -110,7 +110,7 @@ setMethod('plotGroup', signature = 'SRM',
               ) + labs(
                 x = 'Rt (mins)',
                 y = 'Relative Intensity',
-                subtitle = paste0('Rt width: ', group_rt_min, ' - ', group_rt_max)
+                subtitle = paste0('Group Width: ', group_rt_min, ' - ', group_rt_max)
               ) + guides(fill = 'none')
 
             group_plot2 <- patchwork::wrap_plots(p_group, p_info)

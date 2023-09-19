@@ -3,7 +3,6 @@
 #' Extract a minimal amount meta data from a `.mzML` file
 #'
 #' @param x a valid `.mzML` file
-#' @param type a character string of the original file format (`raw` or `lcd`)
 #' @return a `tibble` containing;
 #'  * mzML Schema
 #'  * Acquisition Date
@@ -13,7 +12,7 @@
 #'
 #' @export
 
-get_meta <- function(x, type = 'raw')
+fileMetaData <- function(x)
 {
   xmltmp <- xml2::read_xml(x)
 
@@ -22,9 +21,31 @@ get_meta <- function(x, type = 'raw')
   mzml_schema <-
     xml2::xml_attrs(xml2::xml_children(xmltmp)[[1]])[['schemaLocation']]
 
+
+  InstrumentModel <- detectInstrumentModel(x)
+  if(stringr::str_detect(InstrumentModel, 'Shimadzu')) {
+    type <- 'lcd'
+  } else{
+    type <- 'raw'
+  }
+
+
   if (type == 'raw') {
-    UserParam <- xml2::xml_find_all(xmltmp, "//d1:userParam")
-    inst_model <- xml2::xml_attrs(UserParam)[[1]][['value']]
+    InstrumentParam <-
+      xml2::xml_find_all(xmltmp, "//d1:referenceableParamGroup")[[1]] %>%
+      xml2::xml_children()
+
+    ModelCV <- InstrumentParam[[1]] %>% xml2::xml_attrs() %>%
+      .[['accession']]
+
+
+    ResolveCV <- httr::GET(glue::glue('http://www.ebi.ac.uk/ols/api/terms?obo_id=', {
+      ModelCV
+      })) %>% httr::content('parsed')
+
+    ModelCV_Name <- ResolveCV$`_embedded`$terms[[1]]$label
+
+
     runHeader <- xml2::xml_find_all(xmltmp, "//d1:run")
     acqStamp <- xml2::xml_attrs(runHeader)[[1]][["startTimeStamp"]]
     acqDate <- strsplit(acqStamp, "T")[[1]][1]
@@ -61,7 +82,7 @@ get_meta <- function(x, type = 'raw')
           'Instrument',
           'sampleID'
         ),
-        value = c(mzml_schema, acqDate, acqTime_hhmm, inst_model, fileName)
+        value = c(mzml_schema, acqDate, acqTime_hhmm, ModelCV_Name, fileName)
       )
   }
 

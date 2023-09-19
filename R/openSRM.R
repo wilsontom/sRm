@@ -3,7 +3,6 @@
 #' Open and parse SRM files into an `S4` SRM Object
 #'
 #' @param files a character vector of absolute file paths of SRM files in `.mzML` format
-#' @param source_type a character string of the original file format (`raw` or `lcd`)
 #' @param backend a character string of either `mzR` (Default) or `q3ML`. `q3ML` should only be used as a backend for files
 #' which have been converted using a version of pwiz which is not supported by `mzR`,
 #' @param parallel logical; if `TRUE` then `future_map` is used for opening files
@@ -13,7 +12,6 @@
 
 openSRM <-
   function(files,
-           source_type,
            backend = 'mzR',
            parallel = FALSE)
   {
@@ -95,7 +93,7 @@ openSRM <-
     chromtib <- list()
     for (i in seq_along(chromtmp)) {
       chromtib[[i]] <-
-        purrr::map(chromtmp[[i]], tibble::as_tibble, validate = FALSE) %>% purrr::map(., dplyr::select, rt = 1, int = 2)
+        purrr::map(chromtmp[[i]], tibble::as_tibble, .name_repair = 'minimal') %>% purrr::map(., dplyr::select, rt = 1, int = 2)
     }
 
 
@@ -103,7 +101,7 @@ openSRM <-
     for (i in seq_along(chromtib)) {
       chromtib[[i]] <-
         purrr::map(chromtib[[i]], ~ {
-          dplyr::mutate(., sampleID = basename(files[i]))
+          dplyr::mutate(., sampleID = tools::file_path_sans_ext(basename(files[[i]]),compression = TRUE))
         })
 
     }
@@ -123,8 +121,10 @@ openSRM <-
       unlist(chromtib, recursive = FALSE) %>% dplyr::bind_rows()
 
     # remove file extensions
-    peak_table$sampleID <-
-      stringr::str_remove_all(peak_table$sampleID, '.mzML')
+    peak_table <- dplyr::mutate(
+      peak_table,
+      sampleID = tools::file_path_sans_ext(basename(sampleID),compression = TRUE)
+    )
 
     object <- new("SRM")
     object@chroms <- peak_table
@@ -147,7 +147,7 @@ openSRM <-
       file_hdrs_clean[[i]] <-
         tibble::add_column(
           file_hdrs_clean[[i]],
-          sampleID = stringr::str_remove_all(basename(files[[i]]), '.mzML'),
+          sampleID = tools::file_path_sans_ext(basename(files[[i]]),compression = TRUE),
           .before = 'filter'
         )
     }
@@ -169,10 +169,13 @@ openSRM <-
     object@chroms <-
       object@chroms %>% dplyr::filter(filter != 'TIC')
 
-    if (source_type == 'lcd') {
+
+
+    InstrumentModel <- detectInstrumentModel(files[1])
+
+    if(stringr::str_detect(InstrumentModel, 'Shimadzu')) {
       object@chroms$rt <- object@chroms$rt / 60
     }
-
 
     object@transitions <-
       object@transitions %>% dplyr::mutate(index = seq(from = 1, to = nrow(.)))
@@ -185,7 +188,7 @@ openSRM <-
 
     meta_tibble <-
       purrr::map(files, ~ {
-        get_meta(., type = source_type)
+        fileMetaData(.)
       }) %>% purrr::map(., ~ {
         tidyr::spread(., name, value)
       }) %>% dplyr::bind_rows() %>% dplyr::mutate(sample_n = seq(from = 1, to = nrow(.))) %>%
