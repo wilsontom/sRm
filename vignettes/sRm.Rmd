@@ -36,7 +36,7 @@ library(sRm)
 
 chrom_files <- list.files(system.file('extdata/Shimadzu_LCD', package = 'sRm'), full.names = TRUE)
 
-srmExp <- openSRM(chrom_files, source_type = 'lcd', backend = 'mzR')
+srmExp <- openSRM(chrom_files, backend = 'mzR')
 
 srmExp
 
@@ -58,8 +58,10 @@ The `SRM` object contains the following data;
     * a `tibble` of retention time (rt) and intensity (int) values for all imported SRM chromatograms.
  * **peaks**
     * a `tibble` of detected peaks for each SRM chromatogram.
+* **groups**
+    * a `tibble` of user peak groups based on user defined values.
  * **header**
-    * a `tibble` of formatted header data from `mzR::header()`
+    * a `tibble` of formatted header data from `mzR::header()`.
 
 
 ## Plotting Data
@@ -95,7 +97,7 @@ plotParent(srmExp, 303)
 srmExpPeaks <-
   detectPeaks(srmExp,
               snthresh = 5,
-              peakwidth = c(5,75), 
+              peakwidth = c(5,80), 
               parallel = FALSE)
 ```
 
@@ -103,7 +105,7 @@ srmExpPeaks <-
 The `plotPeakArea` can then be used to determine the quality of the peak integration. 
 
 ```{r, plotArea, fig.width = 6, fig.height = 4,  fig.align = 'center'}
-plotPeakArea(srmExpPeaks, index = 5, sampleName = 'QC02')
+plotPeakArea(srmExpPeaks, index = 1, sampleName = 'QC02')
 ```
 
 
