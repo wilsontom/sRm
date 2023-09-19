@@ -11,8 +11,8 @@ test_that("openSRM-works", {
                            package = 'sRm'),
                full.names = TRUE)
 
-  expect_true(isS4(openSRM(ThermoRawFiles[1], source_type = 'raw')))
-  expect_true(isS4(openSRM(ShimadzuRawFiles[1], source_type = 'lcd')))
+  expect_true(isS4(openSRM(ThermoRawFiles[1])))
+  expect_true(isS4(openSRM(ShimadzuRawFiles[1])))
 
 
 

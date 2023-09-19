@@ -103,7 +103,7 @@ openSRM <-
     for (i in seq_along(chromtib)) {
       chromtib[[i]] <-
         purrr::map(chromtib[[i]], ~ {
-          dplyr::mutate(., sampleID = basename(files[i]))
+          dplyr::mutate(., sampleID = tools::file_path_sans_ext(basename(files[[i]]),compression = TRUE))
         })
 
     }
@@ -123,8 +123,10 @@ openSRM <-
       unlist(chromtib, recursive = FALSE) %>% dplyr::bind_rows()
 
     # remove file extensions
-    peak_table$sampleID <-
-      stringr::str_remove_all(peak_table$sampleID, '.mzML')
+    peak_table <- dplyr::mutate(
+      peak_table,
+      sampleID = tools::file_path_sans_ext(basename(sampleID),compression = TRUE)
+    )
 
     object <- new("SRM")
     object@chroms <- peak_table
@@ -147,7 +149,7 @@ openSRM <-
       file_hdrs_clean[[i]] <-
         tibble::add_column(
           file_hdrs_clean[[i]],
-          sampleID = stringr::str_remove_all(basename(files[[i]]), '.mzML'),
+          sampleID = tools::file_path_sans_ext(basename(files[[i]]),compression = TRUE),
           .before = 'filter'
         )
     }
