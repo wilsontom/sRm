@@ -198,6 +198,19 @@ setGeneric(
 )
 
 
+#' @rdname removeTransitions
+
+setGeneric(
+  name = 'removeTransitions',
+  def = function(object, index_out)
+  {
+    standardGeneric('removeTransitions')
+  }
+)
+
+
+
+
 #' @rdname reducePeaks
 
 setGeneric(
