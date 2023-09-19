@@ -1,5 +1,6 @@
 
 
+
 #' @rdname plotSRM
 
 setGeneric(
@@ -32,13 +33,13 @@ setGeneric(
 )
 
 
-#' @rdname chromTransform
+#' @rdname smoothChrom
 
 setGeneric(
-  name = 'chromTransform',
+  name = 'smoothChrom',
   def = function(object, cf)
   {
-    standardGeneric('chromTransform')
+    standardGeneric('smoothChrom')
   }
 )
 
@@ -50,7 +51,8 @@ setGeneric(
   def = function(object,
                  snthresh,
                  peakwidth,
-                 parallel)
+                 parallel,
+                 cores)
   {
     standardGeneric('detectPeaks')
   }
@@ -196,6 +198,41 @@ setGeneric(
 )
 
 
+#' @rdname removeTransitions
+
+setGeneric(
+  name = 'removeTransitions',
+  def = function(object, index_out)
+  {
+    standardGeneric('removeTransitions')
+  }
+)
+
+
+
+
+#' @rdname reducePeaks
+
+setGeneric(
+  name = 'reducePeaks',
+  def = function(object, relative_area)
+  {
+    standardGeneric('reducePeaks')
+  }
+)
+
+
+#' @rdname adjustBaseline
+
+setGeneric(
+  name = 'adjustBaseline',
+  def = function(object, hwm)
+  {
+    standardGeneric('adjustBaseline')
+  }
+)
+
+
 #' @rdname removeSample
 
 setGeneric(
@@ -205,4 +242,3 @@ setGeneric(
     standardGeneric('removeSample')
   }
 )
-
