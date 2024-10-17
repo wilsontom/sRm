@@ -2,7 +2,7 @@ Package: sRm
 Type: Package
 Title: Toolkit for SRM-MS data
     (MS) data
-Version: 0.2.3
+Version: 0.2.4
 Authors@R: c(
     person("Tom", "Wilson", , "tpw2@aber.ac.uk", c("aut", "cre")))
 Description: A complete toolkit for working with Selecive Reaction Monitoring (SRM) Mass Spectrometry (MS) data and other
@@ -13,7 +13,7 @@ Depends:
     magrittr
 Imports:
     methods,
-    mzR,
+    MSnbase,
     tibble,
     purrr,
     dplyr,
@@ -25,7 +25,6 @@ Imports:
     ptw,
     cli,
     crayon,
-    q3ML,
     furrr,
     future
 URL: https://github.com/wilsontom/sRm
