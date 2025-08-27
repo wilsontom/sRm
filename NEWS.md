@@ -1,3 +1,7 @@
+# sRm v0.2.5
+- Remove `mzR` functions for data handling and replace with `MSnbase`
+- Streamline parallel processing using `furrr` and `future_map`
+
 # sRm v0.2.4
 - Add `removeSample` method to remove unwanted samples form SRM objects
 

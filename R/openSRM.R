@@ -3,108 +3,62 @@
 #' Open and parse SRM files into an `S4` SRM Object
 #'
 #' @param files a character vector of absolute file paths of SRM files in `.mzML` format
-#' @param backend a character string of either `mzR` (Default) or `q3ML`. `q3ML` should only be used as a backend for files
-#' which have been converted using a version of pwiz which is not supported by `mzR`,
-#' @param parallel logical; if `TRUE` then `future_map` is used for opening files
 #' @return an SRM object
 #' @export
 #' @importFrom magrittr %>%
 
 openSRM <-
-  function(files,
-           backend = 'mzR',
-           parallel = FALSE)
+  function(files)
   {
-    # map over input files and open with mzR
-    if (parallel == FALSE) {
-      if (backend == 'mzR') {
-        opentmp <- purrr::map(files, ~ {
-          mzR::openMSfile(., backend = "pwiz")
-        })
+    # map over input files and open with MSnbase
+    opentmp <- furrr::future_map(files, ~ {
+      MSnbase::readSRMData(.)
+    })
 
-        # map over inputs and extract chromatograms
-        chromtmp <- purrr::map(opentmp, ~ {
-          mzR::chromatogram(.)
-        })
 
-        # extract chromatogram headers. this replaces old xml2 parsing code. Most cvParams are now supported by mzR
-        file_hdrs <- purrr::map(opentmp, ~ {
-          mzR::chromatogramHeader(.)
-        })
+    get_chroms <- function(x)
+    {
+      idx_range <- 1:length(x)
+
+      chrom <- purrr::map(idx_range, ~ {
+        cbind(x[., ]@rtime, x[., ]@intensity)
+      })
+
+      chromID <- MSnbase::fData(x)[['chromatogramId']]
+
+      for (i in seq_along(chrom)) {
+        names(chrom)[[i]] <- chromID[i]
       }
 
-      if (backend == 'q3ML') {
-        opentmp <- purrr::map(files, q3ML::openFile)
-
-        chromtmp <- purrr::map(opentmp, ~ {
-          .$peaks
-        })
-
-        file_hdrs <- purrr::map(opentmp, ~ {
-          .$header
-        })
-
-      }
+      return(chrom)
     }
 
-    if (parallel == TRUE) {
 
-      if (backend == 'mzR') {
-        opentmp <- furrr::future_map(files, ~ {
-          mzR::openMSfile(., backend = "pwiz")
-        })
+    chromtmp <- furrr::future_map(opentmp, get_chroms)
 
-        # map over inputs and extract chromatograms
-        chromtmp <- purrr::map(opentmp, ~ {
-          mzR::chromatogram(.)
-        })
 
-        # extract chromatogram headers. this replaces old xml2 parsing code. Most cvParams are now supported by mzR
-        file_hdrs <- purrr::map(opentmp, ~ {
-          mzR::chromatogramHeader(.)
-        })
-      }
-
-      if (backend == 'q3ML') {
-        opentmp <- furrr::future_map(files, q3ML::openFile)
-
-        chromtmp <- purrr::map(opentmp, ~ {
-          .$peaks
-        })
-
-        file_hdrs <- purrr::map(opentmp, ~ {
-          .$header
-        })
-
-      }
-
-    }
-
-    # extract transition names from the chromatograms
-    transition_names <- list()
-    for (i in seq_along(chromtmp)) {
-      transition_names[[i]] <-
-        purrr::map_chr(chromtmp[[i]], ~ {
-          names(.)[[2]]
-        })
-    }
+    file_hdrs <- furrr::future_map(opentmp, ~ {
+      MSnbase::fData(.)
+    })
 
     # iterate over files + chromatograms and convert rt-int matrices to named tibbles
     chromtib <- list()
     for (i in seq_along(chromtmp)) {
       chromtib[[i]] <-
-        purrr::map(chromtmp[[i]], tibble::as_tibble, .name_repair = 'minimal') %>% purrr::map(., dplyr::select, rt = 1, int = 2)
+        furrr::future_map(chromtmp[[i]], tibble::as_tibble, .name_repair = 'minimal') %>% purrr::map(., dplyr::select, rt = 1, int = 2)
     }
 
 
     # iterate over chromatogram tibbles and add fileName as sample identifier
     for (i in seq_along(chromtib)) {
       chromtib[[i]] <-
-        purrr::map(chromtib[[i]], ~ {
-          dplyr::mutate(., sampleID = tools::file_path_sans_ext(basename(files[[i]]),compression = TRUE))
+        furrr::future_map(chromtib[[i]], ~ {
+          dplyr::mutate(.,
+                        sampleID = tools::file_path_sans_ext(basename(files[[i]]), compression = TRUE))
         })
 
     }
+
 
     # iterate over chromatogram tibbles and add transition name as identifier
 
@@ -121,10 +75,8 @@ openSRM <-
       unlist(chromtib, recursive = FALSE) %>% dplyr::bind_rows()
 
     # remove file extensions
-    peak_table <- dplyr::mutate(
-      peak_table,
-      sampleID = tools::file_path_sans_ext(basename(sampleID),compression = TRUE)
-    )
+    peak_table <- dplyr::mutate(peak_table,
+                                sampleID = tools::file_path_sans_ext(basename(sampleID), compression = TRUE))
 
     object <- new("SRM")
     object@chroms <- peak_table
@@ -133,7 +85,7 @@ openSRM <-
 
     # create a tidy tibble of file headers
     file_hdrs_clean <-
-      purrr::map(file_hdrs, ~ {
+      furrr::future_map(file_hdrs, ~ {
         tibble::tibble(
           filter = .$chromatogramId,
           polarity = .$polarity,
@@ -147,7 +99,7 @@ openSRM <-
       file_hdrs_clean[[i]] <-
         tibble::add_column(
           file_hdrs_clean[[i]],
-          sampleID = tools::file_path_sans_ext(basename(files[[i]]),compression = TRUE),
+          sampleID = tools::file_path_sans_ext(basename(files[[i]]), compression = TRUE),
           .before = 'filter'
         )
     }
@@ -173,7 +125,7 @@ openSRM <-
 
     InstrumentModel <- detectInstrumentModel(files[1])
 
-    if(stringr::str_detect(InstrumentModel, 'Shimadzu')) {
+    if (stringr::str_detect(InstrumentModel, 'Shimadzu')) {
       object@chroms$rt <- object@chroms$rt / 60
     }
 
@@ -187,7 +139,7 @@ openSRM <-
       dplyr::full_join(tic_bpi, file_hdrs_clean, by = c('sampleID', 'filter'))
 
     meta_tibble <-
-      purrr::map(files, ~ {
+      furrr::future_map(files, ~ {
         fileMetaData(.)
       }) %>% purrr::map(., ~ {
         tidyr::spread(., name, value)
