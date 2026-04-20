@@ -10,33 +10,40 @@ detectInstrumentModel <- function(mzml_file)
 {
   xml_tmp <- xml2::read_xml(mzml_file)
 
-  instrument_cv <-
-    as.character(
-      xml_tmp %>%
-        xml2::xml_find_all(., "//d1:instrumentConfiguration") %>%
-        xml2::xml_contents() %>%
-        xml2::xml_attr('accession')
-    )
+  instrument_model <-
+    xml2::xml_find_first(
+      xml_tmp,
+      "//d1:referenceableParamGroup/d1:userParam[@name='instrument model']"
+    ) %>%
+    xml2::xml_attr("value")
 
-
-  if (length(instrument_cv) > 0) {
-    instrument_cv <- instrument_cv[which(instrument_cv != 'NA')]
+  if (!is.na(instrument_model) && nzchar(instrument_model)) {
+    return(instrument_model)
   }
 
-  if(all(is.na(instrument_cv))) {
-    return('no info found')
+  instrument_model <-
+    xml2::xml_find_first(
+      xml_tmp,
+      "//d1:instrumentConfiguration/d1:cvParam[contains(@name, 'instrument model')]"
+    ) %>%
+    xml2::xml_attr("name")
+
+  if (!is.na(instrument_model) &&
+      nzchar(instrument_model) &&
+      instrument_model != "instrument model") {
+    return(instrument_model)
   }
 
+  instrument_model <-
+    xml2::xml_find_first(
+      xml_tmp,
+      "//d1:referenceableParamGroup/d1:cvParam[contains(@name, 'instrument model')]"
+    ) %>%
+    xml2::xml_attr("name")
 
-  api_url <-
-    stringr::str_c('http://www.ebi.ac.uk/ols/api/terms?id=', instrument_cv)
+  if (!is.na(instrument_model) && nzchar(instrument_model)) {
+    return(instrument_model)
+  }
 
-  api_query <- httr::GET(api_url) %>% httr::content(., 'parsed')
-
-  cv_description <-
-    api_query$`_embedded`$terms[[1]]$description[[1]]
-
-  return(cv_description)
-
-
+  return("no info found")
 }
