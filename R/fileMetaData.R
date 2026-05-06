@@ -16,91 +16,43 @@ fileMetaData <- function(x)
 {
   xmltmp <- xml2::read_xml(x)
 
-  refGroup <-
-    xml2::xml_find_all(xmltmp, '//d1:referenceableParamGroup')
   mzml_schema <-
     xml2::xml_attrs(xml2::xml_children(xmltmp)[[1]])[['schemaLocation']]
 
-
   InstrumentModel <- detectInstrumentModel(x)
-  if(stringr::str_detect(InstrumentModel, 'Shimadzu')) {
-    type <- 'lcd'
-  } else{
-    type <- 'raw'
-  }
+  runHeader <- xml2::xml_find_first(xmltmp, "//d1:run")
+  acqStamp <- xml2::xml_attr(runHeader, "startTimeStamp")
 
-
-  if (type == 'raw') {
-    InstrumentParam <-
-      xml2::xml_find_all(xmltmp, "//d1:referenceableParamGroup")[[1]] %>%
-      xml2::xml_children()
-
-    ModelCV <- InstrumentParam[[1]] %>% xml2::xml_attrs() %>%
-      .[['accession']]
-
-
-    ResolveCV <- httr::GET(glue::glue('http://www.ebi.ac.uk/ols/api/terms?obo_id=', {
-      ModelCV
-      })) %>% httr::content('parsed')
-
-    ModelCV_Name <- ResolveCV$`_embedded`$terms[[1]]$label
-
-
-    runHeader <- xml2::xml_find_all(xmltmp, "//d1:run")
-    acqStamp <- xml2::xml_attrs(runHeader)[[1]][["startTimeStamp"]]
+  if (!is.na(acqStamp) && nzchar(acqStamp)) {
     acqDate <- strsplit(acqStamp, "T")[[1]][1]
     acqTime <- strsplit(acqStamp, "T")[[1]][2]
     acqTime_sp <- strsplit(acqTime, ":")
-    acqTime_hhmm <-
-      paste0(acqTime_sp[[1]][1], ":", acqTime_sp[[1]][2])
-
+    acqTime_hhmm <- paste0(acqTime_sp[[1]][1], ":", acqTime_sp[[1]][2])
+  } else {
+    acqDate <- NA_character_
+    acqTime_hhmm <- NA_character_
   }
-
-  if (type == 'lcd') {
-    UserParam <-
-      xml2::xml_find_all(xmltmp, "//d1:instrumentConfiguration")
-    inst_model <-
-      xml2::xml_attrs(xml2::xml_children(UserParam)[[1]])[['name']]
-  }
-
 
   fileInfo <- xml2::xml_find_all(xmltmp, "//d1:sourceFileList")
 
   fileName <-
     xml2::xml_attrs(xml2::xml_children(fileInfo))[[1]][['name']]
-  fileID <-
-    xml2::xml_attrs(xml2::xml_children(fileInfo))[[1]][['id']]
 
-
-  if (type == 'raw') {
-    meta_tibble <-
-      tibble::tibble(
-        name = c(
-          'Schema',
-          'Datestamp',
-          'Timestamp',
-          'Instrument',
-          'sampleID'
-        ),
-        value = c(mzml_schema, acqDate, acqTime_hhmm, ModelCV_Name, fileName)
-      )
+  if (is.null(fileName) || is.na(fileName) || !nzchar(fileName)) {
+    fileName <- basename(x)
   }
 
-  if (type == 'lcd') {
-    meta_tibble <-
-      tibble::tibble(
-        name = c(
-          'Schema',
-          'Datestamp',
-          'Timestamp',
-          'Instrument',
-          'sampleID'
-        ),
-        value = c(mzml_schema, NA, NA, inst_model, fileName)
-      )
-  }
-
+  meta_tibble <-
+    tibble::tibble(
+      name = c(
+        'Schema',
+        'Datestamp',
+        'Timestamp',
+        'Instrument',
+        'sampleID'
+      ),
+      value = c(mzml_schema, acqDate, acqTime_hhmm, InstrumentModel, fileName)
+    )
 
   return(meta_tibble)
-
 }

@@ -7,15 +7,14 @@
 
 ## Installation
 
-`sRm` can de installed directly from GitHub using the `remotes` packages
+`sRm` can be installed directly from GitHub using the `remotes` package
 
 ```r
 remotes::install_github('wilsontom/sRm')
 ```
 ## Learn More
 
-The package documentation can be browsed online at [https://wilsontom/github.io/sRm](https://wilsontom/github.io/sRm). The [Getting Started](https://wilsontom.github.io/sRm/articles/sRm.html) vignette is the best place to start for an introduction into using the package. 
-
+The package documentation can be browsed online at [https://wilsontom.github.io/sRm/](https://wilsontom.github.io/sRm/). The [Getting Started](https://wilsontom.github.io/sRm/articles/sRm.html) vignette is the best place to start for an introduction into using the package.
 
 
 

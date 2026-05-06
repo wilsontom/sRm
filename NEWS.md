@@ -1,3 +1,10 @@
+# sRm v0.2.6
+- Resolve instrument model metadata locally instead of querying remote services
+- Make `fileMetaData()` extraction offline-safe and simplify timestamp / sample ID handling
+- Remove stale package metadata from `DESCRIPTION`
+- Update `README` links and wording
+- Refresh tests for the current `detectPeaks()` API
+
 # sRm v0.2.5
 - Remove `mzR` functions for data handling and replace with `MSnbase`
 - Streamline parallel processing using `furrr` and `future_map`
