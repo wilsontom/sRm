@@ -22,7 +22,6 @@ Imports:
     xcms,
     stringr,
     MsCoreUtils,
-    ptw,
     cli,
     crayon,
     furrr,
